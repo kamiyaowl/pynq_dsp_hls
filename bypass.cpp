@@ -13,8 +13,6 @@ void bypass(
 		){
 #pragma HLS INTERFACE m_axi depth=32 port=physMemPtr
 #pragma HLS INTERFACE s_axilite port=basePhysAddr
-#pragma HLS INTERFACE s_axilite port=threash
-#pragma HLS INTERFACE s_axilite port=ratio
 
 	// 4byte‚²‚Æ‚Éˆµ‚Á‚Ä‚¢‚é‚Ì‚ÅŽ¡‚·
 	const ap_uint<32> addr = (basePhysAddr >> 2);// (=/ 4)
