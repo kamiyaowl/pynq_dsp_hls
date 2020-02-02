@@ -17,13 +17,13 @@ set C_modelArgList {
 	{ lrclk_V int 1 regular  }
 	{ physMemPtr_V int 32 regular {axi_master 2}  }
 	{ basePhysAddr_V int 32 regular {axi_slave 0}  }
-	{ configReg int 8 unused {axi_slave 3}  }
+	{ configReg int 8 regular {axi_slave 0}  }
 }
 set C_modelArgMapList {[ 
 	{ "Name" : "lrclk_V", "interface" : "wire", "bitwidth" : 1, "direction" : "READONLY", "bitSlice":[{"low":0,"up":0,"cElement": [{"cName": "lrclk.V","cData": "uint1","bit_use": { "low": 0,"up": 0},"cArray": [{"low" : 0,"up" : 0,"step" : 0}]}]}]} , 
  	{ "Name" : "physMemPtr_V", "interface" : "axi_master", "bitwidth" : 32, "direction" : "READWRITE", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "physMemPtr.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 31,"step" : 1}]}]}]} , 
  	{ "Name" : "basePhysAddr_V", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "basePhysAddr.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 0}]}]}], "offset" : {"in":16}, "offset_end" : {"in":23}} , 
- 	{ "Name" : "configReg", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_memory","bitwidth" : 8, "direction" : "NONE", "bitSlice":[{"low":0,"up":7,"cElement": [{"cName": "configReg","cData": "unsigned char","bit_use": { "low": 0,"up": 7},"cArray": [{"low" : 0,"up" : 47,"step" : 1}]}]}], "offset" : {"in":64}, "offset_end" : {"in":127}} ]}
+ 	{ "Name" : "configReg", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_memory","bitwidth" : 8, "direction" : "READONLY", "bitSlice":[{"low":0,"up":7,"cElement": [{"cName": "configReg","cData": "unsigned char","bit_use": { "low": 0,"up": 7},"cArray": [{"low" : 0,"up" : 11,"step" : 1},{"low" : 0,"up" : 3,"step" : 1}]}]}], "offset" : {"in":64}, "offset_end" : {"in":127}} ]}
 # RTL Port declarations: 
 set portNum 66
 set portList { 
@@ -102,7 +102,7 @@ set NewPortList {[
 	{ "name": "s_axi_AXILiteS_WREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "WREADY" } },
 	{ "name": "s_axi_AXILiteS_WDATA", "direction": "in", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "AXILiteS", "role": "WDATA" } },
 	{ "name": "s_axi_AXILiteS_WSTRB", "direction": "in", "datatype": "sc_lv", "bitwidth":4, "type": "signal", "bundle":{"name": "AXILiteS", "role": "WSTRB" } },
-	{ "name": "s_axi_AXILiteS_ARADDR", "direction": "in", "datatype": "sc_lv", "bitwidth":7, "type": "signal", "bundle":{"name": "AXILiteS", "role": "ARADDR" },"address":[{"name":"pynq_dsp_hls","role":"start","value":"0","valid_bit":"0"},{"name":"pynq_dsp_hls","role":"done","value":"0","valid_bit":"1"},{"name":"pynq_dsp_hls","role":"idle","value":"0","valid_bit":"2"},{"name":"pynq_dsp_hls","role":"ready","value":"0","valid_bit":"3"},{"name":"pynq_dsp_hls","role":"auto_start","value":"0","valid_bit":"7"},{"name":"configReg","role":"data","value":"64"}] },
+	{ "name": "s_axi_AXILiteS_ARADDR", "direction": "in", "datatype": "sc_lv", "bitwidth":7, "type": "signal", "bundle":{"name": "AXILiteS", "role": "ARADDR" },"address":[{"name":"pynq_dsp_hls","role":"start","value":"0","valid_bit":"0"},{"name":"pynq_dsp_hls","role":"done","value":"0","valid_bit":"1"},{"name":"pynq_dsp_hls","role":"idle","value":"0","valid_bit":"2"},{"name":"pynq_dsp_hls","role":"ready","value":"0","valid_bit":"3"},{"name":"pynq_dsp_hls","role":"auto_start","value":"0","valid_bit":"7"}] },
 	{ "name": "s_axi_AXILiteS_ARVALID", "direction": "in", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "ARVALID" } },
 	{ "name": "s_axi_AXILiteS_ARREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "ARREADY" } },
 	{ "name": "s_axi_AXILiteS_RVALID", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "AXILiteS", "role": "RVALID" } },
@@ -163,13 +163,13 @@ set NewPortList {[
  	{ "name": "m_axi_physMemPtr_V_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BUSER" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8"],
 		"CDFG" : "pynq_dsp_hls",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "23",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "66",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -186,27 +186,33 @@ set RtlHierarchyInfo {[
 					{"Name" : "physMemPtr_V_blk_n_W", "Type" : "RtlSignal"},
 					{"Name" : "physMemPtr_V_blk_n_B", "Type" : "RtlSignal"}]},
 			{"Name" : "basePhysAddr_V", "Type" : "None", "Direction" : "I"},
-			{"Name" : "configReg", "Type" : "Memory", "Direction" : "X"},
+			{"Name" : "configReg", "Type" : "Memory", "Direction" : "I"},
 			{"Name" : "readyRch", "Type" : "OVld", "Direction" : "IO"},
 			{"Name" : "readyLch", "Type" : "OVld", "Direction" : "IO"}]},
 	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_AXILiteS_s_axi_U", "Parent" : "0"},
-	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_physMemPtr_V_m_axi_U", "Parent" : "0"}]}
+	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_physMemPtr_V_m_axi_U", "Parent" : "0"},
+	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulbkb_U1", "Parent" : "0"},
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulbkb_U2", "Parent" : "0"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitocud_U3", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitocud_U4", "Parent" : "0"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fpexdEe_U5", "Parent" : "0"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fpexdEe_U6", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
 	pynq_dsp_hls {
 		lrclk_V {Type I LastRead 0 FirstWrite -1}
-		physMemPtr_V {Type IO LastRead 19 FirstWrite 17}
+		physMemPtr_V {Type IO LastRead 50 FirstWrite 48}
 		basePhysAddr_V {Type I LastRead 0 FirstWrite -1}
-		configReg {Type X LastRead -1 FirstWrite -1}
+		configReg {Type I LastRead 35 FirstWrite -1}
 		readyRch {Type IO LastRead -1 FirstWrite -1}
 		readyLch {Type IO LastRead -1 FirstWrite -1}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "10", "Max" : "23"}
-	, {"Name" : "Interval", "Min" : "11", "Max" : "24"}
+	{"Name" : "Latency", "Min" : "10", "Max" : "66"}
+	, {"Name" : "Interval", "Min" : "11", "Max" : "67"}
 ]}
 
 set PipelineEnableSignalInfo {[

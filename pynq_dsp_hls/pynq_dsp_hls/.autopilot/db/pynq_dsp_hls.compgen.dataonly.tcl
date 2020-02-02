@@ -15,7 +15,7 @@ basePhysAddr_V {
 	offset_end 23
 }
 configReg { 
-	dir X
+	dir I
 	width 8
 	depth 48
 	mode ap_memory

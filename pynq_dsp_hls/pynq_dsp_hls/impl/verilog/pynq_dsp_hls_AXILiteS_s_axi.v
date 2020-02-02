@@ -36,8 +36,7 @@ module pynq_dsp_hls_AXILiteS_s_axi
     output wire [31:0]                   basePhysAddr_V,
     input  wire [5:0]                    configReg_address0,
     input  wire                          configReg_ce0,
-    input  wire                          configReg_we0,
-    input  wire [7:0]                    configReg_d0
+    output wire [7:0]                    configReg_q0
 );
 //------------------------Address Info-------------------
 // 0x00 : Control signals
@@ -380,9 +379,10 @@ end
 // configReg
 assign int_configReg_address0 = configReg_address0 >> 2;
 assign int_configReg_ce0      = configReg_ce0;
-assign int_configReg_we0      = configReg_we0;
-assign int_configReg_be0      = 1 << configReg_address0[1:0];
-assign int_configReg_d0       = {4{configReg_d0}};
+assign int_configReg_we0      = 1'b0;
+assign int_configReg_be0      = 1'b0;
+assign int_configReg_d0       = 1'b0;
+assign configReg_q0           = int_configReg_q0 >> (int_configReg_shift * 8);
 assign int_configReg_address1 = ar_hs? raddr[5:2] : waddr[5:2];
 assign int_configReg_ce1      = ar_hs | (int_configReg_write & WVALID);
 assign int_configReg_we1      = int_configReg_write & WVALID;

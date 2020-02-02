@@ -12,10 +12,11 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-02T23:37:00.920+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-02T23:37:00.910+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-02T23:36:49.597+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-02T23:36:49.548+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-03T00:38:52.563+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-03T00:38:52.555+0900" type="Warning"/>
+        <logs message="WARNING: [SYNCHK 200-23] pynq_dsp_hls.cpp:120: variable-indexed range selection may cause suboptimal QoR." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-03T00:38:50.161+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-03T00:38:39.303+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-03T00:38:39.259+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.208+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.169+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.781+0900" type="Warning"/>

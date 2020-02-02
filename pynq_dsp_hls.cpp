@@ -9,6 +9,8 @@
 #define INTERNAL_FIXED_BIT_WIDTH (32)
 // 内部データのうち、固定小数点の精度にあたるbit幅
 #define INTERNAL_FIXED_PRESICION_BIT_WIDTH (23)
+// int24の生の値を-1.0 ~ +1.0に丸めるときの分母
+#define INTERNAL_FIXED_UNIT (0x1 << INTERNAL_FIXED_PRESICION_BIT_WIDTH);
 // 固定小数点Format
 typedef ap_fixed<INTERNAL_FIXED_BIT_WIDTH, (INTERNAL_FIXED_BIT_WIDTH - INTERNAL_FIXED_PRESICION_BIT_WIDTH), AP_RND, AP_SAT> dsp_fixed;
 
@@ -30,8 +32,13 @@ typedef enum {
 	BYPASS = 0x0,
 	DISTORTION,
 	COMPRESSOR,
+	FIR,
+	IIR,
 	DELAY,
 	REVERB,
+	CHORUS,
+	TREMOLO,
+	VIBRATO,
 } EffectId;
 
 // エフェクトの設定用, AXI経由で固定長の領域として見せたいので共用体で定義
@@ -52,19 +59,16 @@ typedef struct {
 	} detail;
 } EffectConfig;
 
-// EffectConfigの総データ量
-#define EFFECT_CONFIG_SIZE (sizeof(EffectConfig) * EFFECT_STAGE_N)
-
-// エフェクトを行う関数ポインタを表す
+// エフェクトを行う関数ポインタを表す(まとめたりするなら....)
 typedef SampleData(*DspFunc)(SampleData inData, EffectConfig* config);
 
-SampleData bypass(SampleData inData, EffectConfig* config) {
+SampleData effect_bypass(SampleData inData, EffectConfig* config) {
 	return inData;
 }
 
-SampleData distortion(SampleData inData, EffectConfig* config) {
+SampleData effect_distortion(SampleData inData, EffectConfig* config) {
 	const dsp_fixed threash = static_cast<dsp_fixed>(config->detail.distortion.threash);
-
+	// TODO: work in progress
 	SampleData dst;
 	return dst;
 }
@@ -75,7 +79,7 @@ void pynq_dsp_hls(
 		ap_uint<1> lrclk,                       // I2SのLR Clock、開始タイミングの同期用
 		volatile ap_uint<32>* physMemPtr,       // AXI4MasterのPointer、basePhysAddrから+5*4byteアクセスする
 		ap_uint<32> basePhysAddr,               // 読み出し先の物理ベースアドレス
-		uint8_t configReg[EFFECT_CONFIG_SIZE] // 実行するエフェクトの設定, Vivado HLSがunion指定に対応していないので泣く泣く後でCastして使う。余計な事が起きると怖いのでap_uintは使わない
+		uint8_t configReg[sizeof(EffectConfig)][EFFECT_STAGE_N] // 実行するエフェクトの設定, Vivado HLSがunion指定に対応していないので泣く泣く後でCastして使う。余計な事が起きると怖いのでap_uintは使わない
 		){
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_none register port=lrclk
@@ -106,15 +110,48 @@ void pynq_dsp_hls(
 		readyRch = false;
 	}
 
-	// 設定レジスタを読み出して使う(型とは...)
-	EffectConfig* config = reinterpret_cast<EffectConfig*>(configReg);
-
 	// L/R chのデータを取得
 	const ap_uint<32> lsrc = physMemPtr[addr + I2S_DATA_RX_L_REG];
 	const ap_uint<32> rsrc = physMemPtr[addr + I2S_DATA_RX_R_REG];
-	// 何かしらの音声処理
-	const ap_uint<32> ldst = lsrc;
-	const ap_uint<32> rdst = rsrc;
+	const float lsrcf = static_cast<float>(lsrc) / INTERNAL_FIXED_UNIT;
+	const float rsrcf = static_cast<float>(rsrc) / INTERNAL_FIXED_UNIT;
+	// 処理中の音声データ格納先を作成
+	SampleData currentData;
+	currentData.lch = static_cast<dsp_fixed>(lsrcf);
+	currentData.rch = static_cast<dsp_fixed>(rsrcf);
+
+	for (ap_uint<32> stageIndex = 0; stageIndex < EFFECT_STAGE_N; stageIndex++) {
+		// 設定レジスタを読み出して使う(型とは...)
+		void* configRegAddr = static_cast<void*>(configReg[stageIndex]);
+		EffectConfig* config = static_cast<EffectConfig*>(configRegAddr);
+		// エフェクトで分岐して処理
+		switch (config->effectId) {
+			case EffectId::BYPASS:
+				currentData = effect_bypass(currentData, config);
+				break;
+			case EffectId::DISTORTION:
+				currentData = effect_distortion(currentData, config);
+				break;
+			case EffectId::COMPRESSOR:
+			case EffectId::FIR:
+			case EffectId::IIR:
+			case EffectId::DELAY:
+			case EffectId::REVERB:
+			case EffectId::CHORUS:
+			case EffectId::TREMOLO:
+			case EffectId::VIBRATO:
+				// TODO: not implemented
+				currentData = effect_bypass(currentData, config);
+				break;
+		}
+
+	}
+	// エフェクトを掛けた音声データをfixedからどうにかもとの単位に戻す
+	const float ldstf = currentData.lch.to_float() * INTERNAL_FIXED_UNIT;
+	const float rdstf = currentData.rch.to_float() * INTERNAL_FIXED_UNIT;
+	const ap_uint<32> ldst = static_cast<ap_uint<32>>(ldstf);
+	const ap_uint<32> rdst = static_cast<ap_uint<32>>(rdstf);
+
 	// L/R chのデータを設定
 	physMemPtr[addr + I2S_DATA_TX_L_REG] = ldst;
 	physMemPtr[addr + I2S_DATA_TX_R_REG] = rdst;

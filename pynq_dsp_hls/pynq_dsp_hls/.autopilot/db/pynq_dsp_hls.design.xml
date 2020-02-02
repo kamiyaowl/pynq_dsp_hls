@@ -17,18 +17,27 @@
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
 <Best-caseLatency>10</Best-caseLatency>
-<Average-caseLatency>14</Average-caseLatency>
-<Worst-caseLatency>23</Worst-caseLatency>
-<PipelineInitiationInterval>11 ~ 24</PipelineInitiationInterval>
+<Average-caseLatency>29</Average-caseLatency>
+<Worst-caseLatency>66</Worst-caseLatency>
+<PipelineInitiationInterval>11 ~ 67</PipelineInitiationInterval>
 <PipelineType>none</PipelineType>
 </SummaryOfOverallLatency>
+<SummaryOfLoopLatency>
+<Loop1>
+<Name>Loop 1</Name>
+<TripCount>4</TripCount>
+<Latency>12</Latency>
+<IterationLatency>3</IterationLatency>
+<PipelineDepth>3</PipelineDepth>
+</Loop1>
+</SummaryOfLoopLatency>
 </PerformanceEstimates>
 <AreaEstimates>
 <Resources>
 <BRAM_18K>4</BRAM_18K>
-<FF>884</FF>
-<LUT>1117</LUT>
-<DSP48E>0</DSP48E>
+<DSP48E>6</DSP48E>
+<FF>4191</FF>
+<LUT>9418</LUT>
 <URAM>0</URAM>
 </Resources>
 </AreaEstimates>

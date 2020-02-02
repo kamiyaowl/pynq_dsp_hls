@@ -6615,7 +6615,7 @@ namespace std
 }
 # 72 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 2 3
 # 3 "pynq_dsp_hls.cpp" 2
-# 13 "pynq_dsp_hls.cpp"
+# 15 "pynq_dsp_hls.cpp"
 typedef ap_fixed<(32), ((32) - (23)), AP_RND, AP_SAT> dsp_fixed;
 
 
@@ -6636,8 +6636,13 @@ typedef enum {
  BYPASS = 0x0,
  DISTORTION,
  COMPRESSOR,
+ FIR,
+ IIR,
  DELAY,
  REVERB,
+ CHORUS,
+ TREMOLO,
+ VIBRATO,
 } EffectId;
 
 
@@ -6659,16 +6664,13 @@ typedef struct {
 } EffectConfig;
 
 
-
-
-
 typedef SampleData(*DspFunc)(SampleData inData, EffectConfig* config);
 
-SampleData bypass(SampleData inData, EffectConfig* config) {
+SampleData effect_bypass(SampleData inData, EffectConfig* config) {
  return inData;
 }
 
-SampleData distortion(SampleData inData, EffectConfig* config) {
+SampleData effect_distortion(SampleData inData, EffectConfig* config) {
  const dsp_fixed threash = static_cast<dsp_fixed>(config->detail.distortion.threash);
 
  SampleData dst;
@@ -6681,8 +6683,8 @@ void pynq_dsp_hls(
   ap_uint<1> lrclk,
   volatile ap_uint<32>* physMemPtr,
   ap_uint<32> basePhysAddr,
-  uint8_t configReg[(sizeof(EffectConfig) * (4))]
-  ){_ssdm_SpecArrayDimSize(configReg, 48);
+  uint8_t configReg[sizeof(EffectConfig)][(4)]
+  ){_ssdm_SpecArrayDimSize(configReg, 12);
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_none register port=&lrclk
 #pragma HLS INTERFACE m_axi depth=32 port=&physMemPtr
@@ -6713,14 +6715,47 @@ void pynq_dsp_hls(
  }
 
 
- EffectConfig* config = reinterpret_cast<EffectConfig*>(configReg);
-
-
  const ap_uint<32> lsrc = physMemPtr[addr + I2S_DATA_RX_L_REG];
  const ap_uint<32> rsrc = physMemPtr[addr + I2S_DATA_RX_R_REG];
+ const float lsrcf = static_cast<float>(lsrc) / (0x1 << (23));;
+ const float rsrcf = static_cast<float>(rsrc) / (0x1 << (23));;
 
- const ap_uint<32> ldst = lsrc;
- const ap_uint<32> rdst = rsrc;
+ SampleData currentData;
+ currentData.lch = static_cast<dsp_fixed>(lsrcf);
+ currentData.rch = static_cast<dsp_fixed>(rsrcf);
+
+ for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
+
+  void* configRegAddr = static_cast<void*>(configReg[stageIndex]);
+  EffectConfig* config = static_cast<EffectConfig*>(configRegAddr);
+
+  switch (config->effectId) {
+   case EffectId::BYPASS:
+    currentData = effect_bypass(currentData, config);
+    break;
+   case EffectId::DISTORTION:
+    currentData = effect_distortion(currentData, config);
+    break;
+   case EffectId::COMPRESSOR:
+   case EffectId::FIR:
+   case EffectId::IIR:
+   case EffectId::DELAY:
+   case EffectId::REVERB:
+   case EffectId::CHORUS:
+   case EffectId::TREMOLO:
+   case EffectId::VIBRATO:
+
+    currentData = effect_bypass(currentData, config);
+    break;
+  }
+
+ }
+
+ const float ldstf = currentData.lch.to_float() * (0x1 << (23));;
+ const float rdstf = currentData.rch.to_float() * (0x1 << (23));;
+ const ap_uint<32> ldst = static_cast<ap_uint<32>>(ldstf);
+ const ap_uint<32> rdst = static_cast<ap_uint<32>>(rdstf);
+
 
  physMemPtr[addr + I2S_DATA_TX_L_REG] = ldst;
  physMemPtr[addr + I2S_DATA_TX_R_REG] = rdst;
