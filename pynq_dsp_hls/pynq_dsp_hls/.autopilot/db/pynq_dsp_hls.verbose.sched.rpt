@@ -1,0 +1,362 @@
+
+
+================================================================
+== Vivado HLS Report for 'pynq_dsp_hls'
+================================================================
+* Date:           Sun Feb  2 23:37:00 2020
+
+* Version:        2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)
+* Project:        pynq_dsp_hls
+* Solution:       pynq_dsp_hls
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |   8.00|     7.000|        1.00|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |   10|   23|   10|   23|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 1
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 24
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 24 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 20 
+20 --> 21 
+21 --> 22 
+22 --> 23 
+23 --> 24 
+24 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 3.49>
+ST_1 : Operation 25 [1/1] (1.00ns)   --->   "%basePhysAddr_V_read = call i32 @_ssdm_op_Read.s_axilite.i32(i32 %basePhysAddr_V)" [pynq_dsp_hls.cpp:76]   --->   Operation 25 'read' 'basePhysAddr_V_read' <Predicate = true> <Delay = 1.00> <Core = "s_axilite">   --->   Core 10 's_axilite' <Latency = 0> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write'>
+ST_1 : Operation 26 [2/2] (0.00ns)   --->   "%lrclk_V_read = call i1 @_ssdm_op_Read.ap_none.i1(i1 %lrclk_V)" [pynq_dsp_hls.cpp:76]   --->   Operation 26 'read' 'lrclk_V_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%r_V = call i30 @_ssdm_op_PartSelect.i30.i32.i32.i32(i32 %basePhysAddr_V_read, i32 2, i32 31)" [pynq_dsp_hls.cpp:87]   --->   Operation 27 'partselect' 'r_V' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%zext_ln215 = zext i30 %r_V to i31" [pynq_dsp_hls.cpp:88]   --->   Operation 28 'zext' 'zext_ln215' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [1/1] (2.49ns)   --->   "%ret_V = add i31 %zext_ln215, 4" [pynq_dsp_hls.cpp:88]   --->   Operation 29 'add' 'ret_V' <Predicate = true> <Delay = 2.49> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.49> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+
+State 2 <SV = 1> <Delay = 7.00>
+ST_2 : Operation 30 [1/2] (0.00ns)   --->   "%lrclk_V_read = call i1 @_ssdm_op_Read.ap_none.i1(i1 %lrclk_V)" [pynq_dsp_hls.cpp:76]   --->   Operation 30 'read' 'lrclk_V_read' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 31 [1/1] (0.00ns)   --->   "%zext_ln544 = zext i31 %ret_V to i64" [pynq_dsp_hls.cpp:88]   --->   Operation 31 'zext' 'zext_ln544' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 32 [1/1] (0.00ns)   --->   "%physMemPtr_V_addr = getelementptr i32* %physMemPtr_V, i64 %zext_ln544" [pynq_dsp_hls.cpp:88]   --->   Operation 32 'getelementptr' 'physMemPtr_V_addr' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 33 [7/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 33 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 3 <SV = 2> <Delay = 7.00>
+ST_3 : Operation 34 [6/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 34 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 4 <SV = 3> <Delay = 7.00>
+ST_4 : Operation 35 [5/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 35 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 5 <SV = 4> <Delay = 7.00>
+ST_5 : Operation 36 [4/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 36 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 6 <SV = 5> <Delay = 7.00>
+ST_6 : Operation 37 [3/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 37 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 7 <SV = 6> <Delay = 7.00>
+ST_7 : Operation 38 [2/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 38 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 8 <SV = 7> <Delay = 7.00>
+ST_8 : Operation 39 [1/7] (7.00ns)   --->   "%status_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:88]   --->   Operation 39 'readreq' 'status_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 9 <SV = 8> <Delay = 7.00>
+ST_9 : Operation 40 [1/1] (7.00ns)   --->   "%status_V = call i32 @_ssdm_op_Read.m_axi.volatile.i32P(i32* %physMemPtr_V_addr)" [pynq_dsp_hls.cpp:88]   --->   Operation 40 'read' 'status_V' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 10 <SV = 9> <Delay = 7.00>
+ST_10 : Operation 41 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i1 %lrclk_V), !map !101"   --->   Operation 41 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 42 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i32* %physMemPtr_V), !map !107"   --->   Operation 42 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 43 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap(i32 %basePhysAddr_V), !map !113"   --->   Operation 43 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 44 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecBitsMap([48 x i8]* %configReg), !map !117"   --->   Operation 44 'specbitsmap' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 45 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecTopModule([13 x i8]* @pynq_dsp_hls_str) nounwind"   --->   Operation 45 'spectopmodule' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 46 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32 0, [10 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str5, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind" [pynq_dsp_hls.cpp:80]   --->   Operation 46 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 47 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i1 %lrclk_V, [8 x i8]* @p_str6, i32 1, i32 1, [1 x i8]* @p_str5, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind" [pynq_dsp_hls.cpp:81]   --->   Operation 47 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 48 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32* %physMemPtr_V, [6 x i8]* @p_str7, i32 0, i32 0, [1 x i8]* @p_str5, i32 0, i32 32, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 16, i32 16, i32 16, i32 16, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind" [pynq_dsp_hls.cpp:82]   --->   Operation 48 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 49 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32 %basePhysAddr_V, [10 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str5, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind" [pynq_dsp_hls.cpp:83]   --->   Operation 49 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 50 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecMemCore([48 x i8]* %configReg, [1 x i8]* @p_str3, [7 x i8]* @RAM_1P_str, [1 x i8]* @p_str3, i32 -1, [1 x i8]* @p_str3, [1 x i8]* @p_str3, [1 x i8]* @p_str3, [1 x i8]* @p_str3, [1 x i8]* @p_str3)" [pynq_dsp_hls.cpp:84]   --->   Operation 50 'specmemcore' 'empty' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 51 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface([48 x i8]* %configReg, [10 x i8]* @p_str, i32 0, i32 0, [1 x i8]* @p_str5, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 0, i32 0, i32 0, i32 0, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind" [pynq_dsp_hls.cpp:84]   --->   Operation 51 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 52 [1/1] (2.47ns)   --->   "%icmp_ln761 = icmp eq i32 %status_V, 0" [pynq_dsp_hls.cpp:89]   --->   Operation 52 'icmp' 'icmp_ln761' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 53 [1/1] (1.81ns)   --->   "br i1 %icmp_ln761, label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge, label %0" [pynq_dsp_hls.cpp:89]   --->   Operation 53 'br' <Predicate = true> <Delay = 1.81>
+ST_10 : Operation 54 [1/1] (0.00ns)   --->   "%readyRch_load = load i1* @readyRch, align 1" [pynq_dsp_hls.cpp:101]   --->   Operation 54 'load' 'readyRch_load' <Predicate = (!icmp_ln761)> <Delay = 0.00>
+ST_10 : Operation 55 [1/1] (0.00ns)   --->   "%readyLch_load = load i1* @readyLch, align 1" [pynq_dsp_hls.cpp:101]   --->   Operation 55 'load' 'readyLch_load' <Predicate = (!icmp_ln761)> <Delay = 0.00>
+ST_10 : Operation 56 [1/1] (0.00ns) (grouped into LUT with out node or_ln101)   --->   "%or_ln96 = or i1 %readyRch_load, %lrclk_V_read" [pynq_dsp_hls.cpp:96]   --->   Operation 56 'or' 'or_ln96' <Predicate = (!icmp_ln761)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 57 [1/1] (0.97ns)   --->   "%xor_ln96 = xor i1 %lrclk_V_read, true" [pynq_dsp_hls.cpp:96]   --->   Operation 57 'xor' 'xor_ln96' <Predicate = (!icmp_ln761)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 58 [1/1] (0.00ns) (grouped into LUT with out node or_ln101)   --->   "%xor_ln101 = xor i1 %readyLch_load, true" [pynq_dsp_hls.cpp:101]   --->   Operation 58 'xor' 'xor_ln101' <Predicate = (!icmp_ln761)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 59 [1/1] (0.00ns) (grouped into LUT with out node or_ln101)   --->   "%and_ln101 = and i1 %lrclk_V_read, %xor_ln101" [pynq_dsp_hls.cpp:101]   --->   Operation 59 'and' 'and_ln101' <Predicate = (!icmp_ln761)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 60 [1/1] (0.00ns) (grouped into LUT with out node or_ln101)   --->   "%xor_ln101_1 = xor i1 %or_ln96, true" [pynq_dsp_hls.cpp:101]   --->   Operation 60 'xor' 'xor_ln101_1' <Predicate = (!icmp_ln761)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 61 [1/1] (0.97ns) (out node of the LUT)   --->   "%or_ln101 = or i1 %and_ln101, %xor_ln101_1" [pynq_dsp_hls.cpp:101]   --->   Operation 61 'or' 'or_ln101' <Predicate = (!icmp_ln761)> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 62 [1/1] (1.81ns)   --->   "br i1 %or_ln101, label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge, label %1" [pynq_dsp_hls.cpp:101]   --->   Operation 62 'br' <Predicate = (!icmp_ln761)> <Delay = 1.81>
+ST_10 : Operation 63 [1/1] (0.00ns)   --->   "%zext_ln544_1 = zext i30 %r_V to i64" [pynq_dsp_hls.cpp:113]   --->   Operation 63 'zext' 'zext_ln544_1' <Predicate = (!icmp_ln761 & !or_ln101)> <Delay = 0.00>
+ST_10 : Operation 64 [1/1] (0.00ns)   --->   "%physMemPtr_V_addr_1 = getelementptr i32* %physMemPtr_V, i64 %zext_ln544_1" [pynq_dsp_hls.cpp:113]   --->   Operation 64 'getelementptr' 'physMemPtr_V_addr_1' <Predicate = (!icmp_ln761 & !or_ln101)> <Delay = 0.00>
+ST_10 : Operation 65 [7/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 65 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = (!icmp_ln761 & !or_ln101)> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 11 <SV = 10> <Delay = 7.00>
+ST_11 : Operation 66 [6/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 66 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 12 <SV = 11> <Delay = 7.00>
+ST_12 : Operation 67 [5/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 67 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 13 <SV = 12> <Delay = 7.00>
+ST_13 : Operation 68 [4/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 68 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 14 <SV = 13> <Delay = 7.00>
+ST_14 : Operation 69 [3/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 69 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 15 <SV = 14> <Delay = 7.00>
+ST_15 : Operation 70 [2/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 70 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 16 <SV = 15> <Delay = 7.00>
+ST_16 : Operation 71 [1/7] (7.00ns)   --->   "%physMemPtr_V_addr_1_s = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %physMemPtr_V_addr_1, i32 2)" [pynq_dsp_hls.cpp:113]   --->   Operation 71 'readreq' 'physMemPtr_V_addr_1_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_16 : Operation 72 [1/1] (2.49ns)   --->   "%ret_V_1 = add i31 %zext_ln215, 2" [pynq_dsp_hls.cpp:119]   --->   Operation 72 'add' 'ret_V_1' <Predicate = true> <Delay = 2.49> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.49> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 16> <Delay = 7.00>
+ST_17 : Operation 73 [1/1] (7.00ns)   --->   "%lsrc_V = call i32 @_ssdm_op_Read.m_axi.i32P(i32* %physMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:113]   --->   Operation 73 'read' 'lsrc_V' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_17 : Operation 74 [1/1] (0.00ns)   --->   "%zext_ln544_2 = zext i31 %ret_V_1 to i64" [pynq_dsp_hls.cpp:119]   --->   Operation 74 'zext' 'zext_ln544_2' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 75 [1/1] (0.00ns)   --->   "%physMemPtr_V_addr_2 = getelementptr i32* %physMemPtr_V, i64 %zext_ln544_2" [pynq_dsp_hls.cpp:119]   --->   Operation 75 'getelementptr' 'physMemPtr_V_addr_2' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 76 [1/1] (7.00ns)   --->   "%physMemPtr_V_addr_3_s = call i1 @_ssdm_op_WriteReq.m_axi.i32P(i32* %physMemPtr_V_addr_2, i32 2)" [pynq_dsp_hls.cpp:119]   --->   Operation 76 'writereq' 'physMemPtr_V_addr_3_s' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 18 <SV = 17> <Delay = 7.00>
+ST_18 : Operation 77 [1/1] (7.00ns)   --->   "%rsrc_V = call i32 @_ssdm_op_Read.m_axi.i32P(i32* %physMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:114]   --->   Operation 77 'read' 'rsrc_V' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_18 : Operation 78 [1/1] (7.00ns)   --->   "call void @_ssdm_op_Write.m_axi.i32P(i32* %physMemPtr_V_addr_2, i32 %lsrc_V, i4 -1)" [pynq_dsp_hls.cpp:119]   --->   Operation 78 'write' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 19 <SV = 18> <Delay = 7.00>
+ST_19 : Operation 79 [1/1] (7.00ns)   --->   "call void @_ssdm_op_Write.m_axi.i32P(i32* %physMemPtr_V_addr_2, i32 %rsrc_V, i4 -1)" [pynq_dsp_hls.cpp:120]   --->   Operation 79 'write' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 20 <SV = 19> <Delay = 7.00>
+ST_20 : Operation 80 [5/5] (7.00ns)   --->   "%physMemPtr_V_addr_3_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %physMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:120]   --->   Operation 80 'writeresp' 'physMemPtr_V_addr_3_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 21 <SV = 20> <Delay = 7.00>
+ST_21 : Operation 81 [4/5] (7.00ns)   --->   "%physMemPtr_V_addr_3_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %physMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:120]   --->   Operation 81 'writeresp' 'physMemPtr_V_addr_3_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 22 <SV = 21> <Delay = 7.00>
+ST_22 : Operation 82 [3/5] (7.00ns)   --->   "%physMemPtr_V_addr_3_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %physMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:120]   --->   Operation 82 'writeresp' 'physMemPtr_V_addr_3_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 23 <SV = 22> <Delay = 7.00>
+ST_23 : Operation 83 [2/5] (7.00ns)   --->   "%physMemPtr_V_addr_3_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %physMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:120]   --->   Operation 83 'writeresp' 'physMemPtr_V_addr_3_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 24 <SV = 23> <Delay = 7.00>
+ST_24 : Operation 84 [1/5] (7.00ns)   --->   "%physMemPtr_V_addr_3_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %physMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:120]   --->   Operation 84 'writeresp' 'physMemPtr_V_addr_3_1' <Predicate = (!icmp_ln761 & !or_ln101)> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_24 : Operation 85 [1/1] (1.81ns)   --->   "br label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge" [pynq_dsp_hls.cpp:121]   --->   Operation 85 'br' <Predicate = (!icmp_ln761 & !or_ln101)> <Delay = 1.81>
+ST_24 : Operation 86 [1/1] (0.00ns)   --->   "%readyRch_flag_1 = phi i1 [ false, %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit ], [ true, %1 ], [ %lrclk_V_read, %0 ]" [pynq_dsp_hls.cpp:76]   --->   Operation 86 'phi' 'readyRch_flag_1' <Predicate = true> <Delay = 0.00>
+ST_24 : Operation 87 [1/1] (0.00ns)   --->   "%readyRch_new_1 = phi i1 [ undef, %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit ], [ false, %1 ], [ true, %0 ]"   --->   Operation 87 'phi' 'readyRch_new_1' <Predicate = true> <Delay = 0.00>
+ST_24 : Operation 88 [1/1] (0.00ns)   --->   "%readyLch_flag_1 = phi i1 [ false, %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit ], [ true, %1 ], [ %xor_ln96, %0 ]" [pynq_dsp_hls.cpp:96]   --->   Operation 88 'phi' 'readyLch_flag_1' <Predicate = true> <Delay = 0.00>
+ST_24 : Operation 89 [1/1] (0.00ns)   --->   "br i1 %readyLch_flag_1, label %mergeST1, label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge.new2" [pynq_dsp_hls.cpp:96]   --->   Operation 89 'br' <Predicate = true> <Delay = 0.00>
+ST_24 : Operation 90 [1/1] (0.00ns)   --->   "store i1 %readyRch_new_1, i1* @readyLch, align 1" [pynq_dsp_hls.cpp:99]   --->   Operation 90 'store' <Predicate = (readyLch_flag_1)> <Delay = 0.00>
+ST_24 : Operation 91 [1/1] (0.00ns)   --->   "br label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge.new2"   --->   Operation 91 'br' <Predicate = (readyLch_flag_1)> <Delay = 0.00>
+ST_24 : Operation 92 [1/1] (0.00ns)   --->   "br i1 %readyRch_flag_1, label %mergeST, label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge.new" [pynq_dsp_hls.cpp:76]   --->   Operation 92 'br' <Predicate = true> <Delay = 0.00>
+ST_24 : Operation 93 [1/1] (0.00ns)   --->   "store i1 %readyRch_new_1, i1* @readyRch, align 1" [pynq_dsp_hls.cpp:97]   --->   Operation 93 'store' <Predicate = (readyRch_flag_1)> <Delay = 0.00>
+ST_24 : Operation 94 [1/1] (0.00ns)   --->   "br label %_ZrsILi32ELb0EEN11ap_int_baseIXT_EXT0_EE5RTypeIXT_EXT0_EE4arg1ERKS1_i.exit._crit_edge.new"   --->   Operation 94 'br' <Predicate = (readyRch_flag_1)> <Delay = 0.00>
+ST_24 : Operation 95 [1/1] (0.00ns)   --->   "ret void" [pynq_dsp_hls.cpp:121]   --->   Operation 95 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 8ns, clock uncertainty: 1ns.
+
+ <State 1>: 3.49ns
+The critical path consists of the following:
+	s_axi read on port 'basePhysAddr_V' (pynq_dsp_hls.cpp:76) [12]  (1 ns)
+	'add' operation ('ret.V', pynq_dsp_hls.cpp:88) [22]  (2.49 ns)
+
+ <State 2>: 7ns
+The critical path consists of the following:
+	'getelementptr' operation ('physMemPtr_V_addr', pynq_dsp_hls.cpp:88) [24]  (0 ns)
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 3>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 4>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 5>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 6>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 7>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 8>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [25]  (7 ns)
+
+ <State 9>: 7ns
+The critical path consists of the following:
+	bus read on port 'physMemPtr_V' (pynq_dsp_hls.cpp:88) [26]  (7 ns)
+
+ <State 10>: 7ns
+The critical path consists of the following:
+	'getelementptr' operation ('physMemPtr_V_addr_1', pynq_dsp_hls.cpp:113) [41]  (0 ns)
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 11>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 12>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 13>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 14>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 15>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 16>: 7ns
+The critical path consists of the following:
+	bus request on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [42]  (7 ns)
+
+ <State 17>: 7ns
+The critical path consists of the following:
+	bus read on port 'physMemPtr_V' (pynq_dsp_hls.cpp:113) [43]  (7 ns)
+
+ <State 18>: 7ns
+The critical path consists of the following:
+	bus read on port 'physMemPtr_V' (pynq_dsp_hls.cpp:114) [44]  (7 ns)
+
+ <State 19>: 7ns
+The critical path consists of the following:
+	bus write on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [50]  (7 ns)
+
+ <State 20>: 7ns
+The critical path consists of the following:
+	bus access on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [51]  (7 ns)
+
+ <State 21>: 7ns
+The critical path consists of the following:
+	bus access on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [51]  (7 ns)
+
+ <State 22>: 7ns
+The critical path consists of the following:
+	bus access on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [51]  (7 ns)
+
+ <State 23>: 7ns
+The critical path consists of the following:
+	bus access on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [51]  (7 ns)
+
+ <State 24>: 7ns
+The critical path consists of the following:
+	bus access on port 'physMemPtr_V' (pynq_dsp_hls.cpp:120) [51]  (7 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+	State 24
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

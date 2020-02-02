@@ -1,0 +1,210 @@
+<profile>
+
+<section name = "Vivado HLS Report for 'pynq_dsp_hls'" level="0">
+<item name = "Date">Sun Feb  2 23:37:01 2020
+</item>
+<item name = "Version">2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)</item>
+<item name = "Project">pynq_dsp_hls</item>
+<item name = "Solution">pynq_dsp_hls</item>
+<item name = "Product family">zynq</item>
+<item name = "Target device">xc7z020-clg400-1</item>
+</section>
+
+<section name = "Performance Estimates" level="0">
+<item name = "Timing (ns)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="4">Clock, Target, Estimated, Uncertainty</keys>
+<column name="ap_clk">8.00, 7.000, 1.00</column>
+</table>
+</item>
+</section>
+</item>
+<item name = "Latency (clock cycles)">
+<section name = "" level="1">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">, min, max, min, max, Type</keys>
+<column name="">10, 23, 10, 23, none</column>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="0">
+<keys size="7">Instance, Module, min, max, min, max, Type</keys>
+</table>
+</item>
+<item name = "Loop"><table name="" hasTotal="0">
+<keys size="8">Loop Name, min, max, Latency, achieved, target, Count, Pipelined</keys>
+</table>
+</item>
+</section>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Utilization Estimates" level="0">
+<item name = "Summary"><table name="" hasTotal="1">
+<keys size="6">Name, BRAM_18K, DSP48E, FF, LUT, URAM</keys>
+<column name="DSP">-, -, -, -, -</column>
+<column name="Expression">-, -, 0, 114, -</column>
+<column name="FIFO">-, -, -, -, -</column>
+<column name="Instance">4, -, 666, 754, -</column>
+<column name="Memory">-, -, -, -, -</column>
+<column name="Multiplexer">-, -, -, 249, -</column>
+<column name="Register">-, -, 218, -, -</column>
+<specialColumn name="Available">280, 220, 106400, 53200, 0</specialColumn>
+<specialColumn name="Utilization (%)">1, 0, ~0, 2, 0</specialColumn>
+</table>
+</item>
+<item name = "Detail">
+<section name = "" level="1">
+<item name = "Instance"><table name="" hasTotal="1">
+<keys size="7">Instance, Module, BRAM_18K, DSP48E, FF, LUT, URAM</keys>
+<column name="pynq_dsp_hls_AXILiteS_s_axi_U">pynq_dsp_hls_AXILiteS_s_axi, 2, 0, 154, 174, 0</column>
+<column name="pynq_dsp_hls_physMemPtr_V_m_axi_U">pynq_dsp_hls_physMemPtr_V_m_axi, 2, 0, 512, 580, 0</column>
+</table>
+</item>
+<item name = "DSP48E"><table name="" hasTotal="0">
+<keys size="3">Instance, Module, Expression</keys>
+</table>
+</item>
+<item name = "Memory"><table name="" hasTotal="1">
+<keys size="10">Memory, Module, BRAM_18K, FF, LUT, URAM, Words, Bits, Banks, W*Bits*Banks</keys>
+</table>
+</item>
+<item name = "FIFO"><table name="" hasTotal="1">
+<keys size="8">Name, BRAM_18K, FF, LUT, URAM, Depth, Bits, Size:D*B</keys>
+</table>
+</item>
+<item name = "Expression"><table name="" hasTotal="1">
+<keys size="7">Variable Name, Operation, DSP48E, FF, LUT, Bitwidth P0, Bitwidth P1</keys>
+<column name="ret_V_1_fu_274_p2">+, 0, 0, 38, 31, 2</column>
+<column name="ret_V_fu_202_p2">+, 0, 0, 38, 31, 3</column>
+<column name="and_ln101_fu_247_p2">and, 0, 0, 2, 1, 1</column>
+<column name="ap_block_state10_io">and, 0, 0, 2, 1, 1</column>
+<column name="ap_block_state24">and, 0, 0, 2, 1, 1</column>
+<column name="ap_predicate_op65_readreq_state10">and, 0, 0, 2, 1, 1</column>
+<column name="ap_predicate_op84_writeresp_state24">and, 0, 0, 2, 1, 1</column>
+<column name="icmp_ln761_fu_218_p2">icmp, 0, 0, 18, 32, 1</column>
+<column name="or_ln101_fu_258_p2">or, 0, 0, 2, 1, 1</column>
+<column name="or_ln96_fu_231_p2">or, 0, 0, 2, 1, 1</column>
+<column name="xor_ln101_1_fu_252_p2">xor, 0, 0, 2, 1, 2</column>
+<column name="xor_ln101_fu_241_p2">xor, 0, 0, 2, 1, 2</column>
+<column name="xor_ln96_fu_236_p2">xor, 0, 0, 2, 1, 2</column>
+</table>
+</item>
+<item name = "Multiplexer"><table name="" hasTotal="1">
+<keys size="5">Name, LUT, Input Size, Bits, Total Bits</keys>
+<column name="ap_NS_fsm">117, 25, 1, 25</column>
+<column name="ap_phi_mux_readyLch_flag_1_phi_fu_172_p6">9, 2, 1, 2</column>
+<column name="ap_phi_mux_readyRch_flag_1_phi_fu_142_p6">9, 2, 1, 2</column>
+<column name="ap_phi_mux_readyRch_new_1_phi_fu_157_p6">9, 2, 1, 2</column>
+<column name="physMemPtr_V_ARADDR">15, 3, 32, 96</column>
+<column name="physMemPtr_V_ARLEN">15, 3, 32, 96</column>
+<column name="physMemPtr_V_blk_n_AR">9, 2, 1, 2</column>
+<column name="physMemPtr_V_blk_n_AW">9, 2, 1, 2</column>
+<column name="physMemPtr_V_blk_n_B">9, 2, 1, 2</column>
+<column name="physMemPtr_V_blk_n_R">9, 2, 1, 2</column>
+<column name="physMemPtr_V_blk_n_W">9, 2, 1, 2</column>
+<column name="readyLch_flag_1_reg_168">15, 3, 1, 3</column>
+<column name="readyRch_flag_1_reg_138">15, 3, 1, 3</column>
+</table>
+</item>
+<item name = "Register"><table name="" hasTotal="1">
+<keys size="5">Name, FF, LUT, Bits, Const Bits</keys>
+<column name="ap_CS_fsm">24, 0, 24, 0</column>
+<column name="icmp_ln761_reg_335">1, 0, 1, 0</column>
+<column name="lrclk_V_0_data_reg">1, 0, 1, 0</column>
+<column name="lrclk_V_0_vld_reg">0, 0, 1, 1</column>
+<column name="or_ln101_reg_344">1, 0, 1, 0</column>
+<column name="r_V_reg_301">30, 0, 30, 0</column>
+<column name="readyLch">1, 0, 1, 0</column>
+<column name="readyLch_flag_1_reg_168">1, 0, 1, 0</column>
+<column name="readyRch">1, 0, 1, 0</column>
+<column name="readyRch_flag_1_reg_138">1, 0, 1, 0</column>
+<column name="readyRch_new_1_reg_152">1, 0, 1, 0</column>
+<column name="reg_182">32, 0, 32, 0</column>
+<column name="ret_V_1_reg_354">31, 0, 31, 0</column>
+<column name="ret_V_reg_311">31, 0, 31, 0</column>
+<column name="status_V_reg_330">32, 0, 32, 0</column>
+<column name="zext_ln215_reg_306">30, 0, 31, 1</column>
+</table>
+</item>
+</section>
+</item>
+</section>
+
+<section name = "Interface" level="0">
+<item name = "Summary"><table name="" hasTotal="0">
+<keys size="6">RTL Ports, Dir, Bits, Protocol, Source Object, C Type</keys>
+<column name="s_axi_AXILiteS_AWVALID">in, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_AWREADY">out, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_AWADDR">in, 7, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_WVALID">in, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_WREADY">out, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_WDATA">in, 32, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_WSTRB">in, 4, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_ARVALID">in, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_ARREADY">out, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_ARADDR">in, 7, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_RVALID">out, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_RREADY">in, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_RDATA">out, 32, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_RRESP">out, 2, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_BVALID">out, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_BREADY">in, 1, s_axi, AXILiteS, array</column>
+<column name="s_axi_AXILiteS_BRESP">out, 2, s_axi, AXILiteS, array</column>
+<column name="ap_clk">in, 1, ap_ctrl_hs, pynq_dsp_hls, return value</column>
+<column name="ap_rst_n">in, 1, ap_ctrl_hs, pynq_dsp_hls, return value</column>
+<column name="interrupt">out, 1, ap_ctrl_hs, pynq_dsp_hls, return value</column>
+<column name="lrclk_V">in, 1, ap_none, lrclk_V, scalar</column>
+<column name="m_axi_physMemPtr_V_AWVALID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWREADY">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWADDR">out, 32, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWLEN">out, 8, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWSIZE">out, 3, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWBURST">out, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWLOCK">out, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWCACHE">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWPROT">out, 3, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWQOS">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWREGION">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_AWUSER">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WVALID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WREADY">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WDATA">out, 32, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WSTRB">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WLAST">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_WUSER">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARVALID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARREADY">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARADDR">out, 32, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARID">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARLEN">out, 8, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARSIZE">out, 3, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARBURST">out, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARLOCK">out, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARCACHE">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARPROT">out, 3, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARQOS">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARREGION">out, 4, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_ARUSER">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RVALID">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RREADY">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RDATA">in, 32, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RLAST">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RID">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RUSER">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_RRESP">in, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_BVALID">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_BREADY">out, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_BRESP">in, 2, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_BID">in, 1, m_axi, physMemPtr_V, pointer</column>
+<column name="m_axi_physMemPtr_V_BUSER">in, 1, m_axi, physMemPtr_V, pointer</column>
+</table>
+</item>
+</section>
+</profile>
