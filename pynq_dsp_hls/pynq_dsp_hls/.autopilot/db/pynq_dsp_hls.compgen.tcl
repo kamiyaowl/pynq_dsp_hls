@@ -92,9 +92,9 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 
 
 set id 3
-set name pynq_dsp_hls_uitocud
-set corename simcore_uitofp
-set op uitofp
+set name pynq_dsp_hls_sitocud
+set corename simcore_sitofp
+set op sitofp
 set stage_num 6
 set max_latency -1
 set registered_input 1
@@ -109,8 +109,8 @@ set ce_width 1
 set ce_signed 0
 set out_width 32
 if {${::AESL::PGuard_simmodel_gen}} {
-if {[info proc ap_gen_simcore_uitofp] == "ap_gen_simcore_uitofp"} {
-eval "ap_gen_simcore_uitofp { \
+if {[info proc ap_gen_simcore_sitofp] == "ap_gen_simcore_sitofp"} {
+eval "ap_gen_simcore_sitofp { \
     id ${id} \
     name ${name} \
     corename ${corename} \
@@ -132,7 +132,7 @@ eval "ap_gen_simcore_uitofp { \
     out_width ${out_width} \
 }"
 } else {
-puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_uitofp, check your AutoPilot builtin lib"
+puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_sitofp, check your AutoPilot builtin lib"
 }
 }
 
@@ -142,7 +142,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 }
 
 
-set op uitofp
+set op sitofp
 set corename Int2Float
 if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
 if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {

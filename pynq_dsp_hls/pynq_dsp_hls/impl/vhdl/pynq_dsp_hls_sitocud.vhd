@@ -5,7 +5,7 @@
 Library ieee;
 use ieee.std_logic_1164.all;
 
-entity pynq_dsp_hls_uitocud is
+entity pynq_dsp_hls_sitocud is
     generic (
         ID         : integer := 3;
         NUM_STAGE  : integer := 6;
@@ -21,14 +21,14 @@ entity pynq_dsp_hls_uitocud is
     );
 end entity;
 
-architecture arch of pynq_dsp_hls_uitocud is
+architecture arch of pynq_dsp_hls_sitocud is
     --------------------- Component ---------------------
-    component pynq_dsp_hls_ap_uitofp_4_no_dsp_32 is
+    component pynq_dsp_hls_ap_sitofp_4_no_dsp_32 is
         port (
             aclk                 : in  std_logic;
             aclken               : in  std_logic;
             s_axis_a_tvalid      : in  std_logic;
-            s_axis_a_tdata       : in  std_logic_vector(63 downto 0);
+            s_axis_a_tdata       : in  std_logic_vector(31 downto 0);
             m_axis_result_tvalid : out std_logic;
             m_axis_result_tdata  : out std_logic_vector(31 downto 0)
         );
@@ -37,7 +37,7 @@ architecture arch of pynq_dsp_hls_uitocud is
     signal aclk      : std_logic;
     signal aclken    : std_logic;
     signal a_tvalid  : std_logic;
-    signal a_tdata   : std_logic_vector(63 downto 0);
+    signal a_tdata   : std_logic_vector(31 downto 0);
     signal r_tvalid  : std_logic;
     signal r_tdata   : std_logic_vector(31 downto 0);
     signal din0_buf1 : std_logic_vector(din0_WIDTH-1 downto 0);
@@ -46,7 +46,7 @@ architecture arch of pynq_dsp_hls_uitocud is
     signal dout_r    : std_logic_vector(dout_WIDTH-1 downto 0);
 begin
     --------------------- Instantiation -----------------
-    pynq_dsp_hls_ap_uitofp_4_no_dsp_32_u : component pynq_dsp_hls_ap_uitofp_4_no_dsp_32
+    pynq_dsp_hls_ap_sitofp_4_no_dsp_32_u : component pynq_dsp_hls_ap_sitofp_4_no_dsp_32
     port map (
         aclk                 => aclk,
         aclken               => aclken,
@@ -57,12 +57,11 @@ begin
     );
 
     --------------------- Assignment --------------------
-    aclk                           <= clk;
-    aclken                         <= ce_r;
-    a_tvalid                       <= '1';
-    a_tdata(din0_WIDTH-1 downto 0) <= din0_buf1;
-    a_tdata(63 downto din0_WIDTH)  <= (others=> '0');
-    dout_i                         <= r_tdata;
+    aclk     <= clk;
+    aclken   <= ce_r;
+    a_tvalid <= '1';
+    a_tdata  <= din0_buf1;
+    dout_i   <= r_tdata;
 
     --------------------- Input buffer ------------------
     process (clk) begin

@@ -5,7 +5,7 @@
 
 `timescale 1ns/1ps
 
-module pynq_dsp_hls_uitocud
+module pynq_dsp_hls_sitocud
 #(parameter
     ID         = 3,
     NUM_STAGE  = 6,
@@ -22,7 +22,7 @@ module pynq_dsp_hls_uitocud
 wire                  aclk;
 wire                  aclken;
 wire                  a_tvalid;
-wire [63:0]           a_tdata;
+wire [31:0]           a_tdata;
 wire                  r_tvalid;
 wire [31:0]           r_tdata;
 reg  [din0_WIDTH-1:0] din0_buf1;
@@ -30,7 +30,7 @@ reg                   ce_r;
 wire [dout_WIDTH-1:0] dout_i;
 reg  [dout_WIDTH-1:0] dout_r;
 //------------------------Instantiation------------------
-pynq_dsp_hls_ap_uitofp_4_no_dsp_32 pynq_dsp_hls_ap_uitofp_4_no_dsp_32_u (
+pynq_dsp_hls_ap_sitofp_4_no_dsp_32 pynq_dsp_hls_ap_sitofp_4_no_dsp_32_u (
     .aclk                 ( aclk ),
     .aclken               ( aclken ),
     .s_axis_a_tvalid      ( a_tvalid ),
@@ -42,7 +42,7 @@ pynq_dsp_hls_ap_uitofp_4_no_dsp_32 pynq_dsp_hls_ap_uitofp_4_no_dsp_32_u (
 assign aclk     = clk;
 assign aclken   = ce_r;
 assign a_tvalid = 1'b1;
-assign a_tdata  = {{(64-din0_WIDTH){1'b0}}, din0_buf1};
+assign a_tdata  = din0_buf1;
 assign dout_i   = r_tdata;
 
 always @(posedge clk) begin

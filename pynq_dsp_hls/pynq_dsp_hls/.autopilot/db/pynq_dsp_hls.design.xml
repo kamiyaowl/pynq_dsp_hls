@@ -18,8 +18,8 @@
 <SummaryOfOverallLatency>
 <Best-caseLatency>10</Best-caseLatency>
 <Average-caseLatency>29</Average-caseLatency>
-<Worst-caseLatency>66</Worst-caseLatency>
-<PipelineInitiationInterval>11 ~ 67</PipelineInitiationInterval>
+<Worst-caseLatency>67</Worst-caseLatency>
+<PipelineInitiationInterval>11 ~ 68</PipelineInitiationInterval>
 <PipelineType>none</PipelineType>
 </SummaryOfOverallLatency>
 <SummaryOfLoopLatency>
@@ -36,8 +36,8 @@
 <Resources>
 <BRAM_18K>4</BRAM_18K>
 <DSP48E>6</DSP48E>
-<FF>4191</FF>
-<LUT>9418</LUT>
+<FF>4256</FF>
+<LUT>9550</LUT>
 <URAM>0</URAM>
 </Resources>
 </AreaEstimates>

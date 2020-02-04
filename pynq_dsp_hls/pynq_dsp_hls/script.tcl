@@ -6,7 +6,7 @@
 open_project pynq_dsp_hls
 set_top pynq_dsp_hls
 add_files pynq_dsp_hls.cpp -cflags "-std=c++11" -csimflags "-std=c++11"
-add_files -tb pynq_dsp_hls_tb.cpp
+add_files -tb pynq_dsp_hls_tb.cpp -cflags "-Wno-unknown-pragmas" -csimflags "-Wno-unknown-pragmas"
 open_solution "pynq_dsp_hls"
 set_part {xc7z020-clg400-1} -tool vivado
 create_clock -period 8 -name default

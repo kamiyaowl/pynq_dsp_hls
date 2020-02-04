@@ -4,14 +4,14 @@ set fpo_ver 7.1
 if {[regexp -nocase {2015\.1.*} $vivado_ver match]} {
     set fpo_ver 7.0
 }
-create_ip -name floating_point -version $fpo_ver -vendor xilinx.com -library ip -module_name pynq_dsp_hls_ap_uitofp_4_no_dsp_32
+create_ip -name floating_point -version $fpo_ver -vendor xilinx.com -library ip -module_name pynq_dsp_hls_ap_sitofp_4_no_dsp_32
 # BEGIN Vivado Commands 
 # BEGIN Vivado Parameters
 set_property -dict [list CONFIG.a_precision_type Custom \
                           CONFIG.a_tuser_width 1 \
                           CONFIG.add_sub_value Both \
                           CONFIG.b_tuser_width 1 \
-                          CONFIG.c_a_exponent_width 64 \
+                          CONFIG.c_a_exponent_width 32 \
                           CONFIG.c_a_fraction_width 0 \
                           CONFIG.c_compare_operation Programmable \
                           CONFIG.c_has_divide_by_zero false \
@@ -24,7 +24,7 @@ set_property -dict [list CONFIG.a_precision_type Custom \
                           CONFIG.c_rate 1 \
                           CONFIG.c_result_exponent_width 8 \
                           CONFIG.c_result_fraction_width 24 \
-                          CONFIG.component_name pynq_dsp_hls_ap_uitofp_4_no_dsp_32 \
+                          CONFIG.component_name pynq_dsp_hls_ap_sitofp_4_no_dsp_32 \
                           CONFIG.flow_control NonBlocking \
                           CONFIG.has_a_tlast false \
                           CONFIG.has_a_tuser false \
@@ -39,7 +39,7 @@ set_property -dict [list CONFIG.a_precision_type Custom \
                           CONFIG.operation_tuser_width 1 \
                           CONFIG.operation_type Fixed_to_Float \
                           CONFIG.result_precision_type Single \
-                          CONFIG.result_tlast_behv Null] -objects [get_ips pynq_dsp_hls_ap_uitofp_4_no_dsp_32] -quiet
+                          CONFIG.result_tlast_behv Null] -objects [get_ips pynq_dsp_hls_ap_sitofp_4_no_dsp_32] -quiet
 # END Vivado Parameters
-set_property generate_synth_checkpoint false [get_files pynq_dsp_hls_ap_uitofp_4_no_dsp_32.xci]
-generate_target {synthesis simulation} [get_files pynq_dsp_hls_ap_uitofp_4_no_dsp_32.xci]
+set_property generate_synth_checkpoint false [get_files pynq_dsp_hls_ap_sitofp_4_no_dsp_32.xci]
+generate_target {synthesis simulation} [get_files pynq_dsp_hls_ap_sitofp_4_no_dsp_32.xci]

@@ -169,7 +169,7 @@ set RtlHierarchyInfo {[
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "66",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "67",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -193,8 +193,8 @@ set RtlHierarchyInfo {[
 	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_physMemPtr_V_m_axi_U", "Parent" : "0"},
 	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulbkb_U1", "Parent" : "0"},
 	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulbkb_U2", "Parent" : "0"},
-	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitocud_U3", "Parent" : "0"},
-	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitocud_U4", "Parent" : "0"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitocud_U3", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitocud_U4", "Parent" : "0"},
 	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fpexdEe_U5", "Parent" : "0"},
 	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fpexdEe_U6", "Parent" : "0"}]}
 
@@ -202,17 +202,17 @@ set RtlHierarchyInfo {[
 set ArgLastReadFirstWriteLatency {
 	pynq_dsp_hls {
 		lrclk_V {Type I LastRead 0 FirstWrite -1}
-		physMemPtr_V {Type IO LastRead 50 FirstWrite 48}
+		physMemPtr_V {Type IO LastRead 51 FirstWrite 49}
 		basePhysAddr_V {Type I LastRead 0 FirstWrite -1}
-		configReg {Type I LastRead 35 FirstWrite -1}
+		configReg {Type I LastRead 36 FirstWrite -1}
 		readyRch {Type IO LastRead -1 FirstWrite -1}
 		readyLch {Type IO LastRead -1 FirstWrite -1}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "10", "Max" : "66"}
-	, {"Name" : "Interval", "Min" : "11", "Max" : "67"}
+	{"Name" : "Latency", "Min" : "10", "Max" : "67"}
+	, {"Name" : "Interval", "Min" : "11", "Max" : "68"}
 ]}
 
 set PipelineEnableSignalInfo {[

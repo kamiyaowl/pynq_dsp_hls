@@ -6615,7 +6615,7 @@ namespace std
 }
 # 72 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 2 3
 # 3 "pynq_dsp_hls.cpp" 2
-# 15 "pynq_dsp_hls.cpp"
+# 17 "pynq_dsp_hls.cpp"
 typedef ap_fixed<(32), ((32) - (23)), AP_RND, AP_SAT> dsp_fixed;
 
 
@@ -6717,8 +6717,10 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
 
  const ap_uint<32> lsrc = physMemPtr[addr + I2S_DATA_RX_L_REG];
  const ap_uint<32> rsrc = physMemPtr[addr + I2S_DATA_RX_R_REG];
- const float lsrcf = static_cast<float>(lsrc) / (0x1 << (23));;
- const float rsrcf = static_cast<float>(rsrc) / (0x1 << (23));;
+ const ap_int<32> lsignExt = lsrc.bit((24) - 1) ? static_cast<ap_int<32>>(lsrc | (~(0xffffffff >> ((32) - (24))))) : static_cast<ap_int<32>>(lsrc);
+ const ap_int<32> rsignExt = rsrc.bit((24) - 1) ? static_cast<ap_int<32>>(rsrc | (~(0xffffffff >> ((32) - (24))))) : static_cast<ap_int<32>>(rsrc);
+ const float lsrcf = static_cast<float>(lsignExt) / (0x1 << (23));;
+ const float rsrcf = static_cast<float>(rsignExt) / (0x1 << (23));;
 
  SampleData currentData;
  currentData.lch = static_cast<dsp_fixed>(lsrcf);
@@ -6753,8 +6755,8 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
 
  const float ldstf = currentData.lch.to_float() * (0x1 << (23));;
  const float rdstf = currentData.rch.to_float() * (0x1 << (23));;
- const ap_uint<32> ldst = static_cast<ap_uint<32>>(ldstf);
- const ap_uint<32> rdst = static_cast<ap_uint<32>>(rdstf);
+ const ap_int<32> ldst = static_cast<ap_int<32>>(ldstf);
+ const ap_int<32> rdst = static_cast<ap_int<32>>(rdstf);
 
 
  physMemPtr[addr + I2S_DATA_TX_L_REG] = ldst;

@@ -7,6 +7,8 @@
 #define I2S_DATA_BIT_WIDTH (24)
 // 内部データの全体幅
 #define INTERNAL_FIXED_BIT_WIDTH (32)
+// 24bitの2の補数表現を32bitに拡張するためのMaｓｋ
+#define INTERNAL_SIGN_EXTENSION_MASK (~(0xffffffff >> (INTERNAL_FIXED_BIT_WIDTH - I2S_DATA_BIT_WIDTH)))
 // 内部データのうち、固定小数点の精度にあたるbit幅
 #define INTERNAL_FIXED_PRESICION_BIT_WIDTH (23)
 // int24の生の値を-1.0 ~ +1.0に丸めるときの分母
@@ -113,8 +115,10 @@ void pynq_dsp_hls(
 	// L/R chのデータを取得
 	const ap_uint<32> lsrc = physMemPtr[addr + I2S_DATA_RX_L_REG];
 	const ap_uint<32> rsrc = physMemPtr[addr + I2S_DATA_RX_R_REG];
-	const float lsrcf = static_cast<float>(lsrc) / INTERNAL_FIXED_UNIT;
-	const float rsrcf = static_cast<float>(rsrc) / INTERNAL_FIXED_UNIT;
+	const ap_int<32> lsignExt = lsrc.bit(I2S_DATA_BIT_WIDTH - 1) ? static_cast<ap_int<32>>(lsrc | INTERNAL_SIGN_EXTENSION_MASK) : static_cast<ap_int<32>>(lsrc);
+	const ap_int<32> rsignExt = rsrc.bit(I2S_DATA_BIT_WIDTH - 1) ? static_cast<ap_int<32>>(rsrc | INTERNAL_SIGN_EXTENSION_MASK) : static_cast<ap_int<32>>(rsrc);
+	const float lsrcf = static_cast<float>(lsignExt) / INTERNAL_FIXED_UNIT;
+	const float rsrcf = static_cast<float>(rsignExt) / INTERNAL_FIXED_UNIT;
 	// 処理中の音声データ格納先を作成
 	SampleData currentData;
 	currentData.lch = static_cast<dsp_fixed>(lsrcf);
@@ -149,8 +153,8 @@ void pynq_dsp_hls(
 	// エフェクトを掛けた音声データをfixedからどうにかもとの単位に戻す
 	const float ldstf = currentData.lch.to_float() * INTERNAL_FIXED_UNIT;
 	const float rdstf = currentData.rch.to_float() * INTERNAL_FIXED_UNIT;
-	const ap_uint<32> ldst = static_cast<ap_uint<32>>(ldstf);
-	const ap_uint<32> rdst = static_cast<ap_uint<32>>(rdstf);
+	const ap_int<32> ldst = static_cast<ap_int<32>>(ldstf);
+	const ap_int<32> rdst = static_cast<ap_int<32>>(rdstf);
 
 	// L/R chのデータを設定
 	physMemPtr[addr + I2S_DATA_TX_L_REG] = ldst;
