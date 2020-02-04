@@ -7,7 +7,7 @@ use ieee.std_logic_1164.all;
 
 entity pynq_dsp_hls_sitocud is
     generic (
-        ID         : integer := 3;
+        ID         : integer := 2;
         NUM_STAGE  : integer := 6;
         din0_WIDTH : integer := 32;
         dout_WIDTH : integer := 32

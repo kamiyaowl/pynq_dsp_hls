@@ -25,11 +25,8 @@
 //        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
 // 0x14 : reserved
 // 0x40 ~
-// 0x7f : Memory 'configReg' (48 * 8b)
-//        Word n : bit [ 7: 0] - configReg[4n]
-//                 bit [15: 8] - configReg[4n+1]
-//                 bit [23:16] - configReg[4n+2]
-//                 bit [31:24] - configReg[4n+3]
+// 0x7f : Memory 'configReg' (16 * 32b)
+//        Word n : bit [31:0] - configReg[n]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 #define XPYNQ_DSP_HLS_AXILITES_ADDR_AP_CTRL             0x00
@@ -40,6 +37,6 @@
 #define XPYNQ_DSP_HLS_AXILITES_BITS_BASEPHYSADDR_V_DATA 32
 #define XPYNQ_DSP_HLS_AXILITES_ADDR_CONFIGREG_BASE      0x40
 #define XPYNQ_DSP_HLS_AXILITES_ADDR_CONFIGREG_HIGH      0x7f
-#define XPYNQ_DSP_HLS_AXILITES_WIDTH_CONFIGREG          8
-#define XPYNQ_DSP_HLS_AXILITES_DEPTH_CONFIGREG          48
+#define XPYNQ_DSP_HLS_AXILITES_WIDTH_CONFIGREG          32
+#define XPYNQ_DSP_HLS_AXILITES_DEPTH_CONFIGREG          16
 

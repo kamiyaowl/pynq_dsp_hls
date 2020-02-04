@@ -1,5 +1,5 @@
 #include <ap_int.h>
-#include <cstdint>
+#include <hls_math.h>
 
 // エフェクトの直列に実行できる総数
 #define EFFECT_STAGE_N (4)
@@ -14,7 +14,7 @@
 // int24の生の値を-1.0 ~ +1.0に丸めるときの分母
 #define INTERNAL_FIXED_UNIT (0x1 << INTERNAL_FIXED_PRESICION_BIT_WIDTH);
 // 固定小数点Format
-typedef ap_fixed<INTERNAL_FIXED_BIT_WIDTH, (INTERNAL_FIXED_BIT_WIDTH - INTERNAL_FIXED_PRESICION_BIT_WIDTH), AP_RND, AP_SAT> dsp_fixed;
+typedef ap_fixed<INTERNAL_FIXED_BIT_WIDTH, (INTERNAL_FIXED_BIT_WIDTH - INTERNAL_FIXED_PRESICION_BIT_WIDTH)> dsp_fixed;
 
 // from audio_adau1761.cpp 4byteごとなので4でわってある
 const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
@@ -31,7 +31,7 @@ typedef struct {
 
 // エフェクトの種類
 typedef enum {
-	BYPASS = 0x0,
+	BYPASS = 0x0, // default
 	DISTORTION,
 	COMPRESSOR,
 	FIR,
@@ -46,32 +46,25 @@ typedef enum {
 // エフェクトの設定用, AXI経由で固定長の領域として見せたいので共用体で定義
 // CPU側で書く時点では固定小数点フォーマットを意識させない
 // 4byte以上の型を扱うと、Lower/Upperのトランザクションを保証できず壊れたデータがセットされる可能性があるので控えるか書き換え完了を保証させるレジスタを増やして転送するなどして工夫する
-typedef struct {
-	EffectId effectId; // エフェクトの種類を格納
-	union {
-		struct {
-			float threash; // 音をクリップさせる上限値
-			uint32_t reserved;
-		} distortion;
-		struct {
-			float threash; // 傾きを抑えだすしきい値
-			float ratio;   // threashを超えたときに減衰させる比率
-		} compressor;
-		uint32_t raw[2]; // ARMのunaligned accessで壊れるの怖いので
-	} detail;
+
+#define EFFECT_CONFIG_SIZE (4)
+typedef union {
+	EffectId id;
+	struct {
+		EffectId effectId;
+		float threash;
+	} distortion;
+	uint32_t raw[EFFECT_CONFIG_SIZE];
 } EffectConfig;
 
-// エフェクトを行う関数ポインタを表す(まとめたりするなら....)
-typedef SampleData(*DspFunc)(SampleData inData, EffectConfig* config);
+SampleData effect_distortion(SampleData inData, const EffectConfig* config) {
+	const dsp_fixed threash = static_cast<dsp_fixed>(config->distortion.threash);
 
-SampleData effect_bypass(SampleData inData, EffectConfig* config) {
-	return inData;
-}
-
-SampleData effect_distortion(SampleData inData, EffectConfig* config) {
-	const dsp_fixed threash = static_cast<dsp_fixed>(config->detail.distortion.threash);
-	// TODO: work in progress
 	SampleData dst;
+	const dsp_fixed labs= inData.lch < 0 ? static_cast<dsp_fixed>(-inData.lch) : inData.lch;
+	const dsp_fixed rabs= inData.rch < 0 ? static_cast<dsp_fixed>(-inData.rch) : inData.rch;
+	dst.lch = (labs < threash) ? inData.lch : threash;
+	dst.rch = (rabs < threash) ? inData.rch : threash;
 	return dst;
 }
 
@@ -81,7 +74,7 @@ void pynq_dsp_hls(
 		ap_uint<1> lrclk,                       // I2SのLR Clock、開始タイミングの同期用
 		volatile ap_uint<32>* physMemPtr,       // AXI4MasterのPointer、basePhysAddrから+5*4byteアクセスする
 		ap_uint<32> basePhysAddr,               // 読み出し先の物理ベースアドレス
-		uint8_t configReg[sizeof(EffectConfig)][EFFECT_STAGE_N] // 実行するエフェクトの設定, Vivado HLSがunion指定に対応していないので泣く泣く後でCastして使う。余計な事が起きると怖いのでap_uintは使わない
+		uint32_t configReg[EFFECT_STAGE_N][EFFECT_CONFIG_SIZE] // 実行するエフェクトの設定, Vivado HLSがunion指定に対応していないので泣く泣く後でCastして使う。余計な事が起きると怖いのでap_uintは使わない
 		){
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_none register port=lrclk
@@ -126,13 +119,10 @@ void pynq_dsp_hls(
 
 	for (ap_uint<32> stageIndex = 0; stageIndex < EFFECT_STAGE_N; stageIndex++) {
 		// 設定レジスタを読み出して使う(型とは...)
-		void* configRegAddr = static_cast<void*>(configReg[stageIndex]);
-		EffectConfig* config = static_cast<EffectConfig*>(configRegAddr);
+		//void* configRegAddr = static_cast<void*>(configReg[stageIndex]);
+		EffectConfig* config = static_cast<EffectConfig*>(configReg[stageIndex]);
 		// エフェクトで分岐して処理
-		switch (config->effectId) {
-			case EffectId::BYPASS:
-				currentData = effect_bypass(currentData, config);
-				break;
+		switch (config->id) {
 			case EffectId::DISTORTION:
 				currentData = effect_distortion(currentData, config);
 				break;
@@ -145,7 +135,10 @@ void pynq_dsp_hls(
 			case EffectId::TREMOLO:
 			case EffectId::VIBRATO:
 				// TODO: not implemented
-				currentData = effect_bypass(currentData, config);
+				break;
+			case EffectId::BYPASS:
+			default:
+				// bypassは何もしない
 				break;
 		}
 

@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_sitocud
 #(parameter
-    ID         = 3,
+    ID         = 2,
     NUM_STAGE  = 6,
     din0_WIDTH = 32,
     dout_WIDTH = 32

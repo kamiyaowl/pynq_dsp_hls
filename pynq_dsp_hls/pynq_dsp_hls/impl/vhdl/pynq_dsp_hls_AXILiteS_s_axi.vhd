@@ -37,9 +37,10 @@ port (
     ap_ready              :in   STD_LOGIC;
     ap_idle               :in   STD_LOGIC;
     basePhysAddr_V        :out  STD_LOGIC_VECTOR(31 downto 0);
-    configReg_address0    :in   STD_LOGIC_VECTOR(5 downto 0);
+    configReg_address0    :in   STD_LOGIC_VECTOR(3 downto 0);
     configReg_ce0         :in   STD_LOGIC;
-    configReg_q0          :out  STD_LOGIC_VECTOR(7 downto 0)
+    configReg_we0         :in   STD_LOGIC;
+    configReg_d0          :in   STD_LOGIC_VECTOR(31 downto 0)
 );
 end entity pynq_dsp_hls_AXILiteS_s_axi;
 
@@ -66,11 +67,8 @@ end entity pynq_dsp_hls_AXILiteS_s_axi;
 --        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
 -- 0x14 : reserved
 -- 0x40 ~
--- 0x7f : Memory 'configReg' (48 * 8b)
---        Word n : bit [ 7: 0] - configReg[4n]
---                 bit [15: 8] - configReg[4n+1]
---                 bit [23:16] - configReg[4n+2]
---                 bit [31:24] - configReg[4n+3]
+-- 0x7f : Memory 'configReg' (16 * 32b)
+--        Word n : bit [31:0] - configReg[n]
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
@@ -124,7 +122,6 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal int_configReg_q1    : UNSIGNED(31 downto 0);
     signal int_configReg_read  : STD_LOGIC;
     signal int_configReg_write : STD_LOGIC;
-    signal int_configReg_shift : UNSIGNED(1 downto 0);
 
     component pynq_dsp_hls_AXILiteS_s_axi_ram is
         generic (
@@ -166,8 +163,8 @@ begin
 int_configReg : pynq_dsp_hls_AXILiteS_s_axi_ram
 generic map (
      BYTES    => 4,
-     DEPTH    => 12,
-     AWIDTH   => log2(12))
+     DEPTH    => 16,
+     AWIDTH   => log2(16))
 port map (
      clk0     => ACLK,
      address0 => int_configReg_address0,
@@ -456,12 +453,11 @@ port map (
 
 -- ----------------------- Memory logic ------------------
     -- configReg
-    int_configReg_address0 <= SHIFT_RIGHT(UNSIGNED(configReg_address0), 2)(3 downto 0);
+    int_configReg_address0 <= UNSIGNED(configReg_address0);
     int_configReg_ce0    <= configReg_ce0;
-    int_configReg_we0    <= '0';
-    int_configReg_be0    <= (others => '0');
-    int_configReg_d0     <= (others => '0');
-    configReg_q0         <= STD_LOGIC_VECTOR(SHIFT_RIGHT(int_configReg_q0, TO_INTEGER(int_configReg_shift) * 8)(7 downto 0));
+    int_configReg_we0    <= configReg_we0;
+    int_configReg_be0    <= (others => configReg_we0);
+    int_configReg_d0     <= RESIZE(UNSIGNED(configReg_d0), 32);
     int_configReg_address1 <= raddr(5 downto 2) when ar_hs = '1' else waddr(5 downto 2);
     int_configReg_ce1    <= '1' when ar_hs = '1' or (int_configReg_write = '1' and WVALID  = '1') else '0';
     int_configReg_we1    <= '1' when int_configReg_write = '1' and WVALID = '1' else '0';
@@ -493,17 +489,6 @@ port map (
                     int_configReg_write <= '1';
                 elsif (WVALID = '1') then
                     int_configReg_write <= '0';
-                end if;
-            end if;
-        end if;
-    end process;
-
-    process (ACLK)
-    begin
-        if (ACLK'event and ACLK = '1') then
-            if (ACLK_EN = '1') then
-                if (configReg_ce0 = '1') then
-                    int_configReg_shift <= UNSIGNED(configReg_address0(1 downto 0));
                 end if;
             end if;
         end if;

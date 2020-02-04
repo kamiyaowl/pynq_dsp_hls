@@ -2,7 +2,9 @@
 <vivadoHLSLog:LogRoot xmlns:vivadoHLSLog="www.xilinx.com/vivadoHLSLog">
   <errorLogs>
     <logs>
-      <synLog/>
+      <synLog>
+        <logs message="ERROR: [HLS 200-70] Compilation errors found: In file included from pynq_dsp_hls.cpp:1:&#xD;&#xA;pynq_dsp_hls.cpp:123:26: error: static_cast from 'uint32_t *' (aka 'unsigned int *') to 'EffectConfig *' is not allowed&#xD;&#xA;  EffectConfig* config = static_cast&lt;EffectConfig*>(configReg[stageIndex]);&#xD;&#xA;                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~&#xD;&#xA;1 error generated.&#xD;&#xA;Failed during preprocessing.&#xD;&#xA;    while executing&#xD;&#xA;&quot;source C:/Users/user/repos/pynq_dsp_hls/pynq_dsp_hls/pynq_dsp_hls/csynth.tcl&quot;&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;hls::main C:/Users/user/repos/pynq_dsp_hls/pynq_dsp_hls/pynq_dsp_hls/csynth.tcl&quot;&#xD;&#xA;    (&quot;uplevel&quot; body line 1)&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;uplevel 1 hls::main {*}$args&quot;&#xD;&#xA;    (procedure &quot;hls_proc&quot; line 5)&#xD;&#xA;    invoked from within&#xD;&#xA;&quot;hls_proc $argv&quot;&#xD;&#xA;" projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T01:11:07.060+0900"/>
+      </synLog>
       <simLog/>
       <mgLog/>
       <packageLog/>
@@ -12,11 +14,8 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T00:10:13.723+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T00:10:13.713+0900" type="Warning"/>
-        <logs message="WARNING: [SYNCHK 200-23] pynq_dsp_hls.cpp:124: variable-indexed range selection may cause suboptimal QoR." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T00:10:10.889+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T00:09:57.471+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T00:09:57.422+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T01:11:01.123+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-05T01:11:01.068+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.208+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.169+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.781+0900" type="Warning"/>

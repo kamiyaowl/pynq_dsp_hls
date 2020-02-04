@@ -34,9 +34,10 @@ module pynq_dsp_hls_AXILiteS_s_axi
     input  wire                          ap_ready,
     input  wire                          ap_idle,
     output wire [31:0]                   basePhysAddr_V,
-    input  wire [5:0]                    configReg_address0,
+    input  wire [3:0]                    configReg_address0,
     input  wire                          configReg_ce0,
-    output wire [7:0]                    configReg_q0
+    input  wire                          configReg_we0,
+    input  wire [31:0]                   configReg_d0
 );
 //------------------------Address Info-------------------
 // 0x00 : Control signals
@@ -61,11 +62,8 @@ module pynq_dsp_hls_AXILiteS_s_axi
 //        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
 // 0x14 : reserved
 // 0x40 ~
-// 0x7f : Memory 'configReg' (48 * 8b)
-//        Word n : bit [ 7: 0] - configReg[4n]
-//                 bit [15: 8] - configReg[4n+1]
-//                 bit [23:16] - configReg[4n+2]
-//                 bit [31:24] - configReg[4n+3]
+// 0x7f : Memory 'configReg' (16 * 32b)
+//        Word n : bit [31:0] - configReg[n]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
@@ -124,13 +122,12 @@ localparam
     wire [31:0]                   int_configReg_q1;
     reg                           int_configReg_read;
     reg                           int_configReg_write;
-    reg  [1:0]                    int_configReg_shift;
 
 //------------------------Instantiation------------------
 // int_configReg
 pynq_dsp_hls_AXILiteS_s_axi_ram #(
     .BYTES    ( 4 ),
-    .DEPTH    ( 12 )
+    .DEPTH    ( 16 )
 ) int_configReg (
     .clk0     ( ACLK ),
     .address0 ( int_configReg_address0 ),
@@ -377,12 +374,11 @@ end
 
 //------------------------Memory logic-------------------
 // configReg
-assign int_configReg_address0 = configReg_address0 >> 2;
+assign int_configReg_address0 = configReg_address0;
 assign int_configReg_ce0      = configReg_ce0;
-assign int_configReg_we0      = 1'b0;
-assign int_configReg_be0      = 1'b0;
-assign int_configReg_d0       = 1'b0;
-assign configReg_q0           = int_configReg_q0 >> (int_configReg_shift * 8);
+assign int_configReg_we0      = configReg_we0;
+assign int_configReg_be0      = {4{configReg_we0}};
+assign int_configReg_d0       = configReg_d0;
 assign int_configReg_address1 = ar_hs? raddr[5:2] : waddr[5:2];
 assign int_configReg_ce1      = ar_hs | (int_configReg_write & WVALID);
 assign int_configReg_we1      = int_configReg_write & WVALID;
@@ -409,14 +405,6 @@ always @(posedge ACLK) begin
             int_configReg_write <= 1'b1;
         else if (WVALID)
             int_configReg_write <= 1'b0;
-    end
-end
-
-// int_configReg_shift
-always @(posedge ACLK) begin
-    if (ACLK_EN) begin
-        if (configReg_ce0)
-            int_configReg_shift <= configReg_address0[1:0];
     end
 end
 

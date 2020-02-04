@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_fpexdEe
 #(parameter
-    ID         = 5,
+    ID         = 3,
     NUM_STAGE  = 2,
     din0_WIDTH = 32,
     dout_WIDTH = 64
