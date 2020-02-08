@@ -12607,12 +12607,12 @@ namespace hotbm_apfixed
               ap_int<fp_struct<double>::EXP_BITS> &Ex){
 
    const bool swap_table[8] = {0,1,1,0,0,1,1,0};
-#pragma HLS array_partition variable=swap_table complete
-#pragma HLS RESOURCE variable=fourth_order_double::sin_cos_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_cos_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_cos_K2 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_cos_K3 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_cos_K4 core=ROM_1P_LUTRAM
+#pragma HLS array_partition variable=&swap_table complete
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_cos_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_cos_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_cos_K2 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_cos_K3 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_cos_K4 core=ROM_1P_LUTRAM
 
  ap_uint<alpha+1> A = x(x.wl()-x.iwl()-1,x.wl()-x.iwl()-alpha);
    ap_ufixed<Wx-alpha-beta1, -alpha> B = x;
@@ -12641,16 +12641,16 @@ namespace hotbm_apfixed
           ap_ufixed<Wr, 1> &sin_result,
           ap_ufixed<Wr, 1> &cos_result
           ) {
-#pragma HLS RESOURCE variable=fourth_order_double::cos_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::cos_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::cos_K2 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::cos_K3 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::cos_K4 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_K2 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_K3 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=fourth_order_double::sin_K4 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::cos_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::cos_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::cos_K2 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::cos_K3 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::cos_K4 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_K2 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_K3 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&fourth_order_double::sin_K4 core=ROM_1P_LUTRAM
 
  ap_uint<alpha> A = x(x.wl()-x.iwl()-1,
          x.wl()-x.iwl()-alpha);
@@ -12697,10 +12697,10 @@ namespace hotbm_apfixed
 
    const bool swap_table[8] = {0,1,1,0,0,1,1,0};
 
-#pragma HLS array_partition variable=swap_table complete
-#pragma HLS RESOURCE variable=second_order_float::sin_cos_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::sin_cos_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::sin_cos_K2 core=ROM_1P_LUTRAM
+#pragma HLS array_partition variable=&swap_table complete
+#pragma HLS RESOURCE variable=&second_order_float::sin_cos_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::sin_cos_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::sin_cos_K2 core=ROM_1P_LUTRAM
 
  ap_uint<alpha+1> A = x(x.wl()-x.iwl()-1,x.wl()-x.iwl()-alpha);
    ap_ufixed<Wx-alpha-beta1, -alpha> B = x;
@@ -12726,12 +12726,12 @@ namespace hotbm_apfixed
           ap_ufixed<Wr, 1> &sin_result,
           ap_ufixed<Wr, 1> &cos_result
           ) {
-#pragma HLS RESOURCE variable=second_order_float::cos_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::cos_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::cos_K2 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::sin_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::sin_K1 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=second_order_float::sin_K2 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::cos_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::cos_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::cos_K2 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::sin_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::sin_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&second_order_float::sin_K2 core=ROM_1P_LUTRAM
 
  ap_uint<alpha> A = x(x.wl()-x.iwl()-1,
          x.wl()-x.iwl()-alpha);
@@ -12765,8 +12765,8 @@ namespace hotbm_apfixed
                ap_uint<2> &k,
                ap_ufixed<W_dout, 0> &x){
 
-#pragma HLS RESOURCE variable=first_order_fixed_16::sin_cos_K0 core=ROM_1P_LUTRAM
-#pragma HLS RESOURCE variable=first_order_fixed_16::sin_cos_K1 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&first_order_fixed_16::sin_cos_K0 core=ROM_1P_LUTRAM
+#pragma HLS RESOURCE variable=&first_order_fixed_16::sin_cos_K1 core=ROM_1P_LUTRAM
 
  ap_uint<alpha> A = x(x.wl()-x.iwl()-1,x.wl()-x.iwl()-alpha);
 
@@ -12793,9 +12793,9 @@ namespace hotbm_apfixed
  const bool neg_sin_table[16] = {0,0,1,0,1,1,0,1, 1,0,1,1,0,1,0,0};
  const bool neg_cos_table[16] = {0,0,0,1,1,1,1,0, 0,1,1,1,1,0,0,0};
 
-#pragma HLS array_partition variable=swap_table complete
-#pragma HLS array_partition variable=neg_sin_table complete
-#pragma HLS array_partition variable=neg_cos_table complete
+#pragma HLS array_partition variable=&swap_table complete
+#pragma HLS array_partition variable=&neg_sin_table complete
+#pragma HLS array_partition variable=&neg_cos_table complete
 
  ap_uint<3> k;
  ap_ufixed<WO+1+g, 0> x;
@@ -12864,9 +12864,9 @@ namespace hotbm_apfixed
  const bool swap_table[8] = {0,1,1,0,0,1,1,0};
  const bool neg_sin_table[16] = {0,0,1,0,1,1,0,1, 1,0,1,1,0,1,0,0};
  const bool neg_cos_table[16] = {0,0,0,1,1,1,1,0, 0,1,1,1,1,0,0,0};
-#pragma HLS array_partition variable=swap_table complete
-#pragma HLS array_partition variable=neg_sin_table complete
-#pragma HLS array_partition variable=neg_cos_table complete
+#pragma HLS array_partition variable=&swap_table complete
+#pragma HLS array_partition variable=&neg_sin_table complete
+#pragma HLS array_partition variable=&neg_cos_table complete
 
  ap_uint<3> k;
  ap_ufixed<WO+1+g, 0> x;
@@ -12934,8 +12934,8 @@ namespace hotbm_apfixed
 
  const bool neg_sin_table[8] = {0,0,1,1, 1,1,0,0};
  const bool neg_cos_table[8] = {0,1,1,0, 0,1,1,0};
-#pragma HLS array_partition variable=neg_sin_table complete
-#pragma HLS array_partition variable=neg_cos_table complete
+#pragma HLS array_partition variable=&neg_sin_table complete
+#pragma HLS array_partition variable=&neg_cos_table complete
 
  ap_uint<2> k;
  ap_ufixed<WO+1+g, 0> x;
@@ -26322,8 +26322,23 @@ namespace hls {
 
 };
 # 3 "pynq_dsp_hls.cpp" 2
-# 17 "pynq_dsp_hls.cpp"
-typedef ap_fixed<(32), ((32) - (23))> dsp_fixed;
+# 14 "pynq_dsp_hls.cpp"
+ap_int<(32)> sign_ext(ap_uint<(32)> src) {
+ auto mask = src[(24) - 1] ? ( ap_uint<(32)-(24)>(~(0xffffffff << ((32) - (24)))) )
+                                   : ap_uint<(32)-(24)>(0x0);
+ return static_cast<ap_int<(32)>>((mask, src));
+}
+
+typedef union {
+ uint32_t uint_data;
+ float float_data;
+} float_data_conversion_t;
+
+float to_float(uint32_t src) {
+ float_data_conversion_t dst;
+ dst.uint_data = src;
+ return dst.float_data;
+}
 
 
 const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
@@ -26334,8 +26349,8 @@ const ap_uint<32> I2S_STATUS_REG = 0x04;
 
 
 typedef struct {
- dsp_fixed lch;
- dsp_fixed rch;
+ float lch;
+ float rch;
 } SampleData;
 
 
@@ -26357,26 +26372,18 @@ typedef enum {
 
 
 
-typedef union {
- EffectId id;
- struct {
-  EffectId effectId;
-  float threash;
- } distortion;
- uint32_t raw[(4)];
-} EffectConfig;
-
-SampleData effect_distortion(SampleData inData, const EffectConfig* config) {
- const dsp_fixed threash = static_cast<dsp_fixed>(config->distortion.threash);
+SampleData effect_distortion(SampleData inData, uint32_t config[(4)]) {_ssdm_SpecArrayDimSize(config, 4);
+ const float threash = to_float(config[1]);
 
  SampleData dst;
- const dsp_fixed labs= inData.lch < 0 ? static_cast<dsp_fixed>(-inData.lch) : inData.lch;
- const dsp_fixed rabs= inData.rch < 0 ? static_cast<dsp_fixed>(-inData.rch) : inData.rch;
- dst.lch = (labs < threash) ? inData.lch : threash;
- dst.rch = (rabs < threash) ? inData.rch : threash;
+ const float labs = hls::abs(inData.lch);
+ const float rabs = hls::abs(inData.rch);
+ const float ldst = hls::min(labs, threash);
+ const float rdst = hls::min(labs, threash);
+ dst.lch = (inData.lch < 0) ? -ldst : ldst;
+ dst.rch = (inData.rch < 0) ? -rdst : rdst;
  return dst;
 }
-
 
 
 void pynq_dsp_hls(
@@ -26384,12 +26391,12 @@ void pynq_dsp_hls(
   volatile ap_uint<32>* physMemPtr,
   ap_uint<32> basePhysAddr,
   uint32_t configReg[(4)][(4)]
-  ){
+  ){_ssdm_SpecArrayDimSize(configReg, 4);
 #pragma HLS INTERFACE s_axilite port=return
-#pragma HLS INTERFACE ap_none register port=lrclk
-#pragma HLS INTERFACE m_axi depth=32 port=physMemPtr
-#pragma HLS INTERFACE s_axilite port=basePhysAddr
-#pragma HLS INTERFACE s_axilite port=configReg
+#pragma HLS INTERFACE ap_none register port=&lrclk
+#pragma HLS INTERFACE m_axi depth=32 port=&physMemPtr
+#pragma HLS INTERFACE s_axilite port=&basePhysAddr
+#pragma HLS INTERFACE s_axilite port=&configReg
 
 
  const ap_uint<32> addr = (basePhysAddr >> 2);
@@ -26415,25 +26422,20 @@ void pynq_dsp_hls(
  }
 
 
- const ap_uint<32> lsrc = physMemPtr[addr + I2S_DATA_RX_L_REG];
- const ap_uint<32> rsrc = physMemPtr[addr + I2S_DATA_RX_R_REG];
- const ap_int<32> lsignExt = lsrc.bit((24) - 1) ? static_cast<ap_int<32>>(lsrc | (~(0xffffffff >> ((32) - (24))))) : static_cast<ap_int<32>>(lsrc);
- const ap_int<32> rsignExt = rsrc.bit((24) - 1) ? static_cast<ap_int<32>>(rsrc | (~(0xffffffff >> ((32) - (24))))) : static_cast<ap_int<32>>(rsrc);
- const float lsrcf = static_cast<float>(lsignExt) / (0x1 << (23));;
- const float rsrcf = static_cast<float>(rsignExt) / (0x1 << (23));;
+ const ap_int<32> lsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_L_REG]);
+ const ap_int<32> rsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_R_REG]);
+ const float lsrcf = static_cast<float>(lsrc) / (0x1 << ((24) - 1));
+ const float rsrcf = static_cast<float>(rsrc) / (0x1 << ((24) - 1));
 
  SampleData currentData;
- currentData.lch = static_cast<dsp_fixed>(lsrcf);
- currentData.rch = static_cast<dsp_fixed>(rsrcf);
+ currentData.lch = lsrcf;
+ currentData.rch = rsrcf;
 
  for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
 
-
-  EffectConfig* config = static_cast<EffectConfig*>(configReg[stageIndex]);
-
-  switch (config->id) {
+  switch (static_cast<EffectId>(configReg[stageIndex][0])) {
    case EffectId::DISTORTION:
-    currentData = effect_distortion(currentData, config);
+    currentData = effect_distortion(currentData, configReg[stageIndex]);
     break;
    case EffectId::COMPRESSOR:
    case EffectId::FIR:
@@ -26453,12 +26455,12 @@ void pynq_dsp_hls(
 
  }
 
- const float ldstf = currentData.lch.to_float() * (0x1 << (23));;
- const float rdstf = currentData.rch.to_float() * (0x1 << (23));;
+ const float ldstf = currentData.lch * (0x1 << ((24) - 1));
+ const float rdstf = currentData.rch * (0x1 << ((24) - 1));
  const ap_int<32> ldst = static_cast<ap_int<32>>(ldstf);
  const ap_int<32> rdst = static_cast<ap_int<32>>(rdstf);
 
 
- physMemPtr[addr + I2S_DATA_TX_L_REG] = ldst;
- physMemPtr[addr + I2S_DATA_TX_R_REG] = rdst;
+ physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(ldst);
+ physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(rdst);
 }

@@ -39,8 +39,7 @@ port (
     basePhysAddr_V        :out  STD_LOGIC_VECTOR(31 downto 0);
     configReg_address0    :in   STD_LOGIC_VECTOR(3 downto 0);
     configReg_ce0         :in   STD_LOGIC;
-    configReg_we0         :in   STD_LOGIC;
-    configReg_d0          :in   STD_LOGIC_VECTOR(31 downto 0)
+    configReg_q0          :out  STD_LOGIC_VECTOR(31 downto 0)
 );
 end entity pynq_dsp_hls_AXILiteS_s_axi;
 
@@ -455,9 +454,10 @@ port map (
     -- configReg
     int_configReg_address0 <= UNSIGNED(configReg_address0);
     int_configReg_ce0    <= configReg_ce0;
-    int_configReg_we0    <= configReg_we0;
-    int_configReg_be0    <= (others => configReg_we0);
-    int_configReg_d0     <= RESIZE(UNSIGNED(configReg_d0), 32);
+    int_configReg_we0    <= '0';
+    int_configReg_be0    <= (others => '0');
+    int_configReg_d0     <= (others => '0');
+    configReg_q0         <= STD_LOGIC_VECTOR(RESIZE(int_configReg_q0, 32));
     int_configReg_address1 <= raddr(5 downto 2) when ar_hs = '1' else waddr(5 downto 2);
     int_configReg_ce1    <= '1' when ar_hs = '1' or (int_configReg_write = '1' and WVALID  = '1') else '0';
     int_configReg_we1    <= '1' when int_configReg_write = '1' and WVALID = '1' else '0';
