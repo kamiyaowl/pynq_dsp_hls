@@ -2,7 +2,7 @@
 #include <cassert>
 #include <ap_int.h>
 
-// from audio_adau1761.cpp 4byte‚²‚Æ‚È‚Ì‚Å4‚Å‚í‚Á‚Ä‚ ‚é
+// from audio_adau1761.cpp 4byteã”ã¨ãªã®ã§4ã§ã‚ã£ã¦ã‚ã‚‹
 const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
 const ap_uint<32> I2S_DATA_RX_R_REG = 0x01;
 const ap_uint<32> I2S_DATA_TX_L_REG = 0x02;
@@ -10,8 +10,8 @@ const ap_uint<32> I2S_DATA_TX_R_REG = 0x03;
 const ap_uint<32> I2S_STATUS_REG    = 0x04;
 
 void bypass(
-		volatile ap_uint<32>* physMemPtr, // AXI4Master‚ÌPointerAbasePhysAddr‚©‚ç+5*4byteƒAƒNƒZƒX‚·‚é
-		ap_uint<32> basePhysAddr // “Ç‚İo‚µæ‚Ì•¨—ƒx[ƒXƒAƒhƒŒƒX
+		volatile ap_uint<32>* physMemPtr, // AXI4Masterã®Pointerã€basePhysAddrã‹ã‚‰+5*4byteã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹
+		ap_uint<32> basePhysAddr // èª­ã¿å‡ºã—å…ˆã®ç‰©ç†ãƒ™ãƒ¼ã‚¹ã‚¢ãƒ‰ãƒ¬ã‚¹
 		);
 
 
@@ -20,10 +20,10 @@ void bypass(
 typedef struct {
 	std::size_t basePhysAddr;
 	ap_uint<32> status;
-	ap_uint<32> lsrc;
-	ap_uint<32> rsrc;
-	ap_uint<32> ldst_expect; // lch o—ÍŠú‘Ò’l
-	ap_uint<32> rdst_expect; // rch o—ÍŠú‘Ò’l
+	ap_uint<32> srcL;
+	ap_uint<32> srcR;
+	ap_uint<32> ldst_expect; // l å‡ºåŠ›æœŸå¾…å€¤
+	ap_uint<32> rdst_expect; // r å‡ºåŠ›æœŸå¾…å€¤
 } BypassVector_t;
 
 template<typename T, std::size_t S>
@@ -40,16 +40,16 @@ int main(void) {
 			{ 0x10, 0x1, 0xaa, 0x55, 0xaa, 0x55 },
 	};
 	for (std::size_t i = 0; i < array_len(vectors); i++) {
-		// Šú‘Ò’l‚ğƒZƒbƒg
+		// æœŸå¾…å€¤ã‚’ã‚»ãƒƒãƒˆ
 		const std::size_t baseIndex = vectors[i].basePhysAddr / 4;
-		buf[baseIndex + I2S_DATA_RX_L_REG] = vectors[i].lsrc;
-		buf[baseIndex + I2S_DATA_RX_R_REG] = vectors[i].rsrc;
+		buf[baseIndex + I2S_DATA_RX_L_REG] = vectors[i].srcL;
+		buf[baseIndex + I2S_DATA_RX_R_REG] = vectors[i].srcR;
 		buf[baseIndex + I2S_DATA_TX_L_REG] = 0x0;
 		buf[baseIndex + I2S_DATA_TX_R_REG] = 0x0;
 		buf[baseIndex + I2S_STATUS_REG] = vectors[i].status;
-		// ƒeƒXƒg‚·‚é
+		// ãƒ†ã‚¹ãƒˆã™ã‚‹
 		bypass((volatile ap_uint<32>*)&buf,  static_cast<ap_uint<32>>(vectors[i].basePhysAddr));
-		// Œ‹‰Ê‚ğŒŸØ
+		// çµæœã‚’æ¤œè¨¼
 		assert(buf[baseIndex + I2S_DATA_TX_L_REG] == vectors[i].ldst_expect);
 		assert(buf[baseIndex + I2S_DATA_TX_R_REG] == vectors[i].rdst_expect);
 	}

@@ -1,26 +1,27 @@
-#include <ap_common.h>
 #include <ap_int.h>
+#include <ap_common.h>
 #include <hls_math.h>
+#include <cstdint>
 
-// ƒGƒtƒFƒNƒg‚Ì’¼—ñ‚ÉÀs‚Å‚«‚é‘”
+// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç›´åˆ—ã«å®Ÿè¡Œã§ãã‚‹ç·æ•°
 #define EFFECT_STAGE_N (4)
-// 24bit signed‚ÌÅ‘å’l
+// 24bit signedã®æœ€å¤§å€¤
 #define INTERNAL_FIXED_UNIT (0x7fffff)
 
-// from audio_adau1761.cpp 4byte‚²‚Æ‚È‚Ì‚Å4‚Å‚í‚Á‚Ä‚ ‚é
+// from audio_adau1761.cpp 4byteã”ã¨ãªã®ã§4ã§ã‚ã£ã¦ã‚ã‚‹
 const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
 const ap_uint<32> I2S_DATA_RX_R_REG = 0x01;
 const ap_uint<32> I2S_DATA_TX_L_REG = 0x02;
 const ap_uint<32> I2S_DATA_TX_R_REG = 0x03;
 const ap_uint<32> I2S_STATUS_REG    = 0x04;
 
-// ‰¹ƒf[ƒ^
+// éŸ³ãƒ‡ãƒ¼ã‚¿
 typedef struct {
-	float lch; // Lch‚Ìƒf[ƒ^‚ğŠi”[
-	float rch; // Rch‚Ìƒf[ƒ^‚ğŠi”[
+	float l; // Lchã®ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´
+	float r; // Rchã®ãƒ‡ãƒ¼ã‚¿ã‚’æ ¼ç´
 } SampleData;
 
-// ƒGƒtƒFƒNƒg‚Ìí—Ş
+// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ç¨®é¡
 typedef enum {
 	BYPASS = 0x0, // default
 	DISTORTION,
@@ -34,47 +35,47 @@ typedef enum {
 	VIBRATO,
 } EffectId;
 
-// ƒGƒtƒFƒNƒg‚Ìİ’è—p, AXIŒo—R‚ÅŒÅ’è’·‚Ì—Ìˆæ‚Æ‚µ‚ÄŒ©‚¹‚½‚¢‚Ì‚Å‹¤—p‘Ì‚Å’è‹`
-// CPU‘¤‚Å‘‚­“_‚Å‚ÍŒÅ’è¬”“_ƒtƒH[ƒ}ƒbƒg‚ğˆÓ¯‚³‚¹‚È‚¢
-// 4byteˆÈã‚ÌŒ^‚ğˆµ‚¤‚ÆALower/Upper‚Ìƒgƒ‰ƒ“ƒUƒNƒVƒ‡ƒ“‚ğ•ÛØ‚Å‚«‚¸‰ó‚ê‚½ƒf[ƒ^‚ªƒZƒbƒg‚³‚ê‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅT‚¦‚é‚©‘‚«Š·‚¦Š®—¹‚ğ•ÛØ‚³‚¹‚éƒŒƒWƒXƒ^‚ğ‘‚â‚µ‚Ä“]‘—‚·‚é‚È‚Ç‚µ‚ÄH•v‚·‚é
+// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è¨­å®šç”¨, AXIçµŒç”±ã§å›ºå®šé•·ã®é ˜åŸŸã¨ã—ã¦è¦‹ã›ãŸã„ã®ã§å…±ç”¨ä½“ã§å®šç¾©
+// CPUå´ã§æ›¸ãæ™‚ç‚¹ã§ã¯å›ºå®šå°æ•°ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã‚’æ„è­˜ã•ã›ãªã„
+// 4byteä»¥ä¸Šã®å‹ã‚’æ‰±ã†ã¨ã€Lower/Upperã®ãƒˆãƒ©ãƒ³ã‚¶ã‚¯ã‚·ãƒ§ãƒ³ã‚’ä¿è¨¼ã§ããšå£Šã‚ŒãŸãƒ‡ãƒ¼ã‚¿ãŒã‚»ãƒƒãƒˆã•ã‚Œã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§æ§ãˆã‚‹ã‹æ›¸ãæ›ãˆå®Œäº†ã‚’ä¿è¨¼ã•ã›ã‚‹ãƒ¬ã‚¸ã‚¹ã‚¿ã‚’å¢—ã‚„ã—ã¦è»¢é€ã™ã‚‹ãªã©ã—ã¦å·¥å¤«ã™ã‚‹
 #define EFFECT_CONFIG_SIZE (8)
 
 SampleData effect_distortion(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE]) {
-	const float threash = hls::abs(rawBitsToFloat(config[1])); // •‰”‚ªw’è‚³‚ê‚é‚Æ‰¹‚ªo‚È‚­‚È‚é‘z’è, 1.0ˆÈã‚Ìê‡‚ÍÀ¿Œø‚©‚È‚¢(ƒGƒtƒFƒNƒg‚Ì“r’†‚Å’´‚¦‚Ä‚¢‚½ê‡‚ğœ‚­)
+	const float thresh = hls::abs(rawBitsToFloat(config[1])); // è² æ•°ãŒæŒ‡å®šã•ã‚Œã‚‹ã¨éŸ³ãŒå‡ºãªããªã‚‹æƒ³å®š, 1.0ä»¥ä¸Šã®å ´åˆã¯å®Ÿè³ªåŠ¹ã‹ãªã„(ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®é€”ä¸­ã§è¶…ãˆã¦ã„ãŸå ´åˆã‚’é™¤ã)
 
 	SampleData dst;
-	const float labs = hls::abs(inData.lch);
-	const float rabs = hls::abs(inData.rch);
-	const float ldst = hls::min(labs, threash);
-	const float rdst = hls::min(rabs, threash);
-	dst.lch = (inData.lch < 0.0f) ? -ldst : ldst;
-	dst.rch = (inData.rch < 0.0f) ? -rdst : rdst;
+	const float absL = hls::abs(inData.l);
+	const float absR = hls::abs(inData.r);
+	const float monitorDstL = hls::min(absL, thresh);
+	const float monitorDstR = hls::min(absR, thresh);
+	dst.l = (inData.l < 0.0f) ? -monitorDstL : monitorDstL;
+	dst.r = (inData.r < 0.0f) ? -monitorDstR : monitorDstR;
 	return dst;
 }
 
 SampleData effect_compressor(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE]) {
-	const float threash = hls::abs(rawBitsToFloat(config[1])); // comp‚ªŒø‚«n‚ß‚é‚µ‚«‚¢’l
-	const float ratio   = hls::abs(rawBitsToFloat(config[2])); // threash‚ğ’´‚¦‚½‚Æ‚«‚ÌŒX‚«A‚»‚Ì‚Ü‚ÜæZ‚³‚ê‚é
+	const float thresh = hls::abs(rawBitsToFloat(config[1])); // compãŒåŠ¹ãå§‹ã‚ã‚‹ã—ãã„å€¤
+	const float ratio  = hls::abs(rawBitsToFloat(config[2])); // threshã‚’è¶…ãˆãŸã¨ãã®å‚¾ãã€ãã®ã¾ã¾ä¹—ç®—ã•ã‚Œã‚‹
 
 	SampleData dst;
-	const float labs = hls::abs(inData.lch);
-	const float rabs = hls::abs(inData.rch);
-	dst.lch = (inData.lch < labs) ? inData.lch : (inData.lch * ratio);
-	dst.rch = (inData.rch < rabs) ? inData.rch : (inData.rch * ratio);
+	const float absL = hls::abs(inData.l);
+	const float absR = hls::abs(inData.r);
+	dst.l = (inData.l < absL) ? inData.l : (inData.l * ratio);
+	dst.r = (inData.r < absR) ? inData.r : (inData.r * ratio);
 	return dst;
 }
 
 SampleData effect_delay(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE], volatile ap_uint<32>* extMemPtr) {
-	const size_t SIZE_PER_SAMPLE = 2; // 1sample‚ ‚½‚è64byte
+	const size_t SIZE_PER_SAMPLE = 2; // 1sampleã‚ãŸã‚Š64byte
 
-	const ap_uint<32> memAddr   = config[1]; // ”CˆÓ‚ÉR/W‚µ‚Ä‚æ‚¢æ“ª—Ìˆæ
-	const ap_uint<32> memSize   = config[2]; // Delay‚Ég‚¦‚é‹óŠÔWord”,Å‘åƒTƒ“ƒvƒ‹”‚Í‚±‚Ì”¼•ª‚Ü‚Å
-	const float volRatio    = hls::abs(rawBitsToFloat(config[3])); // Delay‚·‚éÛ‚ÌVolume‚ğ¬‚³‚­‚Å‚«‚é
-	const float periodRatio = hls::abs(rawBitsToFloat(config[4])); // Delay‚·‚éŠÔB(memSize/2/SampleRate)*timeRatio‚µ‚½ŠÔ‚É‚È‚é
-	ap_uint<32>* wrIndex = &config[5]; // tail,¡‰ñ‚Ìü‰ñ‚Åƒf[ƒ^‚ğ‘‚«‚ŞƒCƒ“ƒfƒbƒNƒX
-	ap_uint<32>* rdIndex = &config[6]; // head, ¡‰ñ‚Ìü‰ñ‚Åƒf[ƒ^‚ğ“Ç‚İo‚·ƒCƒ“ƒfƒbƒNƒXBİ’èŠÔ•ª‚ÌDelay‚ªŒo‰ß‚µ‚Ä‚¢‚È‚¯‚ê‚Î‚Ü‚Â
+	const uint32_t memAddr  = config[1]; // ä»»æ„ã«R/Wã—ã¦ã‚ˆã„å…ˆé ­é ˜åŸŸ
+	const uint32_t memSize  = config[2]; // Delayã«ä½¿ãˆã‚‹ç©ºé–“Wordæ•°,æœ€å¤§ã‚µãƒ³ãƒ—ãƒ«æ•°ã¯ã“ã®åŠåˆ†ã¾ã§
+	const float volRatio    = hls::abs(rawBitsToFloat(config[3])); // Delayã™ã‚‹éš›ã®Volumeã‚’å°ã•ãã§ãã‚‹
+	const float periodRatio = hls::abs(rawBitsToFloat(config[4])); // Delayã™ã‚‹æ™‚é–“ã€‚(memSize/2/SampleRate)*timeRatioã—ãŸæ™‚é–“ã«ãªã‚‹
+	uint32_t* wrIndex = &config[5]; // tail,ä»Šå›ã®å‘¨å›ã§ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ãè¾¼ã‚€ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+	uint32_t* rdIndex = &config[6]; // head, ä»Šå›ã®å‘¨å›ã§ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿å‡ºã™ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã€‚è¨­å®šæ™‚é–“åˆ†ã®DelayãŒçµŒéã—ã¦ã„ãªã‘ã‚Œã°ã¾ã¤
 
-	// ƒƒ‚ƒŠ‚ªŠm•Û‚³‚ê‚Ä‚¢‚È‚¢A”ÍˆÍŠO‚É‚ ‚éó‘Ô‚Å‰Šú‰»‚³‚ê‚½ê‡‚Ì‘Îô
+	// ãƒ¡ãƒ¢ãƒªãŒç¢ºä¿ã•ã‚Œã¦ã„ãªã„ã€ç¯„å›²å¤–ã«ã‚ã‚‹çŠ¶æ…‹ã§åˆæœŸåŒ–ã•ã‚ŒãŸå ´åˆã®å¯¾ç­–
 	const ap_uint<32> maxIndex = memSize / 2; // 1sample=8byte
 	if (maxIndex == 0) {
 		return inData;
@@ -83,73 +84,76 @@ SampleData effect_delay(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE], 
 		*wrIndex = 0;
 		*rdIndex = 0;
 	}
-	// Œ»İ‚Ìƒf[ƒ^‚ğ‘‚­
-	const float srcL = rawBitsToFloat(inData.lch) * volRatio;
-	const float srcR = rawBitsToFloat(inData.rch) * volRatio;
-	extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 0] = floatToRawBits(srcL);
-	extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 1] = floatToRawBits(srcR);
-	*wrIndex = (*wrIndex) < (maxIndex - 2) ? ((*wrIndex) + 1) : 0; // i‚ß‚Ä‚¨‚­
+	// ç¾åœ¨ã®ãƒ‡ãƒ¼ã‚¿ã‚’æ›¸ã
+	const float monitorSrcL = inData.l * volRatio;
+	const float monitorSrcR = inData.r * volRatio;
+	extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 0] = floatToRawBits(monitorSrcL);
+	extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 1] = floatToRawBits(monitorSrcR);
+	*wrIndex = (*wrIndex) < (maxIndex - 2) ? ((*wrIndex) + 1) : 0; // é€²ã‚ã¦ãŠã
 
-	// İ’è•ª‚¾‚¯‰“‚´‚©‚Á‚Ä‚È‚¯‚ê‚ÎRead‚·‚éƒf[ƒ^‚ª‚È‚¢
-	const ap_uint<32> configPeriod = static_cast<ap_uint<32>>(memSize.to_float() * periodRatio);
-	const ap_uint<32> currentPeriod = ((*wrIndex) >= (*rdIndex)) ? ((*wrIndex) - (*rdIndex))
+	// è¨­å®šåˆ†ã ã‘é ã–ã‹ã£ã¦ãªã‘ã‚Œã°Readã™ã‚‹ãƒ‡ãƒ¼ã‚¿ãŒãªã„
+	const uint32_t configPeriod = static_cast<uint32_t>(static_cast<float>(memSize) * periodRatio);
+	const uint32_t currentPeriod = ((*wrIndex) >= (*rdIndex)) ? ((*wrIndex) - (*rdIndex))
 						                                         : ((*wrIndex) + (*rdIndex) - memSize);
 	if (currentPeriod < configPeriod) {
-		return inData; // ‰ÁZ‚·‚éƒf[ƒ^‚Í‚È‚¢
+		return inData; // åŠ ç®—ã™ã‚‹ãƒ‡ãƒ¼ã‚¿ã¯ãªã„
 	}
 
-	// “r’†‚Åİ’è’l‚ª•Ï‚¦‚ç‚ê‚½‚Æ‚«‚Ì‘ÎôAÅV‚Ìƒf[ƒ^‚Ü‚Å”ò‚Ô
-
-	// “Ç‚İ‚¾‚µ‚½ƒf[ƒ^‚ğ‰ÁZ‚·‚é
+	// èª­ã¿ã ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’åŠ ç®—ã™ã‚‹(è¿½åŠ æ™‚ã«ratioã‚’ä¹—ç®—æ¸ˆ
+	const ap_uint<32> auxRawL = extMemPtr[memAddr + (*rdIndex) * SIZE_PER_SAMPLE + 0];
+	const ap_uint<32> auxRawR = extMemPtr[memAddr + (*rdIndex) * SIZE_PER_SAMPLE + 1];
+	const float auxL = rawBitsToFloat(auxRawL.to_uint());
+	const float auxR = rawBitsToFloat(auxRawR.to_uint());
+	*rdIndex = (*rdIndex) < (maxIndex - 2) ? ((*rdIndex) + 1) : 0;
 
 	SampleData dst;
-	const float labs = hls::abs(inData.lch);
-	const float rabs = hls::abs(inData.rch);
-	dst.lch = (inData.lch < labs) ? inData.lch : (inData.lch / ratio);
-	dst.rch = (inData.rch < rabs) ? inData.rch : (inData.rch / ratio);
+	dst.l = inData.l + auxL;
+	dst.r = inData.r + auxR;
 	return dst;
 }
 
 
 // top level function
 void pynq_dsp_hls(
-		ap_uint<1> lrclk,                       // I2S‚ÌLR ClockAŠJnƒ^ƒCƒ~ƒ“ƒO‚Ì“¯Šú—p
-		volatile ap_uint<32>* physMemPtr,       // AXI4Master‚ÌPointerAbasePhysAddr‚©‚ç+5*4byteƒAƒNƒZƒX‚·‚é
-		ap_uint<32> basePhysAddr,               // “Ç‚İo‚µæ‚Ì•¨—ƒx[ƒXƒAƒhƒŒƒX
-		volatile ap_uint<32>* extMemPtr,        // AXI4Master‚ÌPointerADelay/Reberb“™‚Åw’è‚³‚ê‚½ƒAƒhƒŒƒX‚Éƒf[ƒ^‚ğ•Û‚·‚é
-		float *srcL,                            // “ü—Í‰¹ƒf[ƒ^‚ğfloat•ÏŠ·‚Ì’l‚ğ•ÛBƒ‚ƒjƒ^[—p
-		float *srcR,                            // “ü—Í‰¹ƒf[ƒ^‚ğfloat•ÏŠ·‚Ì’l‚ğ•ÛBƒ‚ƒjƒ^[—p
-		float *dstL,                            // o‰¹ƒf[ƒ^‚ğfloat•ÏŠ·‚Ì’l‚ğ•ÛBƒ‚ƒjƒ^[—p
-		float *dstR,                            // o—Í‰¹ƒf[ƒ^‚ğfloat•ÏŠ·‚Ì’l‚ğ•ÛBƒ‚ƒjƒ^[—p
-		ap_uint<32>* numOfStage,                // ƒGƒtƒFƒNƒgƒpƒCƒvƒ‰ƒCƒ“‚ÌƒXƒe[ƒW”BconfigReg‚ÌƒTƒCƒYŠm”F—p
-		ap_uint<32>* configSizePerStage,        // ƒGƒtƒFƒNƒgƒpƒCƒvƒ‰ƒCƒ“‚²‚Æ‚ÌconfigReg‚ÌƒTƒCƒY
-		uint32_t configReg[EFFECT_STAGE_N][EFFECT_CONFIG_SIZE] // Às‚·‚éƒGƒtƒFƒNƒg‚Ìİ’è, Vivado HLS‚ªunionw’è‚É‘Î‰‚µ‚Ä‚¢‚È‚¢‚Ì‚Å‹ƒ‚­‹ƒ‚­Œã‚ÅCast‚µ‚Äg‚¤B—]Œv‚È–‚ª‹N‚«‚é‚Æ•|‚¢‚Ì‚Åap_uint‚Íg‚í‚È‚¢
+		ap_uint<1> lrclk,                       // I2Sã®LR Clockã€é–‹å§‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°ã®åŒæœŸç”¨
+		volatile ap_uint<32>* physMemPtr,       // AXI4Masterã®Pointerã€basePhysAddrã‹ã‚‰+5*4byteã‚¢ã‚¯ã‚»ã‚¹ã™ã‚‹
+		volatile ap_uint<32>* extMemPtr,        // AXI4Masterã®Pointerã€Delay/Reberbç­‰ã§æŒ‡å®šã•ã‚ŒãŸã‚¢ãƒ‰ãƒ¬ã‚¹ã«ãƒ‡ãƒ¼ã‚¿ã‚’ä¿æŒã™ã‚‹
+		ap_uint<32> basePhysAddr,               // èª­ã¿å‡ºã—å…ˆã®ç‰©ç†ãƒ™ãƒ¼ã‚¹ã‚¢ãƒ‰ãƒ¬ã‚¹
+		float* monitorSrcL,                     // å…¥åŠ›éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’floatå¤‰æ›æ™‚ã®å€¤ã‚’ä¿æŒã€‚ãƒ¢ãƒ‹ã‚¿ãƒ¼ç”¨
+		float* monitorSrcR,                     // å…¥åŠ›éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’floatå¤‰æ›æ™‚ã®å€¤ã‚’ä¿æŒã€‚ãƒ¢ãƒ‹ã‚¿ãƒ¼ç”¨
+		float* monitorDstL,                     // å‡ºéŸ³ãƒ‡ãƒ¼ã‚¿ã‚’floatå¤‰æ›æ™‚ã®å€¤ã‚’ä¿æŒã€‚ãƒ¢ãƒ‹ã‚¿ãƒ¼ç”¨
+		float* monitorDstR,                     // å‡ºåŠ›éŸ³ãƒ‡ãƒ¼ã‚¿ã‚’floatå¤‰æ›æ™‚ã®å€¤ã‚’ä¿æŒã€‚ãƒ¢ãƒ‹ã‚¿ãƒ¼ç”¨
+		uint32_t* counter,                      // å®Ÿè¡Œã™ã‚‹ãŸã³ã«ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆ
+		uint32_t* numOfStage,                   // ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ã‚¹ãƒ†ãƒ¼ã‚¸æ•°ã€‚configRegã®ã‚µã‚¤ã‚ºç¢ºèªç”¨
+		uint32_t* configSizePerStage,           // ã‚¨ãƒ•ã‚§ã‚¯ãƒˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã”ã¨ã®configRegã®ã‚µã‚¤ã‚º
+		uint32_t configReg[EFFECT_STAGE_N][EFFECT_CONFIG_SIZE] // å®Ÿè¡Œã™ã‚‹ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®è¨­å®š, Vivado HLSãŒunionæŒ‡å®šã«å¯¾å¿œã—ã¦ã„ãªã„ã®ã§æ³£ãæ³£ãå¾Œã§Castã—ã¦ä½¿ã†ã€‚ä½™è¨ˆãªäº‹ãŒèµ·ãã‚‹ã¨æ€–ã„ã®ã§ap_uintã¯ä½¿ã‚ãªã„
 		){
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_none register port=lrclk
 #pragma HLS INTERFACE m_axi depth=32 port=physMemPtr
-#pragma HLS INTERFACE s_axilite port=basePhysAddr
 #pragma HLS INTERFACE m_axi depth=32 port=extMemPtr
-#pragma HLS INTERFACE s_axilite register port=srcL
-#pragma HLS INTERFACE s_axilite register port=srcR
-#pragma HLS INTERFACE s_axilite register port=dstL
-#pragma HLS INTERFACE s_axilite register port=dstR
+#pragma HLS INTERFACE s_axilite register port=basePhysAddr
+#pragma HLS INTERFACE s_axilite register port=monitorSrcL
+#pragma HLS INTERFACE s_axilite register port=monitorSrcR
+#pragma HLS INTERFACE s_axilite register port=monitorDstL
+#pragma HLS INTERFACE s_axilite register port=monitorDstR
+#pragma HLS INTERFACE s_axilite register port=counter
 #pragma HLS INTERFACE s_axilite register port=numOfStage
 #pragma HLS INTERFACE s_axilite register port=configSizePerStage
 #pragma HLS INTERFACE s_axilite port=configReg
 
-	// ƒfƒoƒbƒOî•ñ
+	// ãƒ‡ãƒãƒƒã‚°æƒ…å ±
 	*numOfStage = EFFECT_STAGE_N;
 	*configSizePerStage = EFFECT_CONFIG_SIZE;
 
-	// 4byte‚²‚Æ‚Éˆµ‚Á‚Ä‚¢‚é‚Ì‚Å¡‚·
+	// 4byteã”ã¨ã«æ‰±ã£ã¦ã„ã‚‹ã®ã§æ²»ã™
 	const ap_uint<32> addr = (basePhysAddr >> 2);// (/= 4)
 	const ap_uint<32> status = physMemPtr[addr + I2S_STATUS_REG];
-	if (!status) { // data_rdy_bit‚ª—§‚Á‚Ä‚¢‚È‚¯‚ê‚Îˆ—‚µ‚È‚¢
+	if (!status) { // data_rdy_bitãŒç«‹ã£ã¦ã„ãªã‘ã‚Œã°å‡¦ç†ã—ãªã„
 		return;
 	}
 
-	// LR‚»‚ë‚Á‚Äˆ—‚µ‚½‚çˆê’USleep‚³‚¹‚é
+	// LRãã‚ã£ã¦å‡¦ç†ã—ãŸã‚‰ä¸€æ—¦Sleepã•ã›ã‚‹
 	static bool readyLch = false;
 	static bool readyRch = false;
 	if (lrclk == 0x1) {
@@ -157,28 +161,31 @@ void pynq_dsp_hls(
 	} else {
 		readyLch = true;
 	}
-	if (!readyLch || !readyRch) { // ‚Ç‚¿‚ç‚©‚Ìƒf[ƒ^‚ªŒÃ‚¢‚©‚à‚µ‚ê‚È‚¢
+	if (!readyLch || !readyRch) { // ã©ã¡ã‚‰ã‹ã®ãƒ‡ãƒ¼ã‚¿ãŒå¤ã„ã‹ã‚‚ã—ã‚Œãªã„
 		return;
 	} else {
-		// status flag‚ğƒŠƒZƒbƒg‚µ‚Äˆ—‘±s
+		// status flagã‚’ãƒªã‚»ãƒƒãƒˆã—ã¦å‡¦ç†ç¶šè¡Œ
 		readyLch = false;
 		readyRch = false;
 	}
 
-	// L/R ch‚Ìƒf[ƒ^‚ğæ“¾
-	const ap_uint<32> lraw = physMemPtr[addr + I2S_DATA_RX_L_REG];
-	const ap_uint<32> rraw = physMemPtr[addr + I2S_DATA_RX_R_REG];
-	const ap_int<24> lsrc = lraw.range(23, 0); // ÀÛ‚Í24bit‚µ‚©‚È‚¢‚Ì‚ÅØ‚èo‚·
-	const ap_int<24> rsrc = rraw.range(23, 0);
-	const float lsrcf = lsrc.to_float() / INTERNAL_FIXED_UNIT; // max 1.0‚Éû‚Ü‚é‚æ‚¤‚É‚·‚é
-	const float rsrcf = rsrc.to_float() / INTERNAL_FIXED_UNIT;
-	// ˆ—’†‚Ì‰¹ºƒf[ƒ^Ši”[æ‚ğì¬
+	// ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼ã‚’ã‚¤ãƒ³ã‚¯ãƒªãƒ¡ãƒ³ãƒˆã—ã¨ã
+	*counter = (*counter < 0xfffffffe) ? ((*counter) + 1) : 0;
+
+	// L/R chã®ãƒ‡ãƒ¼ã‚¿ã‚’å–å¾—
+	const ap_uint<32> rawL = physMemPtr[addr + I2S_DATA_RX_L_REG];
+	const ap_uint<32> rawR = physMemPtr[addr + I2S_DATA_RX_R_REG];
+	const ap_int<24> srcL = rawL.range(23, 0); // å®Ÿéš›ã¯24bitã—ã‹ãªã„ã®ã§åˆ‡ã‚Šå‡ºã™
+	const ap_int<24> srcR = rawR.range(23, 0);
+	const float floatSrcL = srcL.to_float() / INTERNAL_FIXED_UNIT; // max 1.0ã«åã¾ã‚‹ã‚ˆã†ã«ã™ã‚‹
+	const float floatSrcR = srcR.to_float() / INTERNAL_FIXED_UNIT;
+	// å‡¦ç†ä¸­ã®éŸ³å£°ãƒ‡ãƒ¼ã‚¿æ ¼ç´å…ˆã‚’ä½œæˆ
 	SampleData currentData;
-	currentData.lch = lsrcf;
-	currentData.rch = rsrcf;
+	currentData.l = floatSrcL;
+	currentData.r = floatSrcR;
 
 	for (ap_uint<32> stageIndex = 0; stageIndex < EFFECT_STAGE_N; stageIndex++) {
-		// ƒGƒtƒFƒNƒg‚Å•ªŠò‚µ‚Äˆ—
+		// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã§åˆ†å²ã—ã¦å‡¦ç†
 		switch (static_cast<EffectId>(configReg[stageIndex][0])) {
 			case EffectId::DISTORTION:
 				currentData = effect_distortion(currentData, configReg[stageIndex]);
@@ -199,24 +206,24 @@ void pynq_dsp_hls(
 				break;
 			case EffectId::BYPASS:
 			default:
-				// bypass‚Í‰½‚à‚µ‚È‚¢
+				// bypassã¯ä½•ã‚‚ã—ãªã„
 				break;
 		}
 
 	}
-	// ƒGƒtƒFƒNƒg‚ğŠ|‚¯‚½‰¹ºƒf[ƒ^‚ğfixed‚©‚ç‚Ç‚¤‚É‚©‚à‚Æ‚Ì’PˆÊ‚É–ß‚·
-	const float ldstf = currentData.lch * INTERNAL_FIXED_UNIT; // max 1.0‚©‚çŒ³‚Ì•„†‚È‚µ‚É–ß‚·
-	const float rdstf = currentData.rch * INTERNAL_FIXED_UNIT;
-	const ap_int<24> ldst = static_cast<ap_int<24>>(ldstf);
-	const ap_int<24> rdst = static_cast<ap_int<24>>(rdstf);
+	// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’æ›ã‘ãŸéŸ³å£°ãƒ‡ãƒ¼ã‚¿ã‚’fixedã‹ã‚‰ã©ã†ã«ã‹ã‚‚ã¨ã®å˜ä½ã«æˆ»ã™
+	const float floatDstL = currentData.l * INTERNAL_FIXED_UNIT; // max 1.0ã‹ã‚‰å…ƒã®ç¬¦å·ãªã—ã«æˆ»ã™
+	const float floatDstR = currentData.r * INTERNAL_FIXED_UNIT;
+	const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
+	const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
 
-	// L/R ch‚Ìƒf[ƒ^‚ğİ’è
-	physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(ldst);
-	physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(rdst);
+	// L/R chã®ãƒ‡ãƒ¼ã‚¿ã‚’è¨­å®š
+	physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
+	physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
 
-	// ‚»‚Ì‘¼ƒfƒoƒbƒOî•ñ
-	*srcL = lsrcf;
-	*srcR = rsrcf;
-	*dstL = ldstf;
-	*dstR = rdstf;
+	// ãã®ä»–ãƒ‡ãƒãƒƒã‚°æƒ…å ±
+	*monitorSrcL = floatSrcL;
+	*monitorSrcR = floatSrcR;
+	*monitorDstL = floatDstL;
+	*monitorDstR = floatDstR;
 }

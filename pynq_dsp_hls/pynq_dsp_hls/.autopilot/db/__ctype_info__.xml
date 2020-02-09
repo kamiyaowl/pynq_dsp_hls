@@ -20,6 +20,16 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
+<name>extMemPtr_V</name>
+<CType>
+<TypeName>ap_uint 32</TypeName>
+<TypeWidth>32</TypeWidth>
+<PhysicalWidth>32</PhysicalWidth>
+</CType>
+<CFractionWidth>0</CFractionWidth>
+<InvalidType>0</InvalidType>
+</RtlPorts>
+<RtlPorts>
 <name>basePhysAddr_V</name>
 <CType>
 <TypeName>ap_uint 32</TypeName>
@@ -30,7 +40,7 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>srcL</name>
+<name>monitorSrcL</name>
 <CType>
 <TypeName>float</TypeName>
 <TypeWidth>32</TypeWidth>
@@ -40,7 +50,7 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>srcR</name>
+<name>monitorSrcR</name>
 <CType>
 <TypeName>float</TypeName>
 <TypeWidth>32</TypeWidth>
@@ -50,7 +60,7 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>dstL</name>
+<name>monitorDstL</name>
 <CType>
 <TypeName>float</TypeName>
 <TypeWidth>32</TypeWidth>
@@ -60,7 +70,7 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>dstR</name>
+<name>monitorDstR</name>
 <CType>
 <TypeName>float</TypeName>
 <TypeWidth>32</TypeWidth>
@@ -70,9 +80,9 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>numOfStage_V</name>
+<name>counter</name>
 <CType>
-<TypeName>ap_uint 32</TypeName>
+<TypeName>unsigned int</TypeName>
 <TypeWidth>32</TypeWidth>
 <PhysicalWidth>32</PhysicalWidth>
 </CType>
@@ -80,9 +90,19 @@
 <InvalidType>0</InvalidType>
 </RtlPorts>
 <RtlPorts>
-<name>configSizePerStage_V</name>
+<name>numOfStage</name>
 <CType>
-<TypeName>ap_uint 32</TypeName>
+<TypeName>unsigned int</TypeName>
+<TypeWidth>32</TypeWidth>
+<PhysicalWidth>32</PhysicalWidth>
+</CType>
+<CFractionWidth>0</CFractionWidth>
+<InvalidType>0</InvalidType>
+</RtlPorts>
+<RtlPorts>
+<name>configSizePerStage</name>
+<CType>
+<TypeName>unsigned int</TypeName>
 <TypeWidth>32</TypeWidth>
 <PhysicalWidth>32</PhysicalWidth>
 </CType>

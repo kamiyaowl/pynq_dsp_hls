@@ -14,13 +14,77 @@ basePhysAddr_V {
 	offset 16
 	offset_end 23
 }
-configReg { 
+monitorSrcL { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 24
+	offset_end 31
+}
+monitorSrcR { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 32
+	offset_end 39
+}
+monitorDstL { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 40
+	offset_end 47
+}
+monitorDstR { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 48
+	offset_end 55
+}
+counter_i { 
 	dir I
 	width 32
-	depth 16
-	mode ap_memory
+	depth 1
+	mode ap_none
+	offset 56
+	offset_end 63
+}
+counter_o { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
 	offset 64
-	offset_end 127
+	offset_end 71
+}
+numOfStage { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 72
+	offset_end 79
+}
+configSizePerStage { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 80
+	offset_end 87
+}
+configReg { 
+	dir IO
+	width 32
+	depth 32
+	mode ap_memory
+	offset 128
+	offset_end 255
 }
 }
 dict set axilite_register_dict AXILiteS $port_AXILiteS

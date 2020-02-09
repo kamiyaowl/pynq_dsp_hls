@@ -8,7 +8,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity pynq_dsp_hls_AXILiteS_s_axi is
 generic (
-    C_S_AXI_ADDR_WIDTH    : INTEGER := 7;
+    C_S_AXI_ADDR_WIDTH    : INTEGER := 8;
     C_S_AXI_DATA_WIDTH    : INTEGER := 32);
 port (
     ACLK                  :in   STD_LOGIC;
@@ -37,8 +37,25 @@ port (
     ap_ready              :in   STD_LOGIC;
     ap_idle               :in   STD_LOGIC;
     basePhysAddr_V        :out  STD_LOGIC_VECTOR(31 downto 0);
-    configReg_address0    :in   STD_LOGIC_VECTOR(3 downto 0);
+    monitorSrcL           :in   STD_LOGIC_VECTOR(31 downto 0);
+    monitorSrcL_ap_vld    :in   STD_LOGIC;
+    monitorSrcR           :in   STD_LOGIC_VECTOR(31 downto 0);
+    monitorSrcR_ap_vld    :in   STD_LOGIC;
+    monitorDstL           :in   STD_LOGIC_VECTOR(31 downto 0);
+    monitorDstL_ap_vld    :in   STD_LOGIC;
+    monitorDstR           :in   STD_LOGIC_VECTOR(31 downto 0);
+    monitorDstR_ap_vld    :in   STD_LOGIC;
+    counter_i             :out  STD_LOGIC_VECTOR(31 downto 0);
+    counter_o             :in   STD_LOGIC_VECTOR(31 downto 0);
+    counter_o_ap_vld      :in   STD_LOGIC;
+    numOfStage            :in   STD_LOGIC_VECTOR(31 downto 0);
+    numOfStage_ap_vld     :in   STD_LOGIC;
+    configSizePerStage    :in   STD_LOGIC_VECTOR(31 downto 0);
+    configSizePerStage_ap_vld :in   STD_LOGIC;
+    configReg_address0    :in   STD_LOGIC_VECTOR(4 downto 0);
     configReg_ce0         :in   STD_LOGIC;
+    configReg_we0         :in   STD_LOGIC;
+    configReg_d0          :in   STD_LOGIC_VECTOR(31 downto 0);
     configReg_q0          :out  STD_LOGIC_VECTOR(31 downto 0)
 );
 end entity pynq_dsp_hls_AXILiteS_s_axi;
@@ -65,8 +82,46 @@ end entity pynq_dsp_hls_AXILiteS_s_axi;
 -- 0x10 : Data signal of basePhysAddr_V
 --        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
 -- 0x14 : reserved
--- 0x40 ~
--- 0x7f : Memory 'configReg' (16 * 32b)
+-- 0x18 : Data signal of monitorSrcL
+--        bit 31~0 - monitorSrcL[31:0] (Read)
+-- 0x1c : Control signal of monitorSrcL
+--        bit 0  - monitorSrcL_ap_vld (Read/COR)
+--        others - reserved
+-- 0x20 : Data signal of monitorSrcR
+--        bit 31~0 - monitorSrcR[31:0] (Read)
+-- 0x24 : Control signal of monitorSrcR
+--        bit 0  - monitorSrcR_ap_vld (Read/COR)
+--        others - reserved
+-- 0x28 : Data signal of monitorDstL
+--        bit 31~0 - monitorDstL[31:0] (Read)
+-- 0x2c : Control signal of monitorDstL
+--        bit 0  - monitorDstL_ap_vld (Read/COR)
+--        others - reserved
+-- 0x30 : Data signal of monitorDstR
+--        bit 31~0 - monitorDstR[31:0] (Read)
+-- 0x34 : Control signal of monitorDstR
+--        bit 0  - monitorDstR_ap_vld (Read/COR)
+--        others - reserved
+-- 0x38 : Data signal of counter_i
+--        bit 31~0 - counter_i[31:0] (Read/Write)
+-- 0x3c : reserved
+-- 0x40 : Data signal of counter_o
+--        bit 31~0 - counter_o[31:0] (Read)
+-- 0x44 : Control signal of counter_o
+--        bit 0  - counter_o_ap_vld (Read/COR)
+--        others - reserved
+-- 0x48 : Data signal of numOfStage
+--        bit 31~0 - numOfStage[31:0] (Read)
+-- 0x4c : Control signal of numOfStage
+--        bit 0  - numOfStage_ap_vld (Read/COR)
+--        others - reserved
+-- 0x50 : Data signal of configSizePerStage
+--        bit 31~0 - configSizePerStage[31:0] (Read)
+-- 0x54 : Control signal of configSizePerStage
+--        bit 0  - configSizePerStage_ap_vld (Read/COR)
+--        others - reserved
+-- 0x80 ~
+-- 0xff : Memory 'configReg' (32 * 32b)
 --        Word n : bit [31:0] - configReg[n]
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
@@ -75,15 +130,31 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal wstate  : states := wrreset;
     signal rstate  : states := rdreset;
     signal wnext, rnext: states;
-    constant ADDR_AP_CTRL               : INTEGER := 16#00#;
-    constant ADDR_GIE                   : INTEGER := 16#04#;
-    constant ADDR_IER                   : INTEGER := 16#08#;
-    constant ADDR_ISR                   : INTEGER := 16#0c#;
-    constant ADDR_BASEPHYSADDR_V_DATA_0 : INTEGER := 16#10#;
-    constant ADDR_BASEPHYSADDR_V_CTRL   : INTEGER := 16#14#;
-    constant ADDR_CONFIGREG_BASE        : INTEGER := 16#40#;
-    constant ADDR_CONFIGREG_HIGH        : INTEGER := 16#7f#;
-    constant ADDR_BITS         : INTEGER := 7;
+    constant ADDR_AP_CTRL                   : INTEGER := 16#00#;
+    constant ADDR_GIE                       : INTEGER := 16#04#;
+    constant ADDR_IER                       : INTEGER := 16#08#;
+    constant ADDR_ISR                       : INTEGER := 16#0c#;
+    constant ADDR_BASEPHYSADDR_V_DATA_0     : INTEGER := 16#10#;
+    constant ADDR_BASEPHYSADDR_V_CTRL       : INTEGER := 16#14#;
+    constant ADDR_MONITORSRCL_DATA_0        : INTEGER := 16#18#;
+    constant ADDR_MONITORSRCL_CTRL          : INTEGER := 16#1c#;
+    constant ADDR_MONITORSRCR_DATA_0        : INTEGER := 16#20#;
+    constant ADDR_MONITORSRCR_CTRL          : INTEGER := 16#24#;
+    constant ADDR_MONITORDSTL_DATA_0        : INTEGER := 16#28#;
+    constant ADDR_MONITORDSTL_CTRL          : INTEGER := 16#2c#;
+    constant ADDR_MONITORDSTR_DATA_0        : INTEGER := 16#30#;
+    constant ADDR_MONITORDSTR_CTRL          : INTEGER := 16#34#;
+    constant ADDR_COUNTER_I_DATA_0          : INTEGER := 16#38#;
+    constant ADDR_COUNTER_I_CTRL            : INTEGER := 16#3c#;
+    constant ADDR_COUNTER_O_DATA_0          : INTEGER := 16#40#;
+    constant ADDR_COUNTER_O_CTRL            : INTEGER := 16#44#;
+    constant ADDR_NUMOFSTAGE_DATA_0         : INTEGER := 16#48#;
+    constant ADDR_NUMOFSTAGE_CTRL           : INTEGER := 16#4c#;
+    constant ADDR_CONFIGSIZEPERSTAGE_DATA_0 : INTEGER := 16#50#;
+    constant ADDR_CONFIGSIZEPERSTAGE_CTRL   : INTEGER := 16#54#;
+    constant ADDR_CONFIGREG_BASE            : INTEGER := 16#80#;
+    constant ADDR_CONFIGREG_HIGH            : INTEGER := 16#ff#;
+    constant ADDR_BITS         : INTEGER := 8;
 
     signal waddr               : UNSIGNED(ADDR_BITS-1 downto 0);
     signal wmask               : UNSIGNED(31 downto 0);
@@ -106,14 +177,29 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal int_ier             : UNSIGNED(1 downto 0) := (others => '0');
     signal int_isr             : UNSIGNED(1 downto 0) := (others => '0');
     signal int_basePhysAddr_V  : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_monitorSrcL     : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_monitorSrcL_ap_vld : STD_LOGIC;
+    signal int_monitorSrcR     : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_monitorSrcR_ap_vld : STD_LOGIC;
+    signal int_monitorDstL     : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_monitorDstL_ap_vld : STD_LOGIC;
+    signal int_monitorDstR     : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_monitorDstR_ap_vld : STD_LOGIC;
+    signal int_counter_i       : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_counter_o       : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_counter_o_ap_vld : STD_LOGIC;
+    signal int_numOfStage      : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_numOfStage_ap_vld : STD_LOGIC;
+    signal int_configSizePerStage : UNSIGNED(31 downto 0) := (others => '0');
+    signal int_configSizePerStage_ap_vld : STD_LOGIC;
     -- memory signals
-    signal int_configReg_address0 : UNSIGNED(3 downto 0);
+    signal int_configReg_address0 : UNSIGNED(4 downto 0);
     signal int_configReg_ce0   : STD_LOGIC;
     signal int_configReg_we0   : STD_LOGIC;
     signal int_configReg_be0   : UNSIGNED(3 downto 0);
     signal int_configReg_d0    : UNSIGNED(31 downto 0);
     signal int_configReg_q0    : UNSIGNED(31 downto 0);
-    signal int_configReg_address1 : UNSIGNED(3 downto 0);
+    signal int_configReg_address1 : UNSIGNED(4 downto 0);
     signal int_configReg_ce1   : STD_LOGIC;
     signal int_configReg_we1   : STD_LOGIC;
     signal int_configReg_be1   : UNSIGNED(3 downto 0);
@@ -162,8 +248,8 @@ begin
 int_configReg : pynq_dsp_hls_AXILiteS_s_axi_ram
 generic map (
      BYTES    => 4,
-     DEPTH    => 16,
-     AWIDTH   => log2(16))
+     DEPTH    => 32,
+     AWIDTH   => log2(32))
 port map (
      clk0     => ACLK,
      address0 => int_configReg_address0,
@@ -298,6 +384,36 @@ port map (
                         rdata_data <= (1 => int_isr(1), 0 => int_isr(0), others => '0');
                     when ADDR_BASEPHYSADDR_V_DATA_0 =>
                         rdata_data <= RESIZE(int_basePhysAddr_V(31 downto 0), 32);
+                    when ADDR_MONITORSRCL_DATA_0 =>
+                        rdata_data <= RESIZE(int_monitorSrcL(31 downto 0), 32);
+                    when ADDR_MONITORSRCL_CTRL =>
+                        rdata_data <= (0 => int_monitorSrcL_ap_vld, others => '0');
+                    when ADDR_MONITORSRCR_DATA_0 =>
+                        rdata_data <= RESIZE(int_monitorSrcR(31 downto 0), 32);
+                    when ADDR_MONITORSRCR_CTRL =>
+                        rdata_data <= (0 => int_monitorSrcR_ap_vld, others => '0');
+                    when ADDR_MONITORDSTL_DATA_0 =>
+                        rdata_data <= RESIZE(int_monitorDstL(31 downto 0), 32);
+                    when ADDR_MONITORDSTL_CTRL =>
+                        rdata_data <= (0 => int_monitorDstL_ap_vld, others => '0');
+                    when ADDR_MONITORDSTR_DATA_0 =>
+                        rdata_data <= RESIZE(int_monitorDstR(31 downto 0), 32);
+                    when ADDR_MONITORDSTR_CTRL =>
+                        rdata_data <= (0 => int_monitorDstR_ap_vld, others => '0');
+                    when ADDR_COUNTER_I_DATA_0 =>
+                        rdata_data <= RESIZE(int_counter_i(31 downto 0), 32);
+                    when ADDR_COUNTER_O_DATA_0 =>
+                        rdata_data <= RESIZE(int_counter_o(31 downto 0), 32);
+                    when ADDR_COUNTER_O_CTRL =>
+                        rdata_data <= (0 => int_counter_o_ap_vld, others => '0');
+                    when ADDR_NUMOFSTAGE_DATA_0 =>
+                        rdata_data <= RESIZE(int_numOfStage(31 downto 0), 32);
+                    when ADDR_NUMOFSTAGE_CTRL =>
+                        rdata_data <= (0 => int_numOfStage_ap_vld, others => '0');
+                    when ADDR_CONFIGSIZEPERSTAGE_DATA_0 =>
+                        rdata_data <= RESIZE(int_configSizePerStage(31 downto 0), 32);
+                    when ADDR_CONFIGSIZEPERSTAGE_CTRL =>
+                        rdata_data <= (0 => int_configSizePerStage_ap_vld, others => '0');
                     when others =>
                         rdata_data <= (others => '0');
                     end case;
@@ -312,6 +428,7 @@ port map (
     interrupt            <= int_gie and (int_isr(0) or int_isr(1));
     ap_start             <= int_ap_start;
     basePhysAddr_V       <= STD_LOGIC_VECTOR(int_basePhysAddr_V);
+    counter_i            <= STD_LOGIC_VECTOR(int_counter_i);
 
     process (ACLK)
     begin
@@ -449,16 +566,223 @@ port map (
         end if;
     end process;
 
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorSrcL <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (monitorSrcL_ap_vld = '1') then
+                    int_monitorSrcL <= UNSIGNED(monitorSrcL); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorSrcL_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (monitorSrcL_ap_vld = '1') then
+                    int_monitorSrcL_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_MONITORSRCL_CTRL) then
+                    int_monitorSrcL_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorSrcR <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (monitorSrcR_ap_vld = '1') then
+                    int_monitorSrcR <= UNSIGNED(monitorSrcR); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorSrcR_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (monitorSrcR_ap_vld = '1') then
+                    int_monitorSrcR_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_MONITORSRCR_CTRL) then
+                    int_monitorSrcR_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorDstL <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (monitorDstL_ap_vld = '1') then
+                    int_monitorDstL <= UNSIGNED(monitorDstL); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorDstL_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (monitorDstL_ap_vld = '1') then
+                    int_monitorDstL_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_MONITORDSTL_CTRL) then
+                    int_monitorDstL_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorDstR <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (monitorDstR_ap_vld = '1') then
+                    int_monitorDstR <= UNSIGNED(monitorDstR); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_monitorDstR_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (monitorDstR_ap_vld = '1') then
+                    int_monitorDstR_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_MONITORDSTR_CTRL) then
+                    int_monitorDstR_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ACLK_EN = '1') then
+                if (w_hs = '1' and waddr = ADDR_COUNTER_I_DATA_0) then
+                    int_counter_i(31 downto 0) <= (UNSIGNED(WDATA(31 downto 0)) and wmask(31 downto 0)) or ((not wmask(31 downto 0)) and int_counter_i(31 downto 0));
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_counter_o <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (counter_o_ap_vld = '1') then
+                    int_counter_o <= UNSIGNED(counter_o); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_counter_o_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (counter_o_ap_vld = '1') then
+                    int_counter_o_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_COUNTER_O_CTRL) then
+                    int_counter_o_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_numOfStage <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (numOfStage_ap_vld = '1') then
+                    int_numOfStage <= UNSIGNED(numOfStage); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_numOfStage_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (numOfStage_ap_vld = '1') then
+                    int_numOfStage_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_NUMOFSTAGE_CTRL) then
+                    int_numOfStage_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_configSizePerStage <= (others => '0');
+            elsif (ACLK_EN = '1') then
+                if (configSizePerStage_ap_vld = '1') then
+                    int_configSizePerStage <= UNSIGNED(configSizePerStage); -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
+    process (ACLK)
+    begin
+        if (ACLK'event and ACLK = '1') then
+            if (ARESET = '1') then
+                int_configSizePerStage_ap_vld <= '0';
+            elsif (ACLK_EN = '1') then
+                if (configSizePerStage_ap_vld = '1') then
+                    int_configSizePerStage_ap_vld <= '1';
+                elsif (ar_hs = '1' and raddr = ADDR_CONFIGSIZEPERSTAGE_CTRL) then
+                    int_configSizePerStage_ap_vld <= '0'; -- clear on read
+                end if;
+            end if;
+        end if;
+    end process;
+
 
 -- ----------------------- Memory logic ------------------
     -- configReg
     int_configReg_address0 <= UNSIGNED(configReg_address0);
     int_configReg_ce0    <= configReg_ce0;
-    int_configReg_we0    <= '0';
-    int_configReg_be0    <= (others => '0');
-    int_configReg_d0     <= (others => '0');
+    int_configReg_we0    <= configReg_we0;
+    int_configReg_be0    <= (others => configReg_we0);
+    int_configReg_d0     <= RESIZE(UNSIGNED(configReg_d0), 32);
     configReg_q0         <= STD_LOGIC_VECTOR(RESIZE(int_configReg_q0, 32));
-    int_configReg_address1 <= raddr(5 downto 2) when ar_hs = '1' else waddr(5 downto 2);
+    int_configReg_address1 <= raddr(6 downto 2) when ar_hs = '1' else waddr(6 downto 2);
     int_configReg_ce1    <= '1' when ar_hs = '1' or (int_configReg_write = '1' and WVALID  = '1') else '0';
     int_configReg_we1    <= '1' when int_configReg_write = '1' and WVALID = '1' else '0';
     int_configReg_be1    <= UNSIGNED(WSTRB);

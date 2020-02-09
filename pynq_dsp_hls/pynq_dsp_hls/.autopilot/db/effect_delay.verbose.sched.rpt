@@ -1,0 +1,583 @@
+
+
+================================================================
+== Vivado HLS Report for 'effect_delay'
+================================================================
+* Date:           Mon Feb 10 01:21:29 2020
+
+* Version:        2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)
+* Project:        pynq_dsp_hls
+* Solution:       pynq_dsp_hls
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |   8.00|     7.000|        1.00|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |    5|   35|    5|   35|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 36
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 36 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 20 36 
+20 --> 21 
+21 --> 22 
+22 --> 23 
+23 --> 24 
+24 --> 25 
+25 --> 26 
+26 --> 27 
+27 --> 28 
+28 --> 29 
+29 --> 30 
+30 --> 31 
+31 --> 32 
+32 --> 33 
+33 --> 34 
+34 --> 35 
+35 --> 36 
+36 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.32>
+ST_1 : Operation 37 [1/1] (0.00ns)   --->   "%config_offset_read = call i3 @_ssdm_op_Read.ap_auto.i3(i3 %config_offset)" [pynq_dsp_hls.cpp:71]   --->   Operation 37 'read' 'config_offset_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 38 [1/1] (0.00ns)   --->   "%tmp_16 = call i6 @_ssdm_op_BitConcatenate.i6.i3.i3(i3 %config_offset_read, i3 0)" [pynq_dsp_hls.cpp:71]   --->   Operation 38 'bitconcatenate' 'tmp_16' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 39 [1/1] (0.00ns)   --->   "%or_ln71 = or i6 %tmp_16, 1" [pynq_dsp_hls.cpp:71]   --->   Operation 39 'or' 'or_ln71' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 40 [1/1] (0.00ns)   --->   "%tmp_17 = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln71)" [pynq_dsp_hls.cpp:71]   --->   Operation 40 'bitconcatenate' 'tmp_17' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%config_addr = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_17" [pynq_dsp_hls.cpp:71]   --->   Operation 41 'getelementptr' 'config_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [2/2] (2.32ns)   --->   "%memAddr = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:71]   --->   Operation 42 'load' 'memAddr' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 2 <SV = 1> <Delay = 2.32>
+ST_2 : Operation 43 [1/1] (0.00ns)   --->   "%or_ln72 = or i6 %tmp_16, 2" [pynq_dsp_hls.cpp:72]   --->   Operation 43 'or' 'or_ln72' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 44 [1/1] (0.00ns)   --->   "%tmp_18 = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln72)" [pynq_dsp_hls.cpp:72]   --->   Operation 44 'bitconcatenate' 'tmp_18' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 45 [1/1] (0.00ns)   --->   "%config_addr_1 = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_18" [pynq_dsp_hls.cpp:72]   --->   Operation 45 'getelementptr' 'config_addr_1' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 46 [1/2] (2.32ns)   --->   "%memAddr = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:71]   --->   Operation 46 'load' 'memAddr' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_2 : Operation 47 [2/2] (2.32ns)   --->   "%memSize = load i32* %config_addr_1, align 4" [pynq_dsp_hls.cpp:72]   --->   Operation 47 'load' 'memSize' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 3 <SV = 2> <Delay = 2.32>
+ST_3 : Operation 48 [1/1] (0.00ns)   --->   "%or_ln73 = or i6 %tmp_16, 3" [pynq_dsp_hls.cpp:73]   --->   Operation 48 'or' 'or_ln73' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 49 [1/1] (0.00ns)   --->   "%tmp_19 = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln73)" [pynq_dsp_hls.cpp:73]   --->   Operation 49 'bitconcatenate' 'tmp_19' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 50 [1/1] (0.00ns)   --->   "%config_addr_2 = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_19" [pynq_dsp_hls.cpp:73]   --->   Operation 50 'getelementptr' 'config_addr_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 51 [1/2] (2.32ns)   --->   "%memSize = load i32* %config_addr_1, align 4" [pynq_dsp_hls.cpp:72]   --->   Operation 51 'load' 'memSize' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_3 : Operation 52 [2/2] (2.32ns)   --->   "%p_Val2_s = load i32* %config_addr_2, align 4" [pynq_dsp_hls.cpp:73]   --->   Operation 52 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_3 : Operation 53 [1/1] (0.00ns)   --->   "%val_assign_9 = call i31 @_ssdm_op_PartSelect.i31.i32.i32.i32(i32 %memSize, i32 1, i32 31)" [pynq_dsp_hls.cpp:79]   --->   Operation 53 'partselect' 'val_assign_9' <Predicate = true> <Delay = 0.00>
+
+State 4 <SV = 3> <Delay = 2.32>
+ST_4 : Operation 54 [1/1] (0.00ns)   --->   "%or_ln74 = or i6 %tmp_16, 4" [pynq_dsp_hls.cpp:74]   --->   Operation 54 'or' 'or_ln74' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 55 [1/1] (0.00ns)   --->   "%tmp_s = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln74)" [pynq_dsp_hls.cpp:74]   --->   Operation 55 'bitconcatenate' 'tmp_s' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 56 [1/1] (0.00ns)   --->   "%config_addr_3 = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_s" [pynq_dsp_hls.cpp:74]   --->   Operation 56 'getelementptr' 'config_addr_3' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 57 [1/2] (2.32ns)   --->   "%p_Val2_s = load i32* %config_addr_2, align 4" [pynq_dsp_hls.cpp:73]   --->   Operation 57 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_4 : Operation 58 [1/1] (0.00ns)   --->   "%trunc_ln368 = trunc i32 %p_Val2_s to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:73]   --->   Operation 58 'trunc' 'trunc_ln368' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 59 [2/2] (2.32ns)   --->   "%p_Val2_10 = load i32* %config_addr_3, align 4" [pynq_dsp_hls.cpp:74]   --->   Operation 59 'load' 'p_Val2_10' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 5 <SV = 4> <Delay = 4.23>
+ST_5 : Operation 60 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecMemCore([32 x i32]* %config_r, [1 x i8]* @p_str4, [7 x i8]* @RAM_1P_str, [1 x i8]* @p_str4, i32 -1, [1 x i8]* @p_str4, [1 x i8]* @p_str4, [1 x i8]* @p_str4, [1 x i8]* @p_str4, [1 x i8]* @p_str4)"   --->   Operation 60 'specmemcore' 'empty' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 61 [1/1] (0.00ns)   --->   "%inData_r_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_r)" [pynq_dsp_hls.cpp:71]   --->   Operation 61 'read' 'inData_r_read' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 62 [1/1] (0.00ns)   --->   "%inData_l_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_l)" [pynq_dsp_hls.cpp:71]   --->   Operation 62 'read' 'inData_l_read' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 63 [1/1] (0.00ns)   --->   "%or_ln75 = or i6 %tmp_16, 5" [pynq_dsp_hls.cpp:75]   --->   Operation 63 'or' 'or_ln75' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 64 [1/1] (0.00ns)   --->   "%tmp_20 = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln75)" [pynq_dsp_hls.cpp:75]   --->   Operation 64 'bitconcatenate' 'tmp_20' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 65 [1/1] (0.00ns)   --->   "%wrIndex = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_20" [pynq_dsp_hls.cpp:75]   --->   Operation 65 'getelementptr' 'wrIndex' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 66 [1/1] (0.00ns)   --->   "%or_ln76 = or i6 %tmp_16, 6" [pynq_dsp_hls.cpp:76]   --->   Operation 66 'or' 'or_ln76' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 67 [1/1] (0.00ns)   --->   "%tmp_21 = call i64 @_ssdm_op_BitConcatenate.i64.i58.i6(i58 0, i6 %or_ln76)" [pynq_dsp_hls.cpp:76]   --->   Operation 67 'bitconcatenate' 'tmp_21' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 68 [1/1] (0.00ns)   --->   "%rdIndex = getelementptr [32 x i32]* %config_r, i64 0, i64 %tmp_21" [pynq_dsp_hls.cpp:76]   --->   Operation 68 'getelementptr' 'rdIndex' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 69 [1/1] (0.00ns)   --->   "call void (...)* @_ssdm_op_SpecInterface(i32* %extMemPtr_V, [6 x i8]* @p_str7, i32 0, i32 0, [1 x i8]* @p_str5, i32 0, i32 32, [1 x i8]* @p_str5, [1 x i8]* @p_str5, [1 x i8]* @p_str5, i32 16, i32 16, i32 16, i32 16, [1 x i8]* @p_str5, [1 x i8]* @p_str5) nounwind"   --->   Operation 69 'specinterface' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 70 [1/1] (0.00ns)   --->   "%p_Result_s = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:73]   --->   Operation 70 'bitconcatenate' 'p_Result_s' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 71 [1/1] (0.00ns)   --->   "%volRatio = bitcast i32 %p_Result_s to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:73]   --->   Operation 71 'bitcast' 'volRatio' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 72 [1/2] (2.32ns)   --->   "%p_Val2_10 = load i32* %config_addr_3, align 4" [pynq_dsp_hls.cpp:74]   --->   Operation 72 'load' 'p_Val2_10' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_5 : Operation 73 [1/1] (0.00ns)   --->   "%trunc_ln368_6 = trunc i32 %p_Val2_10 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:74]   --->   Operation 73 'trunc' 'trunc_ln368_6' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 74 [1/1] (0.00ns)   --->   "%p_Result_18 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_6)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:74]   --->   Operation 74 'bitconcatenate' 'p_Result_18' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 75 [1/1] (0.00ns)   --->   "%periodRatio = bitcast i32 %p_Result_18 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:74]   --->   Operation 75 'bitcast' 'periodRatio' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 76 [1/1] (0.00ns)   --->   "%maxIndex_V = zext i31 %val_assign_9 to i32" [pynq_dsp_hls.cpp:79]   --->   Operation 76 'zext' 'maxIndex_V' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 77 [1/1] (2.47ns)   --->   "%icmp_ln879 = icmp eq i31 %val_assign_9, 0" [pynq_dsp_hls.cpp:80]   --->   Operation 77 'icmp' 'icmp_ln879' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 78 [1/1] (1.76ns)   --->   "br i1 %icmp_ln879, label %3, label %1" [pynq_dsp_hls.cpp:80]   --->   Operation 78 'br' <Predicate = true> <Delay = 1.76>
+ST_5 : Operation 79 [2/2] (2.32ns)   --->   "%wrIndex_load = load i32* %wrIndex, align 4" [pynq_dsp_hls.cpp:83]   --->   Operation 79 'load' 'wrIndex_load' <Predicate = (!icmp_ln879)> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 6 <SV = 5> <Delay = 4.79>
+ST_6 : Operation 80 [1/2] (2.32ns)   --->   "%wrIndex_load = load i32* %wrIndex, align 4" [pynq_dsp_hls.cpp:83]   --->   Operation 80 'load' 'wrIndex_load' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_6 : Operation 81 [1/1] (2.47ns)   --->   "%icmp_ln891 = icmp ult i32 %wrIndex_load, %maxIndex_V" [pynq_dsp_hls.cpp:83]   --->   Operation 81 'icmp' 'icmp_ln891' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 82 [1/1] (0.00ns)   --->   "br i1 %icmp_ln891, label %2, label %._crit_edge" [pynq_dsp_hls.cpp:83]   --->   Operation 82 'br' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 83 [2/2] (2.32ns)   --->   "%rdIndex_load = load i32* %rdIndex, align 4" [pynq_dsp_hls.cpp:83]   --->   Operation 83 'load' 'rdIndex_load' <Predicate = (icmp_ln891)> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 7 <SV = 6> <Delay = 6.56>
+ST_7 : Operation 84 [1/2] (2.32ns)   --->   "%rdIndex_load = load i32* %rdIndex, align 4" [pynq_dsp_hls.cpp:83]   --->   Operation 84 'load' 'rdIndex_load' <Predicate = (icmp_ln891)> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_7 : Operation 85 [1/1] (2.47ns)   --->   "%icmp_ln891_1 = icmp ult i32 %rdIndex_load, %maxIndex_V" [pynq_dsp_hls.cpp:83]   --->   Operation 85 'icmp' 'icmp_ln891_1' <Predicate = (icmp_ln891)> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 86 [1/1] (1.76ns)   --->   "br i1 %icmp_ln891_1, label %._crit_edge201_ifconv, label %._crit_edge" [pynq_dsp_hls.cpp:83]   --->   Operation 86 'br' <Predicate = (icmp_ln891)> <Delay = 1.76>
+ST_7 : Operation 87 [1/1] (2.32ns)   --->   "store i32 0, i32* %rdIndex, align 4" [pynq_dsp_hls.cpp:85]   --->   Operation 87 'store' <Predicate = (!icmp_ln891_1) | (!icmp_ln891)> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_7 : Operation 88 [1/1] (1.76ns)   --->   "br label %._crit_edge201_ifconv" [pynq_dsp_hls.cpp:86]   --->   Operation 88 'br' <Predicate = (!icmp_ln891_1) | (!icmp_ln891)> <Delay = 1.76>
+ST_7 : Operation 89 [6/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 89 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 6.41>
+ST_8 : Operation 90 [5/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 90 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 6.41>
+ST_9 : Operation 91 [4/4] (5.70ns)   --->   "%monitorSrcL = fmul float %volRatio, %inData_l_read" [pynq_dsp_hls.cpp:88]   --->   Operation 91 'fmul' 'monitorSrcL' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 92 [4/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 92 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 6.41>
+ST_10 : Operation 93 [3/4] (5.70ns)   --->   "%monitorSrcL = fmul float %volRatio, %inData_l_read" [pynq_dsp_hls.cpp:88]   --->   Operation 93 'fmul' 'monitorSrcL' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 94 [4/4] (5.70ns)   --->   "%monitorSrcR = fmul float %volRatio, %inData_r_read" [pynq_dsp_hls.cpp:89]   --->   Operation 94 'fmul' 'monitorSrcR' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 95 [1/1] (2.52ns)   --->   "%ret_V = add i32 -2, %maxIndex_V" [pynq_dsp_hls.cpp:92]   --->   Operation 95 'add' 'ret_V' <Predicate = true> <Delay = 2.52> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 96 [3/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 96 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 6.41>
+ST_11 : Operation 97 [1/1] (0.00ns)   --->   "%i_op_assign_2 = phi i32 [ 0, %._crit_edge ], [ %wrIndex_load, %2 ]" [pynq_dsp_hls.cpp:83]   --->   Operation 97 'phi' 'i_op_assign_2' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 98 [2/4] (5.70ns)   --->   "%monitorSrcL = fmul float %volRatio, %inData_l_read" [pynq_dsp_hls.cpp:88]   --->   Operation 98 'fmul' 'monitorSrcL' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 99 [3/4] (5.70ns)   --->   "%monitorSrcR = fmul float %volRatio, %inData_r_read" [pynq_dsp_hls.cpp:89]   --->   Operation 99 'fmul' 'monitorSrcR' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 100 [1/1] (0.00ns)   --->   "%zext_ln90_1 = zext i32 %memAddr to i34" [pynq_dsp_hls.cpp:90]   --->   Operation 100 'zext' 'zext_ln90_1' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 101 [1/1] (0.00ns)   --->   "%zext_ln90_2 = zext i32 %i_op_assign_2 to i33" [pynq_dsp_hls.cpp:90]   --->   Operation 101 'zext' 'zext_ln90_2' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 102 [1/1] (0.00ns)   --->   "%shl_ln = call i33 @_ssdm_op_BitConcatenate.i33.i32.i1(i32 %i_op_assign_2, i1 false)" [pynq_dsp_hls.cpp:90]   --->   Operation 102 'bitconcatenate' 'shl_ln' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 103 [1/1] (0.00ns)   --->   "%zext_ln90_3 = zext i33 %shl_ln to i34" [pynq_dsp_hls.cpp:90]   --->   Operation 103 'zext' 'zext_ln90_3' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 104 [1/1] (2.59ns)   --->   "%add_ln90 = add i34 %zext_ln90_1, %zext_ln90_3" [pynq_dsp_hls.cpp:90]   --->   Operation 104 'add' 'add_ln90' <Predicate = true> <Delay = 2.59> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 105 [1/1] (0.00ns)   --->   "%zext_ln90_4 = zext i34 %add_ln90 to i64" [pynq_dsp_hls.cpp:90]   --->   Operation 105 'zext' 'zext_ln90_4' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 106 [1/1] (0.00ns)   --->   "%extMemPtr_V_addr = getelementptr i32* %extMemPtr_V, i64 %zext_ln90_4" [pynq_dsp_hls.cpp:90]   --->   Operation 106 'getelementptr' 'extMemPtr_V_addr' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 107 [1/1] (0.00ns)   --->   "%sext_ln1354 = sext i32 %ret_V to i33" [pynq_dsp_hls.cpp:92]   --->   Operation 107 'sext' 'sext_ln1354' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 108 [1/1] (2.47ns)   --->   "%icmp_ln887 = icmp slt i33 %zext_ln90_2, %sext_ln1354" [pynq_dsp_hls.cpp:92]   --->   Operation 108 'icmp' 'icmp_ln887' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 109 [1/1] (2.55ns)   --->   "%add_ln92 = add i32 1, %i_op_assign_2" [pynq_dsp_hls.cpp:92]   --->   Operation 109 'add' 'add_ln92' <Predicate = true> <Delay = 2.55> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 110 [1/1] (0.69ns)   --->   "%select_ln92 = select i1 %icmp_ln887, i32 %add_ln92, i32 0" [pynq_dsp_hls.cpp:92]   --->   Operation 110 'select' 'select_ln92' <Predicate = true> <Delay = 0.69> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_11 : Operation 111 [1/1] (2.32ns)   --->   "store i32 %select_ln92, i32* %wrIndex, align 4" [pynq_dsp_hls.cpp:92]   --->   Operation 111 'store' <Predicate = true> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+ST_11 : Operation 112 [2/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 112 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 7.00>
+ST_12 : Operation 113 [1/4] (5.70ns)   --->   "%monitorSrcL = fmul float %volRatio, %inData_l_read" [pynq_dsp_hls.cpp:88]   --->   Operation 113 'fmul' 'monitorSrcL' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 114 [2/4] (5.70ns)   --->   "%monitorSrcR = fmul float %volRatio, %inData_r_read" [pynq_dsp_hls.cpp:89]   --->   Operation 114 'fmul' 'monitorSrcR' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 115 [1/1] (0.00ns)   --->   "%zext_ln90 = zext i32 %memAddr to i33" [pynq_dsp_hls.cpp:90]   --->   Operation 115 'zext' 'zext_ln90' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 116 [1/1] (7.00ns)   --->   "%extMemPtr_V_addr_req = call i1 @_ssdm_op_WriteReq.m_axi.i32P(i32* %extMemPtr_V_addr, i32 1)" [pynq_dsp_hls.cpp:90]   --->   Operation 116 'writereq' 'extMemPtr_V_addr_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_12 : Operation 117 [1/1] (2.55ns)   --->   "%add_ln91 = add i33 1, %zext_ln90" [pynq_dsp_hls.cpp:91]   --->   Operation 117 'add' 'add_ln91' <Predicate = true> <Delay = 2.55> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 118 [1/1] (0.00ns)   --->   "%zext_ln91 = zext i33 %add_ln91 to i34" [pynq_dsp_hls.cpp:91]   --->   Operation 118 'zext' 'zext_ln91' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 119 [1/1] (2.59ns)   --->   "%add_ln91_1 = add i34 %zext_ln91, %zext_ln90_3" [pynq_dsp_hls.cpp:91]   --->   Operation 119 'add' 'add_ln91_1' <Predicate = true> <Delay = 2.59> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 120 [1/1] (0.00ns)   --->   "%zext_ln91_1 = zext i34 %add_ln91_1 to i64" [pynq_dsp_hls.cpp:91]   --->   Operation 120 'zext' 'zext_ln91_1' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 121 [1/1] (0.00ns)   --->   "%extMemPtr_V_addr_1 = getelementptr i32* %extMemPtr_V, i64 %zext_ln91_1" [pynq_dsp_hls.cpp:91]   --->   Operation 121 'getelementptr' 'extMemPtr_V_addr_1' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 122 [1/6] (6.41ns)   --->   "%tmp = uitofp i32 %memSize to float" [pynq_dsp_hls.cpp:95]   --->   Operation 122 'uitofp' 'tmp' <Predicate = true> <Delay = 6.41> <Core = "Int2Float">   --->   Core 112 'Int2Float' <Latency = 5> <II = 1> <Delay = 6.41> <FuncUnit> <Opcode : 'sitofp' 'uitofp'> <InPorts = 1> <OutPorts = 1>
+
+State 13 <SV = 12> <Delay = 7.00>
+ST_13 : Operation 123 [1/4] (5.70ns)   --->   "%monitorSrcR = fmul float %volRatio, %inData_r_read" [pynq_dsp_hls.cpp:89]   --->   Operation 123 'fmul' 'monitorSrcR' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 124 [1/1] (0.00ns)   --->   "%bitcast_ln705 = bitcast float %monitorSrcL to i32" [pynq_dsp_hls.cpp:90]   --->   Operation 124 'bitcast' 'bitcast_ln705' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 125 [1/1] (7.00ns)   --->   "call void @_ssdm_op_Write.m_axi.volatile.i32P(i32* %extMemPtr_V_addr, i32 %bitcast_ln705, i4 -1)" [pynq_dsp_hls.cpp:90]   --->   Operation 125 'write' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_13 : Operation 126 [1/1] (7.00ns)   --->   "%extMemPtr_V_addr_1_r = call i1 @_ssdm_op_WriteReq.m_axi.i32P(i32* %extMemPtr_V_addr_1, i32 1)" [pynq_dsp_hls.cpp:91]   --->   Operation 126 'writereq' 'extMemPtr_V_addr_1_r' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_13 : Operation 127 [4/4] (5.70ns)   --->   "%x_assign = fmul float %tmp, %periodRatio" [pynq_dsp_hls.cpp:95]   --->   Operation 127 'fmul' 'x_assign' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 14 <SV = 13> <Delay = 7.00>
+ST_14 : Operation 128 [5/5] (7.00ns)   --->   "%extMemPtr_V_addr_res = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr)" [pynq_dsp_hls.cpp:90]   --->   Operation 128 'writeresp' 'extMemPtr_V_addr_res' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_14 : Operation 129 [1/1] (0.00ns)   --->   "%bitcast_ln705_1 = bitcast float %monitorSrcR to i32" [pynq_dsp_hls.cpp:91]   --->   Operation 129 'bitcast' 'bitcast_ln705_1' <Predicate = true> <Delay = 0.00>
+ST_14 : Operation 130 [1/1] (7.00ns)   --->   "call void @_ssdm_op_Write.m_axi.volatile.i32P(i32* %extMemPtr_V_addr_1, i32 %bitcast_ln705_1, i4 -1)" [pynq_dsp_hls.cpp:91]   --->   Operation 130 'write' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_14 : Operation 131 [3/4] (5.70ns)   --->   "%x_assign = fmul float %tmp, %periodRatio" [pynq_dsp_hls.cpp:95]   --->   Operation 131 'fmul' 'x_assign' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 14> <Delay = 7.00>
+ST_15 : Operation 132 [4/5] (7.00ns)   --->   "%extMemPtr_V_addr_res = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr)" [pynq_dsp_hls.cpp:90]   --->   Operation 132 'writeresp' 'extMemPtr_V_addr_res' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_15 : Operation 133 [5/5] (7.00ns)   --->   "%extMemPtr_V_addr_1_r_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:91]   --->   Operation 133 'writeresp' 'extMemPtr_V_addr_1_r_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_15 : Operation 134 [2/4] (5.70ns)   --->   "%x_assign = fmul float %tmp, %periodRatio" [pynq_dsp_hls.cpp:95]   --->   Operation 134 'fmul' 'x_assign' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 15> <Delay = 7.00>
+ST_16 : Operation 135 [3/5] (7.00ns)   --->   "%extMemPtr_V_addr_res = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr)" [pynq_dsp_hls.cpp:90]   --->   Operation 135 'writeresp' 'extMemPtr_V_addr_res' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_16 : Operation 136 [4/5] (7.00ns)   --->   "%extMemPtr_V_addr_1_r_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:91]   --->   Operation 136 'writeresp' 'extMemPtr_V_addr_1_r_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_16 : Operation 137 [1/4] (5.70ns)   --->   "%x_assign = fmul float %tmp, %periodRatio" [pynq_dsp_hls.cpp:95]   --->   Operation 137 'fmul' 'x_assign' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_16 : Operation 138 [1/1] (0.00ns)   --->   "%p_Val2_11 = bitcast float %x_assign to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:310->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:66->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 138 'bitcast' 'p_Val2_11' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 139 [1/1] (0.00ns)   --->   "%tmp_V = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_11, i32 23, i32 30) nounwind" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:317->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:66->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 139 'partselect' 'tmp_V' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 140 [1/1] (0.00ns)   --->   "%tmp_V_1 = trunc i32 %p_Val2_11 to i23" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:318->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:66->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 140 'trunc' 'tmp_V_1' <Predicate = true> <Delay = 0.00>
+
+State 17 <SV = 16> <Delay = 7.00>
+ST_17 : Operation 141 [2/5] (7.00ns)   --->   "%extMemPtr_V_addr_res = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr)" [pynq_dsp_hls.cpp:90]   --->   Operation 141 'writeresp' 'extMemPtr_V_addr_res' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_17 : Operation 142 [3/5] (7.00ns)   --->   "%extMemPtr_V_addr_1_r_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:91]   --->   Operation 142 'writeresp' 'extMemPtr_V_addr_1_r_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_17 : Operation 143 [1/1] (0.00ns)   --->   "%zext_ln339 = zext i8 %tmp_V to i9" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:339->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 143 'zext' 'zext_ln339' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 144 [1/1] (1.91ns)   --->   "%add_ln339 = add i9 -127, %zext_ln339" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:339->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 144 'add' 'add_ln339' <Predicate = true> <Delay = 1.91> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 145 [1/1] (0.00ns)   --->   "%isNeg = call i1 @_ssdm_op_BitSelect.i1.i9.i32(i9 %add_ln339, i32 8)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 145 'bitselect' 'isNeg' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 146 [1/1] (1.91ns)   --->   "%sub_ln1311 = sub i8 127, %tmp_V" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 146 'sub' 'sub_ln1311' <Predicate = true> <Delay = 1.91> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 147 [1/1] (0.00ns)   --->   "%sext_ln1311 = sext i8 %sub_ln1311 to i9" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 147 'sext' 'sext_ln1311' <Predicate = true> <Delay = 0.00>
+ST_17 : Operation 148 [1/1] (0.96ns)   --->   "%ush = select i1 %isNeg, i9 %sext_ln1311, i9 %add_ln339" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 148 'select' 'ush' <Predicate = true> <Delay = 0.96> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+
+State 18 <SV = 17> <Delay = 7.00>
+ST_18 : Operation 149 [1/1] (0.00ns)   --->   "%i_op_assign_3 = phi i32 [ 0, %._crit_edge ], [ %rdIndex_load, %2 ]" [pynq_dsp_hls.cpp:83]   --->   Operation 149 'phi' 'i_op_assign_3' <Predicate = true> <Delay = 0.00>
+ST_18 : Operation 150 [1/5] (7.00ns)   --->   "%extMemPtr_V_addr_res = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr)" [pynq_dsp_hls.cpp:90]   --->   Operation 150 'writeresp' 'extMemPtr_V_addr_res' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_18 : Operation 151 [2/5] (7.00ns)   --->   "%extMemPtr_V_addr_1_r_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:91]   --->   Operation 151 'writeresp' 'extMemPtr_V_addr_1_r_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_18 : Operation 152 [1/1] (0.00ns)   --->   "%mantissa_V = call i25 @_ssdm_op_BitConcatenate.i25.i1.i23.i1(i1 true, i23 %tmp_V_1, i1 false)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:68->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 152 'bitconcatenate' 'mantissa_V' <Predicate = true> <Delay = 0.00>
+ST_18 : Operation 153 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%zext_ln682 = zext i25 %mantissa_V to i79" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:68->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 153 'zext' 'zext_ln682' <Predicate = (!isNeg)> <Delay = 0.00>
+ST_18 : Operation 154 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%sext_ln1311_1 = sext i9 %ush to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 154 'sext' 'sext_ln1311_1' <Predicate = (!isNeg)> <Delay = 0.00>
+ST_18 : Operation 155 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%sext_ln1311_2 = sext i9 %ush to i25" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 155 'sext' 'sext_ln1311_2' <Predicate = (isNeg)> <Delay = 0.00>
+ST_18 : Operation 156 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%zext_ln1287 = zext i32 %sext_ln1311_1 to i79" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 156 'zext' 'zext_ln1287' <Predicate = (!isNeg)> <Delay = 0.00>
+ST_18 : Operation 157 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%r_V = lshr i25 %mantissa_V, %sext_ln1311_2" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 157 'lshr' 'r_V' <Predicate = (isNeg)> <Delay = 0.00> <Core = "Shift">   --->   Core 28 'Shift' <Latency = 0> <II = 1> <Delay = 4.42> <FuncUnit> <Opcode : 'shl' 'lshr' 'ashr'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 158 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%r_V_1 = shl i79 %zext_ln682, %zext_ln1287" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 158 'shl' 'r_V_1' <Predicate = (!isNeg)> <Delay = 0.00> <Core = "Shift">   --->   Core 28 'Shift' <Latency = 0> <II = 1> <Delay = 4.42> <FuncUnit> <Opcode : 'shl' 'lshr' 'ashr'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 159 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%tmp_10 = call i1 @_ssdm_op_BitSelect.i1.i25.i32(i25 %r_V, i32 24)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:74->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 159 'bitselect' 'tmp_10' <Predicate = (isNeg)> <Delay = 0.00>
+ST_18 : Operation 160 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%zext_ln662 = zext i1 %tmp_10 to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:74->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 160 'zext' 'zext_ln662' <Predicate = (isNeg)> <Delay = 0.00>
+ST_18 : Operation 161 [1/1] (0.00ns) (grouped into LUT with out node val_V)   --->   "%tmp_22 = call i32 @_ssdm_op_PartSelect.i32.i79.i32.i32(i79 %r_V_1, i32 24, i32 55)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:74->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 161 'partselect' 'tmp_22' <Predicate = (!isNeg)> <Delay = 0.00>
+ST_18 : Operation 162 [1/1] (4.42ns) (out node of the LUT)   --->   "%val_V = select i1 %isNeg, i32 %zext_ln662, i32 %tmp_22" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:71->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_case_IEEE754.h:117->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/lib_floatconversion.cpp:65->pynq_dsp_hls.cpp:95]   --->   Operation 162 'select' 'val_V' <Predicate = true> <Delay = 4.42> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_18 : Operation 163 [1/1] (2.47ns)   --->   "%icmp_ln97 = icmp ult i32 %select_ln92, %i_op_assign_3" [pynq_dsp_hls.cpp:97]   --->   Operation 163 'icmp' 'icmp_ln97' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 164 [1/1] (0.00ns) (grouped into TernaryAdder)   --->   "%sub_ln97_1 = sub i32 %select_ln92, %memSize" [pynq_dsp_hls.cpp:97]   --->   Operation 164 'sub' 'sub_ln97_1' <Predicate = true> <Delay = 0.00> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 2.18> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_18 : Operation 165 [1/1] (4.37ns) (root node of TernaryAdder)   --->   "%add_ln97 = add i32 %i_op_assign_3, %sub_ln97_1" [pynq_dsp_hls.cpp:97]   --->   Operation 165 'add' 'add_ln97' <Predicate = true> <Delay = 4.37> <Core = "TAddSub">   --->   Core 83 'TAddSub' <Latency = 0> <II = 1> <Delay = 2.18> <IPBlock> <Opcode : 'add' 'sub'> <InPorts = 3> <OutPorts = 1> <Sync> <CReg>
+ST_18 : Operation 166 [1/1] (2.55ns)   --->   "%sub_ln97 = sub i32 %select_ln92, %i_op_assign_3" [pynq_dsp_hls.cpp:97]   --->   Operation 166 'sub' 'sub_ln97' <Predicate = true> <Delay = 2.55> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 167 [1/1] (0.00ns) (grouped into LUT with out node icmp_ln98)   --->   "%currentPeriod = select i1 %icmp_ln97, i32 %add_ln97, i32 %sub_ln97" [pynq_dsp_hls.cpp:97]   --->   Operation 167 'select' 'currentPeriod' <Predicate = true> <Delay = 0.00> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_18 : Operation 168 [1/1] (2.47ns) (out node of the LUT)   --->   "%icmp_ln98 = icmp ult i32 %currentPeriod, %val_V" [pynq_dsp_hls.cpp:98]   --->   Operation 168 'icmp' 'icmp_ln98' <Predicate = true> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+
+State 19 <SV = 18> <Delay = 7.00>
+ST_19 : Operation 169 [1/5] (7.00ns)   --->   "%extMemPtr_V_addr_1_r_1 = call i1 @_ssdm_op_WriteResp.m_axi.i32P(i32* %extMemPtr_V_addr_1)" [pynq_dsp_hls.cpp:91]   --->   Operation 169 'writeresp' 'extMemPtr_V_addr_1_r_1' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_19 : Operation 170 [1/1] (1.76ns)   --->   "br i1 %icmp_ln98, label %3, label %._crit_edge204" [pynq_dsp_hls.cpp:98]   --->   Operation 170 'br' <Predicate = true> <Delay = 1.76>
+ST_19 : Operation 171 [1/1] (0.00ns)   --->   "%zext_ln103 = zext i32 %i_op_assign_3 to i33" [pynq_dsp_hls.cpp:103]   --->   Operation 171 'zext' 'zext_ln103' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 172 [1/1] (0.00ns)   --->   "%shl_ln1 = call i33 @_ssdm_op_BitConcatenate.i33.i32.i1(i32 %i_op_assign_3, i1 false)" [pynq_dsp_hls.cpp:103]   --->   Operation 172 'bitconcatenate' 'shl_ln1' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 173 [1/1] (0.00ns)   --->   "%zext_ln103_1 = zext i33 %shl_ln1 to i34" [pynq_dsp_hls.cpp:103]   --->   Operation 173 'zext' 'zext_ln103_1' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 174 [1/1] (2.59ns)   --->   "%add_ln103 = add i34 %zext_ln90_1, %zext_ln103_1" [pynq_dsp_hls.cpp:103]   --->   Operation 174 'add' 'add_ln103' <Predicate = (!icmp_ln98)> <Delay = 2.59> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 175 [1/1] (0.00ns)   --->   "%zext_ln103_2 = zext i34 %add_ln103 to i64" [pynq_dsp_hls.cpp:103]   --->   Operation 175 'zext' 'zext_ln103_2' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 176 [1/1] (0.00ns)   --->   "%extMemPtr_V_addr_2 = getelementptr i32* %extMemPtr_V, i64 %zext_ln103_2" [pynq_dsp_hls.cpp:103]   --->   Operation 176 'getelementptr' 'extMemPtr_V_addr_2' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 177 [1/1] (2.59ns)   --->   "%add_ln104 = add i34 %zext_ln91, %zext_ln103_1" [pynq_dsp_hls.cpp:104]   --->   Operation 177 'add' 'add_ln104' <Predicate = (!icmp_ln98)> <Delay = 2.59> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 178 [1/1] (0.00ns)   --->   "%zext_ln104 = zext i34 %add_ln104 to i64" [pynq_dsp_hls.cpp:104]   --->   Operation 178 'zext' 'zext_ln104' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 179 [1/1] (0.00ns)   --->   "%extMemPtr_V_addr_3 = getelementptr i32* %extMemPtr_V, i64 %zext_ln104" [pynq_dsp_hls.cpp:104]   --->   Operation 179 'getelementptr' 'extMemPtr_V_addr_3' <Predicate = (!icmp_ln98)> <Delay = 0.00>
+ST_19 : Operation 180 [1/1] (2.47ns)   --->   "%icmp_ln887_1 = icmp slt i33 %zext_ln103, %sext_ln1354" [pynq_dsp_hls.cpp:107]   --->   Operation 180 'icmp' 'icmp_ln887_1' <Predicate = (!icmp_ln98)> <Delay = 2.47> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.47> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 181 [1/1] (2.55ns)   --->   "%add_ln107 = add i32 %i_op_assign_3, 1" [pynq_dsp_hls.cpp:107]   --->   Operation 181 'add' 'add_ln107' <Predicate = (!icmp_ln98)> <Delay = 2.55> <Core = "AddSub">   --->   Core 14 'AddSub' <Latency = 0> <II = 1> <Delay = 2.55> <FuncUnit> <Opcode : 'add' 'sub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 182 [1/1] (0.69ns)   --->   "%select_ln107 = select i1 %icmp_ln887_1, i32 %add_ln107, i32 0" [pynq_dsp_hls.cpp:107]   --->   Operation 182 'select' 'select_ln107' <Predicate = (!icmp_ln98)> <Delay = 0.69> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_19 : Operation 183 [1/1] (2.32ns)   --->   "store i32 %select_ln107, i32* %rdIndex, align 4" [pynq_dsp_hls.cpp:107]   --->   Operation 183 'store' <Predicate = (!icmp_ln98)> <Delay = 2.32> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.32> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 32> <RAM>
+
+State 20 <SV = 19> <Delay = 7.00>
+ST_20 : Operation 184 [7/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 184 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 21 <SV = 20> <Delay = 7.00>
+ST_21 : Operation 185 [6/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 185 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_21 : Operation 186 [7/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 186 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 22 <SV = 21> <Delay = 7.00>
+ST_22 : Operation 187 [5/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 187 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_22 : Operation 188 [6/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 188 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 23 <SV = 22> <Delay = 7.00>
+ST_23 : Operation 189 [4/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 189 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_23 : Operation 190 [5/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 190 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 24 <SV = 23> <Delay = 7.00>
+ST_24 : Operation 191 [3/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 191 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_24 : Operation 192 [4/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 192 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 25 <SV = 24> <Delay = 7.00>
+ST_25 : Operation 193 [2/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 193 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_25 : Operation 194 [3/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 194 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 26 <SV = 25> <Delay = 7.00>
+ST_26 : Operation 195 [1/7] (7.00ns)   --->   "%auxRawL_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_2, i32 1)" [pynq_dsp_hls.cpp:103]   --->   Operation 195 'readreq' 'auxRawL_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_26 : Operation 196 [2/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 196 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 27 <SV = 26> <Delay = 7.00>
+ST_27 : Operation 197 [1/1] (7.00ns)   --->   "%auxRawL_V = call i32 @_ssdm_op_Read.m_axi.volatile.i32P(i32* %extMemPtr_V_addr_2)" [pynq_dsp_hls.cpp:103]   --->   Operation 197 'read' 'auxRawL_V' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+ST_27 : Operation 198 [1/7] (7.00ns)   --->   "%auxRawR_V_req = call i1 @_ssdm_op_ReadReq.m_axi.i32P(i32* %extMemPtr_V_addr_3, i32 1)" [pynq_dsp_hls.cpp:104]   --->   Operation 198 'readreq' 'auxRawR_V_req' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 28 <SV = 27> <Delay = 7.00>
+ST_28 : Operation 199 [1/1] (7.00ns)   --->   "%auxRawR_V = call i32 @_ssdm_op_Read.m_axi.volatile.i32P(i32* %extMemPtr_V_addr_3)" [pynq_dsp_hls.cpp:104]   --->   Operation 199 'read' 'auxRawR_V' <Predicate = true> <Delay = 7.00> <Core = "m_axi">   --->   Core 9 'm_axi' <Latency = 6> <II = 1> <Delay = 1.00> <Adapter> <Opcode : 'read' 'write' 'readreq' 'writereq' 'writeresp'>
+
+State 29 <SV = 28> <Delay = 6.44>
+ST_29 : Operation 200 [1/1] (0.00ns)   --->   "%auxL = bitcast i32 %auxRawL_V to float" [pynq_dsp_hls.cpp:105]   --->   Operation 200 'bitcast' 'auxL' <Predicate = true> <Delay = 0.00>
+ST_29 : Operation 201 [1/1] (0.00ns)   --->   "%auxR = bitcast i32 %auxRawR_V to float" [pynq_dsp_hls.cpp:106]   --->   Operation 201 'bitcast' 'auxR' <Predicate = true> <Delay = 0.00>
+ST_29 : Operation 202 [7/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 202 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_29 : Operation 203 [7/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 203 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 30 <SV = 29> <Delay = 6.44>
+ST_30 : Operation 204 [6/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 204 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_30 : Operation 205 [6/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 205 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 31 <SV = 30> <Delay = 6.44>
+ST_31 : Operation 206 [5/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 206 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_31 : Operation 207 [5/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 207 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 32 <SV = 31> <Delay = 6.44>
+ST_32 : Operation 208 [4/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 208 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_32 : Operation 209 [4/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 209 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 33 <SV = 32> <Delay = 6.44>
+ST_33 : Operation 210 [3/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 210 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_33 : Operation 211 [3/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 211 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 34 <SV = 33> <Delay = 6.44>
+ST_34 : Operation 212 [2/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 212 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_34 : Operation 213 [2/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 213 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 35 <SV = 34> <Delay = 6.44>
+ST_35 : Operation 214 [1/7] (6.44ns)   --->   "%dst_l = fadd float %auxL, %inData_l_read" [pynq_dsp_hls.cpp:110]   --->   Operation 214 'fadd' 'dst_l' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_35 : Operation 215 [1/7] (6.44ns)   --->   "%dst_r = fadd float %auxR, %inData_r_read" [pynq_dsp_hls.cpp:111]   --->   Operation 215 'fadd' 'dst_r' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 36 <SV = 35> <Delay = 1.76>
+ST_36 : Operation 216 [1/1] (1.76ns)   --->   "br label %3" [pynq_dsp_hls.cpp:112]   --->   Operation 216 'br' <Predicate = (!icmp_ln879 & !icmp_ln98)> <Delay = 1.76>
+ST_36 : Operation 217 [1/1] (0.00ns)   --->   "%agg_result_l_write_a = phi float [ %dst_l, %._crit_edge204 ], [ %inData_l_read, %0 ], [ %inData_l_read, %._crit_edge201_ifconv ]"   --->   Operation 217 'phi' 'agg_result_l_write_a' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 218 [1/1] (0.00ns)   --->   "%agg_result_r_write_a = phi float [ %dst_r, %._crit_edge204 ], [ %inData_r_read, %0 ], [ %inData_r_read, %._crit_edge201_ifconv ]"   --->   Operation 218 'phi' 'agg_result_r_write_a' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 219 [1/1] (0.00ns)   --->   "%mrv = insertvalue { float, float } undef, float %agg_result_l_write_a, 0" [pynq_dsp_hls.cpp:113]   --->   Operation 219 'insertvalue' 'mrv' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 220 [1/1] (0.00ns)   --->   "%mrv_1 = insertvalue { float, float } %mrv, float %agg_result_r_write_a, 1" [pynq_dsp_hls.cpp:113]   --->   Operation 220 'insertvalue' 'mrv_1' <Predicate = true> <Delay = 0.00>
+ST_36 : Operation 221 [1/1] (0.00ns)   --->   "ret { float, float } %mrv_1" [pynq_dsp_hls.cpp:113]   --->   Operation 221 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 8ns, clock uncertainty: 1ns.
+
+ <State 1>: 2.32ns
+The critical path consists of the following:
+	wire read on port 'config_offset' (pynq_dsp_hls.cpp:71) [7]  (0 ns)
+	'or' operation ('or_ln71', pynq_dsp_hls.cpp:71) [11]  (0 ns)
+	'getelementptr' operation ('config_addr', pynq_dsp_hls.cpp:71) [13]  (0 ns)
+	'load' operation ('memAddr', pynq_dsp_hls.cpp:71) on array 'config_r' [30]  (2.32 ns)
+
+ <State 2>: 2.32ns
+The critical path consists of the following:
+	'or' operation ('or_ln72', pynq_dsp_hls.cpp:72) [14]  (0 ns)
+	'getelementptr' operation ('config_addr_1', pynq_dsp_hls.cpp:72) [16]  (0 ns)
+	'load' operation ('memSize', pynq_dsp_hls.cpp:72) on array 'config_r' [31]  (2.32 ns)
+
+ <State 3>: 2.32ns
+The critical path consists of the following:
+	'or' operation ('or_ln73', pynq_dsp_hls.cpp:73) [17]  (0 ns)
+	'getelementptr' operation ('config_addr_2', pynq_dsp_hls.cpp:73) [19]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:73) on array 'config_r' [32]  (2.32 ns)
+
+ <State 4>: 2.32ns
+The critical path consists of the following:
+	'or' operation ('or_ln74', pynq_dsp_hls.cpp:74) [20]  (0 ns)
+	'getelementptr' operation ('config_addr_3', pynq_dsp_hls.cpp:74) [22]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:74) on array 'config_r' [36]  (2.32 ns)
+
+ <State 5>: 4.24ns
+The critical path consists of the following:
+	'icmp' operation ('icmp_ln879', pynq_dsp_hls.cpp:80) [42]  (2.47 ns)
+	multiplexor before 'phi' operation ('dst.l') with incoming values : ('inData_l_read', pynq_dsp_hls.cpp:71) ('dst.l', pynq_dsp_hls.cpp:110) [140]  (1.77 ns)
+
+ <State 6>: 4.79ns
+The critical path consists of the following:
+	'load' operation ('i_op', pynq_dsp_hls.cpp:83) on array 'config_r' [45]  (2.32 ns)
+	'icmp' operation ('icmp_ln891', pynq_dsp_hls.cpp:83) [46]  (2.47 ns)
+
+ <State 7>: 6.56ns
+The critical path consists of the following:
+	'load' operation ('i_op', pynq_dsp_hls.cpp:83) on array 'config_r' [49]  (2.32 ns)
+	'icmp' operation ('icmp_ln891_1', pynq_dsp_hls.cpp:83) [50]  (2.47 ns)
+	multiplexor before 'phi' operation ('i_op', pynq_dsp_hls.cpp:83) with incoming values : ('i_op', pynq_dsp_hls.cpp:83) [56]  (1.77 ns)
+
+ <State 8>: 6.41ns
+The critical path consists of the following:
+	'uitofp' operation ('tmp', pynq_dsp_hls.cpp:95) [87]  (6.41 ns)
+
+ <State 9>: 6.41ns
+The critical path consists of the following:
+	'uitofp' operation ('tmp', pynq_dsp_hls.cpp:95) [87]  (6.41 ns)
+
+ <State 10>: 6.41ns
+The critical path consists of the following:
+	'uitofp' operation ('tmp', pynq_dsp_hls.cpp:95) [87]  (6.41 ns)
+
+ <State 11>: 6.41ns
+The critical path consists of the following:
+	'uitofp' operation ('tmp', pynq_dsp_hls.cpp:95) [87]  (6.41 ns)
+
+ <State 12>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [69]  (7 ns)
+
+ <State 13>: 7ns
+The critical path consists of the following:
+	bus write on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [70]  (7 ns)
+
+ <State 14>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [71]  (7 ns)
+
+ <State 15>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [71]  (7 ns)
+
+ <State 16>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [71]  (7 ns)
+
+ <State 17>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [71]  (7 ns)
+
+ <State 18>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:90) [71]  (7 ns)
+
+ <State 19>: 7ns
+The critical path consists of the following:
+	bus access on port 'extMemPtr_V' (pynq_dsp_hls.cpp:91) [80]  (7 ns)
+
+ <State 20>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 21>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 22>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 23>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 24>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 25>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 26>: 7ns
+The critical path consists of the following:
+	bus request on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [123]  (7 ns)
+
+ <State 27>: 7ns
+The critical path consists of the following:
+	bus read on port 'extMemPtr_V' (pynq_dsp_hls.cpp:103) [124]  (7 ns)
+
+ <State 28>: 7ns
+The critical path consists of the following:
+	bus read on port 'extMemPtr_V' (pynq_dsp_hls.cpp:104) [129]  (7 ns)
+
+ <State 29>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 30>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 31>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 32>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 33>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 34>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 35>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('dst.l', pynq_dsp_hls.cpp:110) [136]  (6.44 ns)
+
+ <State 36>: 1.77ns
+The critical path consists of the following:
+	multiplexor before 'phi' operation ('dst.l') with incoming values : ('inData_l_read', pynq_dsp_hls.cpp:71) ('dst.l', pynq_dsp_hls.cpp:110) [140]  (1.77 ns)
+	'phi' operation ('dst.l') with incoming values : ('inData_l_read', pynq_dsp_hls.cpp:71) ('dst.l', pynq_dsp_hls.cpp:110) [140]  (0 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+	State 24
+	State 25
+	State 26
+	State 27
+	State 28
+	State 29
+	State 30
+	State 31
+	State 32
+	State 33
+	State 34
+	State 35
+	State 36
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

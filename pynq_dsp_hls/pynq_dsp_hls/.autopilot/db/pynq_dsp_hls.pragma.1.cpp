@@ -6359,6 +6359,7 @@ inline bool operator!=(
 # 399 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_fixed.h" 2
 # 368 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_int.h" 2
 # 2 "pynq_dsp_hls.cpp" 2
+
 # 1 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\hls_math.h" 1
 # 36 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\hls_math.h"
 # 1 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cmath" 1 3
@@ -26321,23 +26322,62 @@ namespace hls {
     uint32_t logb(uint32_t);
 
 };
-# 3 "pynq_dsp_hls.cpp" 2
+# 4 "pynq_dsp_hls.cpp" 2
+# 1 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 1 3
+# 32 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 3
+# 32 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 3
+# 71 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 3
+# 1 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\tr1_impl/cstdint" 1 3
+# 32 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\tr1_impl/cstdint" 3
+namespace std
+{
 
 
+  using ::int8_t;
+  using ::int16_t;
+  using ::int32_t;
+  using ::int64_t;
+
+  using ::int_fast8_t;
+  using ::int_fast16_t;
+  using ::int_fast32_t;
+  using ::int_fast64_t;
+
+  using ::int_least8_t;
+  using ::int_least16_t;
+  using ::int_least32_t;
+  using ::int_least64_t;
+
+  using ::intmax_t;
+  using ::intptr_t;
+
+  using ::uint8_t;
+  using ::uint16_t;
+  using ::uint32_t;
+  using ::uint64_t;
+
+  using ::uint_fast8_t;
+  using ::uint_fast16_t;
+  using ::uint_fast32_t;
+  using ::uint_fast64_t;
+
+  using ::uint_least8_t;
+  using ::uint_least16_t;
+  using ::uint_least32_t;
+  using ::uint_least64_t;
+
+  using ::uintmax_t;
+  using ::uintptr_t;
 
 
-
-
-typedef union {
- uint32_t uint_data;
- float float_data;
-} float_data_conversion_t;
-
-float to_float(uint32_t src) {
- float_data_conversion_t dst;
- dst.uint_data = src;
- return dst.float_data;
 }
+# 72 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 2 3
+# 5 "pynq_dsp_hls.cpp" 2
+
+
+
+
+
 
 
 const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
@@ -26348,8 +26388,8 @@ const ap_uint<32> I2S_STATUS_REG = 0x04;
 
 
 typedef struct {
- float lch;
- float rch;
+ float l;
+ float r;
 } SampleData;
 
 
@@ -26371,41 +26411,111 @@ typedef enum {
 
 
 
-SampleData effect_distortion(SampleData inData, uint32_t config[(4)]) {_ssdm_SpecArrayDimSize(config, 4);
- const float threash = to_float(config[1]);
+SampleData effect_distortion(SampleData inData, uint32_t config[(8)]) {_ssdm_SpecArrayDimSize(config, 8);
+ const float thresh = hls::abs(rawBitsToFloat(config[1]));
 
  SampleData dst;
- const float labs = hls::abs(inData.lch);
- const float rabs = hls::abs(inData.rch);
- const float ldst = hls::min(labs, threash);
- const float rdst = hls::min(rabs, threash);
- dst.lch = (inData.lch < 0.0f) ? -ldst : ldst;
- dst.rch = (inData.rch < 0.0f) ? -rdst : rdst;
+ const float absL = hls::abs(inData.l);
+ const float absR = hls::abs(inData.r);
+ const float monitorDstL = hls::min(absL, thresh);
+ const float monitorDstR = hls::min(absR, thresh);
+ dst.l = (inData.l < 0.0f) ? -monitorDstL : monitorDstL;
+ dst.r = (inData.r < 0.0f) ? -monitorDstR : monitorDstR;
  return dst;
 }
+
+SampleData effect_compressor(SampleData inData, uint32_t config[(8)]) {_ssdm_SpecArrayDimSize(config, 8);
+ const float thresh = hls::abs(rawBitsToFloat(config[1]));
+ const float ratio = hls::abs(rawBitsToFloat(config[2]));
+
+ SampleData dst;
+ const float absL = hls::abs(inData.l);
+ const float absR = hls::abs(inData.r);
+ dst.l = (inData.l < absL) ? inData.l : (inData.l * ratio);
+ dst.r = (inData.r < absR) ? inData.r : (inData.r * ratio);
+ return dst;
+}
+
+SampleData effect_delay(SampleData inData, uint32_t config[(8)], volatile ap_uint<32>* extMemPtr) {_ssdm_SpecArrayDimSize(config, 8);
+ const size_t SIZE_PER_SAMPLE = 2;
+
+ const uint32_t memAddr = config[1];
+ const uint32_t memSize = config[2];
+ const float volRatio = hls::abs(rawBitsToFloat(config[3]));
+ const float periodRatio = hls::abs(rawBitsToFloat(config[4]));
+ uint32_t* wrIndex = &config[5];
+ uint32_t* rdIndex = &config[6];
+
+
+ const ap_uint<32> maxIndex = memSize / 2;
+ if (maxIndex == 0) {
+  return inData;
+ }
+ if ((*wrIndex >= maxIndex) || (*rdIndex >= maxIndex)) {
+  *wrIndex = 0;
+  *rdIndex = 0;
+ }
+
+ const float monitorSrcL = inData.l * volRatio;
+ const float monitorSrcR = inData.r * volRatio;
+ extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 0] = floatToRawBits(monitorSrcL);
+ extMemPtr[memAddr + (*wrIndex) * SIZE_PER_SAMPLE + 1] = floatToRawBits(monitorSrcR);
+ *wrIndex = (*wrIndex) < (maxIndex - 2) ? ((*wrIndex) + 1) : 0;
+
+
+ const uint32_t configPeriod = static_cast<uint32_t>(static_cast<float>(memSize) * periodRatio);
+ const uint32_t currentPeriod = ((*wrIndex) >= (*rdIndex)) ? ((*wrIndex) - (*rdIndex))
+                                               : ((*wrIndex) + (*rdIndex) - memSize);
+ if (currentPeriod < configPeriod) {
+  return inData;
+ }
+
+
+ const ap_uint<32> auxRawL = extMemPtr[memAddr + (*rdIndex) * SIZE_PER_SAMPLE + 0];
+ const ap_uint<32> auxRawR = extMemPtr[memAddr + (*rdIndex) * SIZE_PER_SAMPLE + 1];
+ const float auxL = rawBitsToFloat(auxRawL.to_uint());
+ const float auxR = rawBitsToFloat(auxRawR.to_uint());
+ *rdIndex = (*rdIndex) < (maxIndex - 2) ? ((*rdIndex) + 1) : 0;
+
+ SampleData dst;
+ dst.l = inData.l + auxL;
+ dst.r = inData.r + auxR;
+ return dst;
+}
+
 
 
 void pynq_dsp_hls(
   ap_uint<1> lrclk,
   volatile ap_uint<32>* physMemPtr,
+  volatile ap_uint<32>* extMemPtr,
   ap_uint<32> basePhysAddr,
-  float *srcL,
-  float *srcR,
-  float *dstL,
-  float *dstR,
-  ap_uint<32>* numOfStage,
-  ap_uint<32>* configSizePerStage,
-  uint32_t configReg[(4)][(4)]
+  float* monitorSrcL,
+  float* monitorSrcR,
+  float* monitorDstL,
+  float* monitorDstR,
+  uint32_t* counter,
+  uint32_t* numOfStage,
+  uint32_t* configSizePerStage,
+  uint32_t configReg[(4)][(8)]
   ){_ssdm_SpecArrayDimSize(configReg, 4);
 _ssdm_op_SpecInterface(0, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(&lrclk, "ap_none", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(physMemPtr, "m_axi", 0, 0, "", 0, 32, "", "", "", 16, 16, 16, 16, "", "");
-_ssdm_op_SpecInterface(&basePhysAddr, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(extMemPtr, "m_axi", 0, 0, "", 0, 32, "", "", "", 16, 16, 16, 16, "", "");
+_ssdm_op_SpecInterface(&basePhysAddr, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(monitorSrcL, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(monitorSrcR, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(monitorDstL, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(monitorDstR, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(counter, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(numOfStage, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+_ssdm_op_SpecInterface(configSizePerStage, "s_axilite", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 
 
  *numOfStage = (4);
- *configSizePerStage = (4);
+ *configSizePerStage = (8);
 
 
  const ap_uint<32> addr = (basePhysAddr >> 2);
@@ -26431,16 +26541,19 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
  }
 
 
- const ap_uint<32> lraw = physMemPtr[addr + I2S_DATA_RX_L_REG];
- const ap_uint<32> rraw = physMemPtr[addr + I2S_DATA_RX_R_REG];
- const ap_int<24> lsrc = lraw.range(23, 0);
- const ap_int<24> rsrc = rraw.range(23, 0);
- const float lsrcf = lsrc.to_float() / (0x7fffff);
- const float rsrcf = rsrc.to_float() / (0x7fffff);
+ *counter = (*counter < 0xfffffffe) ? ((*counter) + 1) : 0;
+
+
+ const ap_uint<32> rawL = physMemPtr[addr + I2S_DATA_RX_L_REG];
+ const ap_uint<32> rawR = physMemPtr[addr + I2S_DATA_RX_R_REG];
+ const ap_int<24> srcL = rawL.range(23, 0);
+ const ap_int<24> srcR = rawR.range(23, 0);
+ const float floatSrcL = srcL.to_float() / (0x7fffff);
+ const float floatSrcR = srcR.to_float() / (0x7fffff);
 
  SampleData currentData;
- currentData.lch = lsrcf;
- currentData.rch = rsrcf;
+ currentData.l = floatSrcL;
+ currentData.r = floatSrcR;
 
  for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
 
@@ -26449,9 +26562,13 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
     currentData = effect_distortion(currentData, configReg[stageIndex]);
     break;
    case EffectId::COMPRESSOR:
+    currentData = effect_compressor(currentData, configReg[stageIndex]);
+    break;
+   case EffectId::DELAY:
+    currentData = effect_delay(currentData, configReg[stageIndex], extMemPtr);
+    break;
    case EffectId::FIR:
    case EffectId::IIR:
-   case EffectId::DELAY:
    case EffectId::REVERB:
    case EffectId::CHORUS:
    case EffectId::TREMOLO:
@@ -26466,18 +26583,18 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
 
  }
 
- const float ldstf = currentData.lch * (0x7fffff);
- const float rdstf = currentData.rch * (0x7fffff);
- const ap_int<24> ldst = static_cast<ap_int<24>>(ldstf);
- const ap_int<24> rdst = static_cast<ap_int<24>>(rdstf);
+ const float floatDstL = currentData.l * (0x7fffff);
+ const float floatDstR = currentData.r * (0x7fffff);
+ const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
+ const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
 
 
- physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(ldst);
- physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(rdst);
+ physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
+ physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
 
 
- *srcL = lsrcf;
- *srcR = rsrcf;
- *dstL = ldstf;
- *dstR = rdstf;
+ *monitorSrcL = floatSrcL;
+ *monitorSrcR = floatSrcR;
+ *monitorDstL = floatDstL;
+ *monitorDstR = floatDstR;
 }

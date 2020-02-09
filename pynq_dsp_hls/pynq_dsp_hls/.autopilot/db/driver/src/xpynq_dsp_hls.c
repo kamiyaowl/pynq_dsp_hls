@@ -90,6 +90,163 @@ u32 XPynq_dsp_hls_Get_basePhysAddr_V(XPynq_dsp_hls *InstancePtr) {
     return Data;
 }
 
+u32 XPynq_dsp_hls_Get_monitorSrcL(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORSRCL_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_monitorSrcL_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORSRCL_CTRL);
+    return Data & 0x1;
+}
+
+u32 XPynq_dsp_hls_Get_monitorSrcR(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORSRCR_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_monitorSrcR_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORSRCR_CTRL);
+    return Data & 0x1;
+}
+
+u32 XPynq_dsp_hls_Get_monitorDstL(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORDSTL_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_monitorDstL_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORDSTL_CTRL);
+    return Data & 0x1;
+}
+
+u32 XPynq_dsp_hls_Get_monitorDstR(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORDSTR_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_monitorDstR_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_MONITORDSTR_CTRL);
+    return Data & 0x1;
+}
+
+void XPynq_dsp_hls_Set_counter_i(XPynq_dsp_hls *InstancePtr, u32 Data) {
+    Xil_AssertVoid(InstancePtr != NULL);
+    Xil_AssertVoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    XPynq_dsp_hls_WriteReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_COUNTER_I_DATA, Data);
+}
+
+u32 XPynq_dsp_hls_Get_counter_i(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_COUNTER_I_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_counter_o(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_COUNTER_O_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_counter_o_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_COUNTER_O_CTRL);
+    return Data & 0x1;
+}
+
+u32 XPynq_dsp_hls_Get_numOfStage(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_NUMOFSTAGE_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_numOfStage_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_NUMOFSTAGE_CTRL);
+    return Data & 0x1;
+}
+
+u32 XPynq_dsp_hls_Get_configSizePerStage(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_CONFIGSIZEPERSTAGE_DATA);
+    return Data;
+}
+
+u32 XPynq_dsp_hls_Get_configSizePerStage_vld(XPynq_dsp_hls *InstancePtr) {
+    u32 Data;
+
+    Xil_AssertNonvoid(InstancePtr != NULL);
+    Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);
+
+    Data = XPynq_dsp_hls_ReadReg(InstancePtr->Axilites_BaseAddress, XPYNQ_DSP_HLS_AXILITES_ADDR_CONFIGSIZEPERSTAGE_CTRL);
+    return Data & 0x1;
+}
+
 u32 XPynq_dsp_hls_Get_configReg_BaseAddress(XPynq_dsp_hls *InstancePtr) {
     Xil_AssertNonvoid(InstancePtr != NULL);
     Xil_AssertNonvoid(InstancePtr->IsReady == XIL_COMPONENT_IS_READY);

@@ -5,7 +5,7 @@
 `timescale 1ns/1ps
 module pynq_dsp_hls_AXILiteS_s_axi
 #(parameter
-    C_S_AXI_ADDR_WIDTH = 7,
+    C_S_AXI_ADDR_WIDTH = 8,
     C_S_AXI_DATA_WIDTH = 32
 )(
     input  wire                          ACLK,
@@ -34,8 +34,25 @@ module pynq_dsp_hls_AXILiteS_s_axi
     input  wire                          ap_ready,
     input  wire                          ap_idle,
     output wire [31:0]                   basePhysAddr_V,
-    input  wire [3:0]                    configReg_address0,
+    input  wire [31:0]                   monitorSrcL,
+    input  wire                          monitorSrcL_ap_vld,
+    input  wire [31:0]                   monitorSrcR,
+    input  wire                          monitorSrcR_ap_vld,
+    input  wire [31:0]                   monitorDstL,
+    input  wire                          monitorDstL_ap_vld,
+    input  wire [31:0]                   monitorDstR,
+    input  wire                          monitorDstR_ap_vld,
+    output wire [31:0]                   counter_i,
+    input  wire [31:0]                   counter_o,
+    input  wire                          counter_o_ap_vld,
+    input  wire [31:0]                   numOfStage,
+    input  wire                          numOfStage_ap_vld,
+    input  wire [31:0]                   configSizePerStage,
+    input  wire                          configSizePerStage_ap_vld,
+    input  wire [4:0]                    configReg_address0,
     input  wire                          configReg_ce0,
+    input  wire                          configReg_we0,
+    input  wire [31:0]                   configReg_d0,
     output wire [31:0]                   configReg_q0
 );
 //------------------------Address Info-------------------
@@ -60,29 +77,83 @@ module pynq_dsp_hls_AXILiteS_s_axi
 // 0x10 : Data signal of basePhysAddr_V
 //        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
 // 0x14 : reserved
-// 0x40 ~
-// 0x7f : Memory 'configReg' (16 * 32b)
+// 0x18 : Data signal of monitorSrcL
+//        bit 31~0 - monitorSrcL[31:0] (Read)
+// 0x1c : Control signal of monitorSrcL
+//        bit 0  - monitorSrcL_ap_vld (Read/COR)
+//        others - reserved
+// 0x20 : Data signal of monitorSrcR
+//        bit 31~0 - monitorSrcR[31:0] (Read)
+// 0x24 : Control signal of monitorSrcR
+//        bit 0  - monitorSrcR_ap_vld (Read/COR)
+//        others - reserved
+// 0x28 : Data signal of monitorDstL
+//        bit 31~0 - monitorDstL[31:0] (Read)
+// 0x2c : Control signal of monitorDstL
+//        bit 0  - monitorDstL_ap_vld (Read/COR)
+//        others - reserved
+// 0x30 : Data signal of monitorDstR
+//        bit 31~0 - monitorDstR[31:0] (Read)
+// 0x34 : Control signal of monitorDstR
+//        bit 0  - monitorDstR_ap_vld (Read/COR)
+//        others - reserved
+// 0x38 : Data signal of counter_i
+//        bit 31~0 - counter_i[31:0] (Read/Write)
+// 0x3c : reserved
+// 0x40 : Data signal of counter_o
+//        bit 31~0 - counter_o[31:0] (Read)
+// 0x44 : Control signal of counter_o
+//        bit 0  - counter_o_ap_vld (Read/COR)
+//        others - reserved
+// 0x48 : Data signal of numOfStage
+//        bit 31~0 - numOfStage[31:0] (Read)
+// 0x4c : Control signal of numOfStage
+//        bit 0  - numOfStage_ap_vld (Read/COR)
+//        others - reserved
+// 0x50 : Data signal of configSizePerStage
+//        bit 31~0 - configSizePerStage[31:0] (Read)
+// 0x54 : Control signal of configSizePerStage
+//        bit 0  - configSizePerStage_ap_vld (Read/COR)
+//        others - reserved
+// 0x80 ~
+// 0xff : Memory 'configReg' (32 * 32b)
 //        Word n : bit [31:0] - configReg[n]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL               = 7'h00,
-    ADDR_GIE                   = 7'h04,
-    ADDR_IER                   = 7'h08,
-    ADDR_ISR                   = 7'h0c,
-    ADDR_BASEPHYSADDR_V_DATA_0 = 7'h10,
-    ADDR_BASEPHYSADDR_V_CTRL   = 7'h14,
-    ADDR_CONFIGREG_BASE        = 7'h40,
-    ADDR_CONFIGREG_HIGH        = 7'h7f,
-    WRIDLE                     = 2'd0,
-    WRDATA                     = 2'd1,
-    WRRESP                     = 2'd2,
-    WRRESET                    = 2'd3,
-    RDIDLE                     = 2'd0,
-    RDDATA                     = 2'd1,
-    RDRESET                    = 2'd2,
-    ADDR_BITS         = 7;
+    ADDR_AP_CTRL                   = 8'h00,
+    ADDR_GIE                       = 8'h04,
+    ADDR_IER                       = 8'h08,
+    ADDR_ISR                       = 8'h0c,
+    ADDR_BASEPHYSADDR_V_DATA_0     = 8'h10,
+    ADDR_BASEPHYSADDR_V_CTRL       = 8'h14,
+    ADDR_MONITORSRCL_DATA_0        = 8'h18,
+    ADDR_MONITORSRCL_CTRL          = 8'h1c,
+    ADDR_MONITORSRCR_DATA_0        = 8'h20,
+    ADDR_MONITORSRCR_CTRL          = 8'h24,
+    ADDR_MONITORDSTL_DATA_0        = 8'h28,
+    ADDR_MONITORDSTL_CTRL          = 8'h2c,
+    ADDR_MONITORDSTR_DATA_0        = 8'h30,
+    ADDR_MONITORDSTR_CTRL          = 8'h34,
+    ADDR_COUNTER_I_DATA_0          = 8'h38,
+    ADDR_COUNTER_I_CTRL            = 8'h3c,
+    ADDR_COUNTER_O_DATA_0          = 8'h40,
+    ADDR_COUNTER_O_CTRL            = 8'h44,
+    ADDR_NUMOFSTAGE_DATA_0         = 8'h48,
+    ADDR_NUMOFSTAGE_CTRL           = 8'h4c,
+    ADDR_CONFIGSIZEPERSTAGE_DATA_0 = 8'h50,
+    ADDR_CONFIGSIZEPERSTAGE_CTRL   = 8'h54,
+    ADDR_CONFIGREG_BASE            = 8'h80,
+    ADDR_CONFIGREG_HIGH            = 8'hff,
+    WRIDLE                         = 2'd0,
+    WRDATA                         = 2'd1,
+    WRRESP                         = 2'd2,
+    WRRESET                        = 2'd3,
+    RDIDLE                         = 2'd0,
+    RDDATA                         = 2'd1,
+    RDRESET                        = 2'd2,
+    ADDR_BITS         = 8;
 
 //------------------------Local signal-------------------
     reg  [1:0]                    wstate = WRRESET;
@@ -106,14 +177,29 @@ localparam
     reg  [1:0]                    int_ier = 2'b0;
     reg  [1:0]                    int_isr = 2'b0;
     reg  [31:0]                   int_basePhysAddr_V = 'b0;
+    reg  [31:0]                   int_monitorSrcL = 'b0;
+    reg                           int_monitorSrcL_ap_vld;
+    reg  [31:0]                   int_monitorSrcR = 'b0;
+    reg                           int_monitorSrcR_ap_vld;
+    reg  [31:0]                   int_monitorDstL = 'b0;
+    reg                           int_monitorDstL_ap_vld;
+    reg  [31:0]                   int_monitorDstR = 'b0;
+    reg                           int_monitorDstR_ap_vld;
+    reg  [31:0]                   int_counter_i = 'b0;
+    reg  [31:0]                   int_counter_o = 'b0;
+    reg                           int_counter_o_ap_vld;
+    reg  [31:0]                   int_numOfStage = 'b0;
+    reg                           int_numOfStage_ap_vld;
+    reg  [31:0]                   int_configSizePerStage = 'b0;
+    reg                           int_configSizePerStage_ap_vld;
     // memory signals
-    wire [3:0]                    int_configReg_address0;
+    wire [4:0]                    int_configReg_address0;
     wire                          int_configReg_ce0;
     wire                          int_configReg_we0;
     wire [3:0]                    int_configReg_be0;
     wire [31:0]                   int_configReg_d0;
     wire [31:0]                   int_configReg_q0;
-    wire [3:0]                    int_configReg_address1;
+    wire [4:0]                    int_configReg_address1;
     wire                          int_configReg_ce1;
     wire                          int_configReg_we1;
     wire [3:0]                    int_configReg_be1;
@@ -126,7 +212,7 @@ localparam
 // int_configReg
 pynq_dsp_hls_AXILiteS_s_axi_ram #(
     .BYTES    ( 4 ),
-    .DEPTH    ( 16 )
+    .DEPTH    ( 32 )
 ) int_configReg (
     .clk0     ( ACLK ),
     .address0 ( int_configReg_address0 ),
@@ -251,6 +337,51 @@ always @(posedge ACLK) begin
                 ADDR_BASEPHYSADDR_V_DATA_0: begin
                     rdata <= int_basePhysAddr_V[31:0];
                 end
+                ADDR_MONITORSRCL_DATA_0: begin
+                    rdata <= int_monitorSrcL[31:0];
+                end
+                ADDR_MONITORSRCL_CTRL: begin
+                    rdata[0] <= int_monitorSrcL_ap_vld;
+                end
+                ADDR_MONITORSRCR_DATA_0: begin
+                    rdata <= int_monitorSrcR[31:0];
+                end
+                ADDR_MONITORSRCR_CTRL: begin
+                    rdata[0] <= int_monitorSrcR_ap_vld;
+                end
+                ADDR_MONITORDSTL_DATA_0: begin
+                    rdata <= int_monitorDstL[31:0];
+                end
+                ADDR_MONITORDSTL_CTRL: begin
+                    rdata[0] <= int_monitorDstL_ap_vld;
+                end
+                ADDR_MONITORDSTR_DATA_0: begin
+                    rdata <= int_monitorDstR[31:0];
+                end
+                ADDR_MONITORDSTR_CTRL: begin
+                    rdata[0] <= int_monitorDstR_ap_vld;
+                end
+                ADDR_COUNTER_I_DATA_0: begin
+                    rdata <= int_counter_i[31:0];
+                end
+                ADDR_COUNTER_O_DATA_0: begin
+                    rdata <= int_counter_o[31:0];
+                end
+                ADDR_COUNTER_O_CTRL: begin
+                    rdata[0] <= int_counter_o_ap_vld;
+                end
+                ADDR_NUMOFSTAGE_DATA_0: begin
+                    rdata <= int_numOfStage[31:0];
+                end
+                ADDR_NUMOFSTAGE_CTRL: begin
+                    rdata[0] <= int_numOfStage_ap_vld;
+                end
+                ADDR_CONFIGSIZEPERSTAGE_DATA_0: begin
+                    rdata <= int_configSizePerStage[31:0];
+                end
+                ADDR_CONFIGSIZEPERSTAGE_CTRL: begin
+                    rdata[0] <= int_configSizePerStage_ap_vld;
+                end
             endcase
         end
         else if (int_configReg_read) begin
@@ -264,6 +395,7 @@ end
 assign interrupt      = int_gie & (|int_isr);
 assign ap_start       = int_ap_start;
 assign basePhysAddr_V = int_basePhysAddr_V;
+assign counter_i      = int_counter_i;
 // int_ap_start
 always @(posedge ACLK) begin
     if (ARESET)
@@ -370,16 +502,180 @@ always @(posedge ACLK) begin
     end
 end
 
+// int_monitorSrcL
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorSrcL <= 0;
+    else if (ACLK_EN) begin
+        if (monitorSrcL_ap_vld)
+            int_monitorSrcL <= monitorSrcL;
+    end
+end
+
+// int_monitorSrcL_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorSrcL_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (monitorSrcL_ap_vld)
+            int_monitorSrcL_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_MONITORSRCL_CTRL)
+            int_monitorSrcL_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_monitorSrcR
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorSrcR <= 0;
+    else if (ACLK_EN) begin
+        if (monitorSrcR_ap_vld)
+            int_monitorSrcR <= monitorSrcR;
+    end
+end
+
+// int_monitorSrcR_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorSrcR_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (monitorSrcR_ap_vld)
+            int_monitorSrcR_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_MONITORSRCR_CTRL)
+            int_monitorSrcR_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_monitorDstL
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorDstL <= 0;
+    else if (ACLK_EN) begin
+        if (monitorDstL_ap_vld)
+            int_monitorDstL <= monitorDstL;
+    end
+end
+
+// int_monitorDstL_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorDstL_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (monitorDstL_ap_vld)
+            int_monitorDstL_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_MONITORDSTL_CTRL)
+            int_monitorDstL_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_monitorDstR
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorDstR <= 0;
+    else if (ACLK_EN) begin
+        if (monitorDstR_ap_vld)
+            int_monitorDstR <= monitorDstR;
+    end
+end
+
+// int_monitorDstR_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_monitorDstR_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (monitorDstR_ap_vld)
+            int_monitorDstR_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_MONITORDSTR_CTRL)
+            int_monitorDstR_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_counter_i[31:0]
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_counter_i[31:0] <= 0;
+    else if (ACLK_EN) begin
+        if (w_hs && waddr == ADDR_COUNTER_I_DATA_0)
+            int_counter_i[31:0] <= (WDATA[31:0] & wmask) | (int_counter_i[31:0] & ~wmask);
+    end
+end
+
+// int_counter_o
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_counter_o <= 0;
+    else if (ACLK_EN) begin
+        if (counter_o_ap_vld)
+            int_counter_o <= counter_o;
+    end
+end
+
+// int_counter_o_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_counter_o_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (counter_o_ap_vld)
+            int_counter_o_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_COUNTER_O_CTRL)
+            int_counter_o_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_numOfStage
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_numOfStage <= 0;
+    else if (ACLK_EN) begin
+        if (numOfStage_ap_vld)
+            int_numOfStage <= numOfStage;
+    end
+end
+
+// int_numOfStage_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_numOfStage_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (numOfStage_ap_vld)
+            int_numOfStage_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_NUMOFSTAGE_CTRL)
+            int_numOfStage_ap_vld <= 1'b0; // clear on read
+    end
+end
+
+// int_configSizePerStage
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_configSizePerStage <= 0;
+    else if (ACLK_EN) begin
+        if (configSizePerStage_ap_vld)
+            int_configSizePerStage <= configSizePerStage;
+    end
+end
+
+// int_configSizePerStage_ap_vld
+always @(posedge ACLK) begin
+    if (ARESET)
+        int_configSizePerStage_ap_vld <= 1'b0;
+    else if (ACLK_EN) begin
+        if (configSizePerStage_ap_vld)
+            int_configSizePerStage_ap_vld <= 1'b1;
+        else if (ar_hs && raddr == ADDR_CONFIGSIZEPERSTAGE_CTRL)
+            int_configSizePerStage_ap_vld <= 1'b0; // clear on read
+    end
+end
+
 
 //------------------------Memory logic-------------------
 // configReg
 assign int_configReg_address0 = configReg_address0;
 assign int_configReg_ce0      = configReg_ce0;
-assign int_configReg_we0      = 1'b0;
-assign int_configReg_be0      = 1'b0;
-assign int_configReg_d0       = 1'b0;
+assign int_configReg_we0      = configReg_we0;
+assign int_configReg_be0      = {4{configReg_we0}};
+assign int_configReg_d0       = configReg_d0;
 assign configReg_q0           = int_configReg_q0;
-assign int_configReg_address1 = ar_hs? raddr[5:2] : waddr[5:2];
+assign int_configReg_address1 = ar_hs? raddr[6:2] : waddr[6:2];
 assign int_configReg_ce1      = ar_hs | (int_configReg_write & WVALID);
 assign int_configReg_we1      = int_configReg_write & WVALID;
 assign int_configReg_be1      = WSTRB;

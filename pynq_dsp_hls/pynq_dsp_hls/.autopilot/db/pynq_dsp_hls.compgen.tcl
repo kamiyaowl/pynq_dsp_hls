@@ -1,98 +1,7 @@
 # This script segment is generated automatically by AutoPilot
 
-set id 1
-set name pynq_dsp_hls_fmulbkb
-set corename simcore_fmul
-set op fmul
-set stage_num 4
-set max_latency -1
-set registered_input 1
-set impl_style max_dsp
-set Futype4reduceCEFanout 1
-set clk_width 1
-set clk_signed 0
-set reset_width 1
-set reset_signed 0
-set in0_width 32
-set in0_signed 0
-set in1_width 32
-set in1_signed 0
-set ce_width 1
-set ce_signed 0
-set out_width 32
-if {${::AESL::PGuard_simmodel_gen}} {
-if {[info proc ap_gen_simcore_fmul] == "ap_gen_simcore_fmul"} {
-eval "ap_gen_simcore_fmul { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
-    reset_level 1 \
-    sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    style ${impl_style} \
-    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
-    clk_width ${clk_width} \
-    clk_signed ${clk_signed} \
-    reset_width ${reset_width} \
-    reset_signed ${reset_signed} \
-    in0_width ${in0_width} \
-    in0_signed ${in0_signed} \
-    in1_width ${in1_width} \
-    in1_signed ${in1_signed} \
-    ce_width ${ce_width} \
-    ce_signed ${ce_signed} \
-    out_width ${out_width} \
-}"
-} else {
-puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_fmul, check your AutoPilot builtin lib"
-}
-}
-
-
-if {${::AESL::PGuard_rtl_comp_handler}} {
-	::AP::rtl_comp_handler ${name}
-}
-
-
-set op fmul
-set corename FMul
-if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
-if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {
-eval "::AESL_LIB_XILINX_FPV6::fpv6_gen { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
-    reset_level 1 \
-    sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    style ${impl_style} \
-    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
-    clk_width ${clk_width} \
-    clk_signed ${clk_signed} \
-    reset_width ${reset_width} \
-    reset_signed ${reset_signed} \
-    in0_width ${in0_width} \
-    in0_signed ${in0_signed} \
-    in1_width ${in1_width} \
-    in1_signed ${in1_signed} \
-    ce_width ${ce_width} \
-    ce_signed ${ce_signed} \
-    out_width ${out_width} \
-}"
-} else {
-puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your platform lib"
-}
-}
-
-
-set id 2
-set name pynq_dsp_hls_fdivcud
+set id 15
+set name pynq_dsp_hls_fdiveOg
 set corename simcore_fdiv
 set op fdiv
 set stage_num 16
@@ -179,8 +88,8 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 4
-set name pynq_dsp_hls_sitodEe
+set id 17
+set name pynq_dsp_hls_sitofYi
 set corename simcore_sitofp
 set op sitofp
 set stage_num 6
@@ -261,8 +170,8 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 6
-set name pynq_dsp_hls_fcmpeOg
+set id 19
+set name pynq_dsp_hls_fcmpg8j
 set corename simcore_fcmp
 set op fcmp
 set stage_num 2
@@ -376,13 +285,77 @@ basePhysAddr_V {
 	offset 16
 	offset_end 23
 }
-configReg { 
+monitorSrcL { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 24
+	offset_end 31
+}
+monitorSrcR { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 32
+	offset_end 39
+}
+monitorDstL { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 40
+	offset_end 47
+}
+monitorDstR { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 48
+	offset_end 55
+}
+counter_i { 
 	dir I
 	width 32
-	depth 16
-	mode ap_memory
+	depth 1
+	mode ap_none
+	offset 56
+	offset_end 63
+}
+counter_o { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
 	offset 64
-	offset_end 127
+	offset_end 71
+}
+numOfStage { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 72
+	offset_end 79
+}
+configSizePerStage { 
+	dir O
+	width 32
+	depth 1
+	mode ap_vld
+	offset 80
+	offset_end 87
+}
+configReg { 
+	dir IO
+	width 32
+	depth 32
+	mode ap_memory
+	offset 128
+	offset_end 255
 }
 }
 dict set axilite_register_dict AXILiteS $port_AXILiteS
@@ -392,7 +365,7 @@ dict set axilite_register_dict AXILiteS $port_AXILiteS
 if {${::AESL::PGuard_simmodel_gen}} {
 	if {[info proc ::AESL_LIB_XILADAPTER::s_axilite_gen] == "::AESL_LIB_XILADAPTER::s_axilite_gen"} {
 		eval "::AESL_LIB_XILADAPTER::s_axilite_gen { \
-			id 14 \
+			id 26 \
 			corename pynq_dsp_hls_AXILiteS_axilite \
 			name pynq_dsp_hls_AXILiteS_s_axi \
 			ports {$port_AXILiteS} \
@@ -412,7 +385,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 16 \
+    id 28 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -429,10 +402,31 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 	::AP::rtl_comp_handler pynq_dsp_hls_physMemPtr_V_m_axi
 }
 
+# Native M_AXI:
+if {${::AESL::PGuard_simmodel_gen}} {
+if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
+eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
+    id 29 \
+    corename {m_axi} \
+    op interface \
+    max_latency -1 \ 
+    delay_budget 7 \ 
+    is_flushable 0 \ 
+    name {pynq_dsp_hls_extMemPtr_V_m_axi} \
+} "
+} else {
+puts "@W \[IMPL-110\] Cannot find AXI interface model in the library. Ignored generation of AXI interface for 'extMemPtr_V'"
+}
+}
+
+if {${::AESL::PGuard_rtl_comp_handler}} {
+	::AP::rtl_comp_handler pynq_dsp_hls_extMemPtr_V_m_axi
+}
+
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 15 \
+    id 27 \
     name lrclk_V \
     type other \
     dir I \
@@ -441,96 +435,6 @@ eval "cg_default_interface_gen_dc { \
     corename dc_lrclk_V \
     op interface \
     ports { lrclk_V { I 1 vector } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 17 \
-    name srcL \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_srcL \
-    op interface \
-    ports { srcL { O 32 vector } srcL_ap_vld { O 1 bit } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 18 \
-    name srcR \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_srcR \
-    op interface \
-    ports { srcR { O 32 vector } srcR_ap_vld { O 1 bit } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 19 \
-    name dstL \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_dstL \
-    op interface \
-    ports { dstL { O 32 vector } dstL_ap_vld { O 1 bit } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 20 \
-    name dstR \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_dstR \
-    op interface \
-    ports { dstR { O 32 vector } dstR_ap_vld { O 1 bit } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 21 \
-    name numOfStage_V \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_numOfStage_V \
-    op interface \
-    ports { numOfStage_V { O 32 vector } numOfStage_V_ap_vld { O 1 bit } } \
-} "
-}
-
-# Direct connection:
-if {${::AESL::PGuard_autoexp_gen}} {
-eval "cg_default_interface_gen_dc { \
-    id 22 \
-    name configSizePerStage_V \
-    type other \
-    dir O \
-    reset_level 0 \
-    sync_rst true \
-    corename dc_configSizePerStage_V \
-    op interface \
-    ports { configSizePerStage_V { O 32 vector } configSizePerStage_V_ap_vld { O 1 bit } } \
 } "
 }
 
