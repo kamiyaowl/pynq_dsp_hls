@@ -26322,12 +26322,11 @@ namespace hls {
 
 };
 # 3 "pynq_dsp_hls.cpp" 2
-# 14 "pynq_dsp_hls.cpp"
-ap_int<(32)> sign_ext(ap_uint<(32)> src) {
- auto mask = src[(24) - 1] ? ( ap_uint<(32)-(24)>(~(0xffffffff << ((32) - (24)))) )
-                                   : ap_uint<(32)-(24)>(0x0);
- return static_cast<ap_int<(32)>>((mask, src));
-}
+
+
+
+
+
 
 typedef union {
  uint32_t uint_data;
@@ -26379,9 +26378,9 @@ SampleData effect_distortion(SampleData inData, uint32_t config[(4)]) {_ssdm_Spe
  const float labs = hls::abs(inData.lch);
  const float rabs = hls::abs(inData.rch);
  const float ldst = hls::min(labs, threash);
- const float rdst = hls::min(labs, threash);
- dst.lch = (inData.lch < 0) ? -ldst : ldst;
- dst.rch = (inData.rch < 0) ? -rdst : rdst;
+ const float rdst = hls::min(rabs, threash);
+ dst.lch = (inData.lch < 0.0f) ? -ldst : ldst;
+ dst.rch = (inData.rch < 0.0f) ? -rdst : rdst;
  return dst;
 }
 
@@ -26390,6 +26389,12 @@ void pynq_dsp_hls(
   ap_uint<1> lrclk,
   volatile ap_uint<32>* physMemPtr,
   ap_uint<32> basePhysAddr,
+  float *srcL,
+  float *srcR,
+  float *dstL,
+  float *dstR,
+  ap_uint<32>* numOfStage,
+  ap_uint<32>* configSizePerStage,
   uint32_t configReg[(4)][(4)]
   ){_ssdm_SpecArrayDimSize(configReg, 4);
 _ssdm_op_SpecInterface(0, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
@@ -26397,6 +26402,10 @@ _ssdm_op_SpecInterface(&lrclk, "ap_none", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0
 _ssdm_op_SpecInterface(physMemPtr, "m_axi", 0, 0, "", 0, 32, "", "", "", 16, 16, 16, 16, "", "");
 _ssdm_op_SpecInterface(&basePhysAddr, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
+
+
+ *numOfStage = (4);
+ *configSizePerStage = (4);
 
 
  const ap_uint<32> addr = (basePhysAddr >> 2);
@@ -26422,10 +26431,12 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
  }
 
 
- const ap_int<32> lsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_L_REG]);
- const ap_int<32> rsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_R_REG]);
- const float lsrcf = static_cast<float>(lsrc) / (0x1 << ((24) - 1));
- const float rsrcf = static_cast<float>(rsrc) / (0x1 << ((24) - 1));
+ const ap_uint<32> lraw = physMemPtr[addr + I2S_DATA_RX_L_REG];
+ const ap_uint<32> rraw = physMemPtr[addr + I2S_DATA_RX_R_REG];
+ const ap_int<24> lsrc = lraw.range(23, 0);
+ const ap_int<24> rsrc = rraw.range(23, 0);
+ const float lsrcf = lsrc.to_float() / (0x7fffff);
+ const float rsrcf = rsrc.to_float() / (0x7fffff);
 
  SampleData currentData;
  currentData.lch = lsrcf;
@@ -26455,12 +26466,18 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
 
  }
 
- const float ldstf = currentData.lch * (0x1 << ((24) - 1));
- const float rdstf = currentData.rch * (0x1 << ((24) - 1));
- const ap_int<32> ldst = static_cast<ap_int<32>>(ldstf);
- const ap_int<32> rdst = static_cast<ap_int<32>>(rdstf);
+ const float ldstf = currentData.lch * (0x7fffff);
+ const float rdstf = currentData.rch * (0x7fffff);
+ const ap_int<24> ldst = static_cast<ap_int<24>>(ldstf);
+ const ap_int<24> rdst = static_cast<ap_int<24>>(rdstf);
 
 
  physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(ldst);
  physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(rdst);
+
+
+ *srcL = lsrcf;
+ *srcR = rsrcf;
+ *dstL = ldstf;
+ *dstR = rdstf;
 }

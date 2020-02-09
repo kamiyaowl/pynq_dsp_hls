@@ -92,7 +92,95 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 
 
 set id 2
-set name pynq_dsp_hls_sitocud
+set name pynq_dsp_hls_fdivcud
+set corename simcore_fdiv
+set op fdiv
+set stage_num 16
+set max_latency -1
+set registered_input 1
+set Futype4reduceCEFanout 1
+set clk_width 1
+set clk_signed 0
+set reset_width 1
+set reset_signed 0
+set in0_width 32
+set in0_signed 0
+set in1_width 32
+set in1_signed 0
+set ce_width 1
+set ce_signed 0
+set out_width 32
+if {${::AESL::PGuard_simmodel_gen}} {
+if {[info proc ap_gen_simcore_fdiv] == "ap_gen_simcore_fdiv"} {
+eval "ap_gen_simcore_fdiv { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
+    clk_width ${clk_width} \
+    clk_signed ${clk_signed} \
+    reset_width ${reset_width} \
+    reset_signed ${reset_signed} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    ce_width ${ce_width} \
+    ce_signed ${ce_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_fdiv, check your AutoPilot builtin lib"
+}
+}
+
+
+if {${::AESL::PGuard_rtl_comp_handler}} {
+	::AP::rtl_comp_handler ${name}
+}
+
+
+set op fdiv
+set corename FDiv
+if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
+if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {
+eval "::AESL_LIB_XILINX_FPV6::fpv6_gen { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
+    clk_width ${clk_width} \
+    clk_signed ${clk_signed} \
+    reset_width ${reset_width} \
+    reset_signed ${reset_signed} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    ce_width ${ce_width} \
+    ce_signed ${ce_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your platform lib"
+}
+}
+
+
+set id 4
+set name pynq_dsp_hls_sitodEe
 set corename simcore_sitofp
 set op sitofp
 set stage_num 6
@@ -104,7 +192,7 @@ set clk_signed 0
 set reset_width 1
 set reset_signed 0
 set in0_width 32
-set in0_signed 0
+set in0_signed 1
 set ce_width 1
 set ce_signed 0
 set out_width 32
@@ -173,8 +261,8 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 3
-set name pynq_dsp_hls_fcmpdEe
+set id 6
+set name pynq_dsp_hls_fcmpeOg
 set corename simcore_fcmp
 set op fcmp
 set stage_num 2
@@ -304,7 +392,7 @@ dict set axilite_register_dict AXILiteS $port_AXILiteS
 if {${::AESL::PGuard_simmodel_gen}} {
 	if {[info proc ::AESL_LIB_XILADAPTER::s_axilite_gen] == "::AESL_LIB_XILADAPTER::s_axilite_gen"} {
 		eval "::AESL_LIB_XILADAPTER::s_axilite_gen { \
-			id 9 \
+			id 14 \
 			corename pynq_dsp_hls_AXILiteS_axilite \
 			name pynq_dsp_hls_AXILiteS_s_axi \
 			ports {$port_AXILiteS} \
@@ -324,7 +412,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 11 \
+    id 16 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -344,7 +432,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 10 \
+    id 15 \
     name lrclk_V \
     type other \
     dir I \
@@ -353,6 +441,96 @@ eval "cg_default_interface_gen_dc { \
     corename dc_lrclk_V \
     op interface \
     ports { lrclk_V { I 1 vector } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 17 \
+    name srcL \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_srcL \
+    op interface \
+    ports { srcL { O 32 vector } srcL_ap_vld { O 1 bit } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 18 \
+    name srcR \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_srcR \
+    op interface \
+    ports { srcR { O 32 vector } srcR_ap_vld { O 1 bit } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 19 \
+    name dstL \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_dstL \
+    op interface \
+    ports { dstL { O 32 vector } dstL_ap_vld { O 1 bit } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 20 \
+    name dstR \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_dstR \
+    op interface \
+    ports { dstR { O 32 vector } dstR_ap_vld { O 1 bit } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 21 \
+    name numOfStage_V \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_numOfStage_V \
+    op interface \
+    ports { numOfStage_V { O 32 vector } numOfStage_V_ap_vld { O 1 bit } } \
+} "
+}
+
+# Direct connection:
+if {${::AESL::PGuard_autoexp_gen}} {
+eval "cg_default_interface_gen_dc { \
+    id 22 \
+    name configSizePerStage_V \
+    type other \
+    dir O \
+    reset_level 0 \
+    sync_rst true \
+    corename dc_configSizePerStage_V \
+    op interface \
+    ports { configSizePerStage_V { O 32 vector } configSizePerStage_V_ap_vld { O 1 bit } } \
 } "
 }
 

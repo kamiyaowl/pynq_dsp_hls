@@ -17,15 +17,27 @@ set C_modelArgList {
 	{ lrclk_V int 1 regular  }
 	{ physMemPtr_V int 32 regular {axi_master 2}  }
 	{ basePhysAddr_V int 32 regular {axi_slave 0}  }
+	{ srcL float 32 regular {pointer 1}  }
+	{ srcR float 32 regular {pointer 1}  }
+	{ dstL float 32 regular {pointer 1}  }
+	{ dstR float 32 regular {pointer 1}  }
+	{ numOfStage_V int 32 regular {pointer 1}  }
+	{ configSizePerStage_V int 32 regular {pointer 1}  }
 	{ configReg int 32 regular {axi_slave 0}  }
 }
 set C_modelArgMapList {[ 
 	{ "Name" : "lrclk_V", "interface" : "wire", "bitwidth" : 1, "direction" : "READONLY", "bitSlice":[{"low":0,"up":0,"cElement": [{"cName": "lrclk.V","cData": "uint1","bit_use": { "low": 0,"up": 0},"cArray": [{"low" : 0,"up" : 0,"step" : 0}]}]}]} , 
  	{ "Name" : "physMemPtr_V", "interface" : "axi_master", "bitwidth" : 32, "direction" : "READWRITE", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "physMemPtr.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 31,"step" : 1}]}]}]} , 
  	{ "Name" : "basePhysAddr_V", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_none","bitwidth" : 32, "direction" : "READONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "basePhysAddr.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 0}]}]}], "offset" : {"in":16}, "offset_end" : {"in":23}} , 
+ 	{ "Name" : "srcL", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "srcL","cData": "float","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
+ 	{ "Name" : "srcR", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "srcR","cData": "float","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
+ 	{ "Name" : "dstL", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "dstL","cData": "float","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
+ 	{ "Name" : "dstR", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "dstR","cData": "float","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
+ 	{ "Name" : "numOfStage_V", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "numOfStage.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
+ 	{ "Name" : "configSizePerStage_V", "interface" : "wire", "bitwidth" : 32, "direction" : "WRITEONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "configSizePerStage.V","cData": "uint32","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 0,"step" : 1}]}]}]} , 
  	{ "Name" : "configReg", "interface" : "axi_slave", "bundle":"AXILiteS","type":"ap_memory","bitwidth" : 32, "direction" : "READONLY", "bitSlice":[{"low":0,"up":31,"cElement": [{"cName": "configReg","cData": "unsigned int","bit_use": { "low": 0,"up": 31},"cArray": [{"low" : 0,"up" : 3,"step" : 1},{"low" : 0,"up" : 3,"step" : 1}]}]}], "offset" : {"in":64}, "offset_end" : {"in":127}} ]}
 # RTL Port declarations: 
-set portNum 66
+set portNum 78
 set portList { 
 	{ ap_clk sc_in sc_logic 1 clock -1 } 
 	{ ap_rst_n sc_in sc_logic 1 reset -1 active_low_sync } 
@@ -75,6 +87,18 @@ set portList {
 	{ m_axi_physMemPtr_V_BRESP sc_in sc_lv 2 signal 1 } 
 	{ m_axi_physMemPtr_V_BID sc_in sc_lv 1 signal 1 } 
 	{ m_axi_physMemPtr_V_BUSER sc_in sc_lv 1 signal 1 } 
+	{ srcL sc_out sc_lv 32 signal 3 } 
+	{ srcL_ap_vld sc_out sc_logic 1 outvld 3 } 
+	{ srcR sc_out sc_lv 32 signal 4 } 
+	{ srcR_ap_vld sc_out sc_logic 1 outvld 4 } 
+	{ dstL sc_out sc_lv 32 signal 5 } 
+	{ dstL_ap_vld sc_out sc_logic 1 outvld 5 } 
+	{ dstR sc_out sc_lv 32 signal 6 } 
+	{ dstR_ap_vld sc_out sc_logic 1 outvld 6 } 
+	{ numOfStage_V sc_out sc_lv 32 signal 7 } 
+	{ numOfStage_V_ap_vld sc_out sc_logic 1 outvld 7 } 
+	{ configSizePerStage_V sc_out sc_lv 32 signal 8 } 
+	{ configSizePerStage_V_ap_vld sc_out sc_logic 1 outvld 8 } 
 	{ s_axi_AXILiteS_AWVALID sc_in sc_logic 1 signal -1 } 
 	{ s_axi_AXILiteS_AWREADY sc_out sc_logic 1 signal -1 } 
 	{ s_axi_AXILiteS_AWADDR sc_in sc_lv 7 signal -1 } 
@@ -160,16 +184,28 @@ set NewPortList {[
  	{ "name": "m_axi_physMemPtr_V_BREADY", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BREADY" }} , 
  	{ "name": "m_axi_physMemPtr_V_BRESP", "direction": "in", "datatype": "sc_lv", "bitwidth":2, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BRESP" }} , 
  	{ "name": "m_axi_physMemPtr_V_BID", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BID" }} , 
- 	{ "name": "m_axi_physMemPtr_V_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BUSER" }}  ]}
+ 	{ "name": "m_axi_physMemPtr_V_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "physMemPtr_V", "role": "BUSER" }} , 
+ 	{ "name": "srcL", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "srcL", "role": "default" }} , 
+ 	{ "name": "srcL_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "srcL", "role": "ap_vld" }} , 
+ 	{ "name": "srcR", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "srcR", "role": "default" }} , 
+ 	{ "name": "srcR_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "srcR", "role": "ap_vld" }} , 
+ 	{ "name": "dstL", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "dstL", "role": "default" }} , 
+ 	{ "name": "dstL_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "dstL", "role": "ap_vld" }} , 
+ 	{ "name": "dstR", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "dstR", "role": "default" }} , 
+ 	{ "name": "dstR_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "dstR", "role": "ap_vld" }} , 
+ 	{ "name": "numOfStage_V", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "numOfStage_V", "role": "default" }} , 
+ 	{ "name": "numOfStage_V_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "numOfStage_V", "role": "ap_vld" }} , 
+ 	{ "name": "configSizePerStage_V", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "configSizePerStage_V", "role": "default" }} , 
+ 	{ "name": "configSizePerStage_V_ap_vld", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "outvld", "bundle":{"name": "configSizePerStage_V", "role": "ap_vld" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
 		"CDFG" : "pynq_dsp_hls",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "67",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "79",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -186,32 +222,48 @@ set RtlHierarchyInfo {[
 					{"Name" : "physMemPtr_V_blk_n_W", "Type" : "RtlSignal"},
 					{"Name" : "physMemPtr_V_blk_n_B", "Type" : "RtlSignal"}]},
 			{"Name" : "basePhysAddr_V", "Type" : "None", "Direction" : "I"},
+			{"Name" : "srcL", "Type" : "Vld", "Direction" : "O"},
+			{"Name" : "srcR", "Type" : "Vld", "Direction" : "O"},
+			{"Name" : "dstL", "Type" : "Vld", "Direction" : "O"},
+			{"Name" : "dstR", "Type" : "Vld", "Direction" : "O"},
+			{"Name" : "numOfStage_V", "Type" : "Vld", "Direction" : "O"},
+			{"Name" : "configSizePerStage_V", "Type" : "Vld", "Direction" : "O"},
 			{"Name" : "configReg", "Type" : "Memory", "Direction" : "I"},
 			{"Name" : "readyRch", "Type" : "OVld", "Direction" : "IO"},
 			{"Name" : "readyLch", "Type" : "OVld", "Direction" : "IO"}]},
 	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_AXILiteS_s_axi_U", "Parent" : "0"},
 	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_physMemPtr_V_m_axi_U", "Parent" : "0"},
 	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulbkb_U1", "Parent" : "0"},
-	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitocud_U2", "Parent" : "0"},
-	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpdEe_U3", "Parent" : "0"},
-	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpdEe_U4", "Parent" : "0"},
-	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpdEe_U5", "Parent" : "0"}]}
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivcud_U2", "Parent" : "0"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivcud_U3", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitodEe_U4", "Parent" : "0"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitodEe_U5", "Parent" : "0"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U6", "Parent" : "0"},
+	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U7", "Parent" : "0"},
+	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U8", "Parent" : "0"},
+	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U9", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
 	pynq_dsp_hls {
 		lrclk_V {Type I LastRead 0 FirstWrite -1}
-		physMemPtr_V {Type IO LastRead 39 FirstWrite 37}
+		physMemPtr_V {Type IO LastRead 51 FirstWrite 49}
 		basePhysAddr_V {Type I LastRead 0 FirstWrite -1}
-		configReg {Type I LastRead 30 FirstWrite -1}
+		srcL {Type O LastRead -1 FirstWrite 41}
+		srcR {Type O LastRead -1 FirstWrite 41}
+		dstL {Type O LastRead -1 FirstWrite 45}
+		dstR {Type O LastRead -1 FirstWrite 46}
+		numOfStage_V {Type O LastRead -1 FirstWrite 9}
+		configSizePerStage_V {Type O LastRead -1 FirstWrite 9}
+		configReg {Type I LastRead 42 FirstWrite -1}
 		readyRch {Type IO LastRead -1 FirstWrite -1}
 		readyLch {Type IO LastRead -1 FirstWrite -1}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "10", "Max" : "67"}
-	, {"Name" : "Interval", "Min" : "11", "Max" : "68"}
+	{"Name" : "Latency", "Min" : "10", "Max" : "79"}
+	, {"Name" : "Interval", "Min" : "11", "Max" : "80"}
 ]}
 
 set PipelineEnableSignalInfo {[
@@ -220,6 +272,12 @@ set PipelineEnableSignalInfo {[
 set Spec2ImplPortList { 
 	lrclk_V { ap_none {  { lrclk_V in_data 0 1 } } }
 	physMemPtr_V { m_axi {  { m_axi_physMemPtr_V_AWVALID VALID 1 1 }  { m_axi_physMemPtr_V_AWREADY READY 0 1 }  { m_axi_physMemPtr_V_AWADDR ADDR 1 32 }  { m_axi_physMemPtr_V_AWID ID 1 1 }  { m_axi_physMemPtr_V_AWLEN LEN 1 8 }  { m_axi_physMemPtr_V_AWSIZE SIZE 1 3 }  { m_axi_physMemPtr_V_AWBURST BURST 1 2 }  { m_axi_physMemPtr_V_AWLOCK LOCK 1 2 }  { m_axi_physMemPtr_V_AWCACHE CACHE 1 4 }  { m_axi_physMemPtr_V_AWPROT PROT 1 3 }  { m_axi_physMemPtr_V_AWQOS QOS 1 4 }  { m_axi_physMemPtr_V_AWREGION REGION 1 4 }  { m_axi_physMemPtr_V_AWUSER USER 1 1 }  { m_axi_physMemPtr_V_WVALID VALID 1 1 }  { m_axi_physMemPtr_V_WREADY READY 0 1 }  { m_axi_physMemPtr_V_WDATA DATA 1 32 }  { m_axi_physMemPtr_V_WSTRB STRB 1 4 }  { m_axi_physMemPtr_V_WLAST LAST 1 1 }  { m_axi_physMemPtr_V_WID ID 1 1 }  { m_axi_physMemPtr_V_WUSER USER 1 1 }  { m_axi_physMemPtr_V_ARVALID VALID 1 1 }  { m_axi_physMemPtr_V_ARREADY READY 0 1 }  { m_axi_physMemPtr_V_ARADDR ADDR 1 32 }  { m_axi_physMemPtr_V_ARID ID 1 1 }  { m_axi_physMemPtr_V_ARLEN LEN 1 8 }  { m_axi_physMemPtr_V_ARSIZE SIZE 1 3 }  { m_axi_physMemPtr_V_ARBURST BURST 1 2 }  { m_axi_physMemPtr_V_ARLOCK LOCK 1 2 }  { m_axi_physMemPtr_V_ARCACHE CACHE 1 4 }  { m_axi_physMemPtr_V_ARPROT PROT 1 3 }  { m_axi_physMemPtr_V_ARQOS QOS 1 4 }  { m_axi_physMemPtr_V_ARREGION REGION 1 4 }  { m_axi_physMemPtr_V_ARUSER USER 1 1 }  { m_axi_physMemPtr_V_RVALID VALID 0 1 }  { m_axi_physMemPtr_V_RREADY READY 1 1 }  { m_axi_physMemPtr_V_RDATA DATA 0 32 }  { m_axi_physMemPtr_V_RLAST LAST 0 1 }  { m_axi_physMemPtr_V_RID ID 0 1 }  { m_axi_physMemPtr_V_RUSER USER 0 1 }  { m_axi_physMemPtr_V_RRESP RESP 0 2 }  { m_axi_physMemPtr_V_BVALID VALID 0 1 }  { m_axi_physMemPtr_V_BREADY READY 1 1 }  { m_axi_physMemPtr_V_BRESP RESP 0 2 }  { m_axi_physMemPtr_V_BID ID 0 1 }  { m_axi_physMemPtr_V_BUSER USER 0 1 } } }
+	srcL { ap_vld {  { srcL out_data 1 32 }  { srcL_ap_vld out_vld 1 1 } } }
+	srcR { ap_vld {  { srcR out_data 1 32 }  { srcR_ap_vld out_vld 1 1 } } }
+	dstL { ap_vld {  { dstL out_data 1 32 }  { dstL_ap_vld out_vld 1 1 } } }
+	dstR { ap_vld {  { dstR out_data 1 32 }  { dstR_ap_vld out_vld 1 1 } } }
+	numOfStage_V { ap_vld {  { numOfStage_V out_data 1 32 }  { numOfStage_V_ap_vld out_vld 1 1 } } }
+	configSizePerStage_V { ap_vld {  { configSizePerStage_V out_data 1 32 }  { configSizePerStage_V_ap_vld out_vld 1 1 } } }
 }
 
 set busDeadlockParameterList { 

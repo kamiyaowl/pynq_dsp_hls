@@ -12,10 +12,10 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T19:04:06.803+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T19:04:06.794+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T19:03:47.006+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T19:03:46.966+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-09T18:35:40.950+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-09T18:35:40.941+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-09T18:35:19.690+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-09T18:35:19.647+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.208+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.169+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.781+0900" type="Warning"/>
@@ -23,11 +23,7 @@
       </synLog>
       <simLog/>
       <mgLog/>
-      <packageLog>
-        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_sitofp_4_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T20:16:27.892+0900" type="Warning"/>
-        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fmul_2_max_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T20:16:24.582+0900" type="Warning"/>
-        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fcmp_0_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-08T20:16:21.043+0900" type="Warning"/>
-      </packageLog>
+      <packageLog/>
       <csimLog/>
     </logs>
   </warningLogs>

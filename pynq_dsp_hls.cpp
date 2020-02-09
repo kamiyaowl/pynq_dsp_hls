@@ -3,19 +3,8 @@
 
 // エフェクトの直列に実行できる総数
 #define EFFECT_STAGE_N (4)
-// I2Sの有効データ幅(LSB詰であること)
-#define I2S_DATA_BIT_WIDTH (24)
-// 符号1bitがいるので23シフトした値が最大値
-#define INTERNAL_FIXED_UNIT (0x1 << (I2S_DATA_BIT_WIDTH - 1))
-// 内部データの全体幅
-#define INTERNAL_FIXED_BIT_WIDTH (32)
-
-// int24でデータが来るのでint32になるように符号拡張します
-ap_int<INTERNAL_FIXED_BIT_WIDTH> sign_ext(ap_uint<INTERNAL_FIXED_BIT_WIDTH> src) {
-	auto mask = src[I2S_DATA_BIT_WIDTH - 1] ? ( ap_uint<INTERNAL_FIXED_BIT_WIDTH-I2S_DATA_BIT_WIDTH>(~(0xffffffff << (INTERNAL_FIXED_BIT_WIDTH - I2S_DATA_BIT_WIDTH))) )
-			                                : ap_uint<INTERNAL_FIXED_BIT_WIDTH-I2S_DATA_BIT_WIDTH>(0x0);
-	return static_cast<ap_int<INTERNAL_FIXED_BIT_WIDTH>>((mask, src));
-}
+// 24bit signedの最大値
+#define INTERNAL_FIXED_UNIT (0x7fffff)
 
 typedef union {
 	uint32_t uint_data;
@@ -61,15 +50,15 @@ typedef enum {
 #define EFFECT_CONFIG_SIZE (4)
 
 SampleData effect_distortion(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE]) {
-	const float threash = to_float(config[1]);
+	const float threash = to_float(config[1]); // 負数が指定されると音が出なくなる想定, 1.0以上の場合は実質効かない(エフェクトの途中で超えていた場合を除く)
 
 	SampleData dst;
 	const float labs = hls::abs(inData.lch);
 	const float rabs = hls::abs(inData.rch);
 	const float ldst = hls::min(labs, threash);
-	const float rdst = hls::min(labs, threash);
-	dst.lch = (inData.lch < 0) ? -ldst : ldst;
-	dst.rch = (inData.rch < 0) ? -rdst : rdst;
+	const float rdst = hls::min(rabs, threash);
+	dst.lch = (inData.lch < 0.0f) ? -ldst : ldst;
+	dst.rch = (inData.rch < 0.0f) ? -rdst : rdst;
 	return dst;
 }
 
@@ -78,6 +67,12 @@ void pynq_dsp_hls(
 		ap_uint<1> lrclk,                       // I2SのLR Clock、開始タイミングの同期用
 		volatile ap_uint<32>* physMemPtr,       // AXI4MasterのPointer、basePhysAddrから+5*4byteアクセスする
 		ap_uint<32> basePhysAddr,               // 読み出し先の物理ベースアドレス
+		float *srcL,                            // 入力音データをfloat変換時の値を保持。モニター用
+		float *srcR,                            // 入力音データをfloat変換時の値を保持。モニター用
+		float *dstL,                            // 出音データをfloat変換時の値を保持。モニター用
+		float *dstR,                            // 出力音データをfloat変換時の値を保持。モニター用
+		ap_uint<32>* numOfStage,                // エフェクトパイプラインのステージ数。configRegのサイズ確認用
+		ap_uint<32>* configSizePerStage,        // エフェクトパイプラインごとのconfigRegのサイズ
 		uint32_t configReg[EFFECT_STAGE_N][EFFECT_CONFIG_SIZE] // 実行するエフェクトの設定, Vivado HLSがunion指定に対応していないので泣く泣く後でCastして使う。余計な事が起きると怖いのでap_uintは使わない
 		){
 #pragma HLS INTERFACE s_axilite port=return
@@ -85,6 +80,10 @@ void pynq_dsp_hls(
 #pragma HLS INTERFACE m_axi depth=32 port=physMemPtr
 #pragma HLS INTERFACE s_axilite port=basePhysAddr
 #pragma HLS INTERFACE s_axilite port=configReg
+
+	// デバッグ情報
+	*numOfStage = EFFECT_STAGE_N;
+	*configSizePerStage = EFFECT_CONFIG_SIZE;
 
 	// 4byteごとに扱っているので治す
 	const ap_uint<32> addr = (basePhysAddr >> 2);// (/= 4)
@@ -110,10 +109,12 @@ void pynq_dsp_hls(
 	}
 
 	// L/R chのデータを取得
-	const ap_int<32> lsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_L_REG]);// 24bit->32bitに符号拡張する
-	const ap_int<32> rsrc = sign_ext(physMemPtr[addr + I2S_DATA_RX_R_REG]);
-	const float lsrcf = static_cast<float>(lsrc) / INTERNAL_FIXED_UNIT;
-	const float rsrcf = static_cast<float>(rsrc) / INTERNAL_FIXED_UNIT;
+	const ap_uint<32> lraw = physMemPtr[addr + I2S_DATA_RX_L_REG];
+	const ap_uint<32> rraw = physMemPtr[addr + I2S_DATA_RX_R_REG];
+	const ap_int<24> lsrc = lraw.range(23, 0); // 実際は24bitしかないので切り出す
+	const ap_int<24> rsrc = rraw.range(23, 0);
+	const float lsrcf = lsrc.to_float() / INTERNAL_FIXED_UNIT; // max 1.0に収まるようにする
+	const float rsrcf = rsrc.to_float() / INTERNAL_FIXED_UNIT;
 	// 処理中の音声データ格納先を作成
 	SampleData currentData;
 	currentData.lch = lsrcf;
@@ -143,12 +144,18 @@ void pynq_dsp_hls(
 
 	}
 	// エフェクトを掛けた音声データをfixedからどうにかもとの単位に戻す
-	const float ldstf = currentData.lch * INTERNAL_FIXED_UNIT;
+	const float ldstf = currentData.lch * INTERNAL_FIXED_UNIT; // max 1.0から元の符号なしに戻す
 	const float rdstf = currentData.rch * INTERNAL_FIXED_UNIT;
-	const ap_int<32> ldst = static_cast<ap_int<32>>(ldstf);
-	const ap_int<32> rdst = static_cast<ap_int<32>>(rdstf);
+	const ap_int<24> ldst = static_cast<ap_int<24>>(ldstf);
+	const ap_int<24> rdst = static_cast<ap_int<24>>(rdstf);
 
 	// L/R chのデータを設定
 	physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(ldst);
 	physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(rdst);
+
+	// その他デバッグ情報
+	*srcL = lsrcf;
+	*srcR = rsrcf;
+	*dstL = ldstf;
+	*dstR = rdstf;
 }
