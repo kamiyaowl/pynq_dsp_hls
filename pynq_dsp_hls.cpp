@@ -60,8 +60,8 @@ SampleData effect_compressor(SampleData inData, uint32_t config[EFFECT_CONFIG_SI
 	SampleData dst;
 	const float absL = hls::abs(inData.l);
 	const float absR = hls::abs(inData.r);
-	dst.l = (inData.l < absL) ? inData.l : (inData.l * ratio);
-	dst.r = (inData.r < absR) ? inData.r : (inData.r * ratio);
+	dst.l = (absL < thresh) ? inData.l : (inData.l * ratio);
+	dst.r = (absR < thresh) ? inData.r : (inData.r * ratio);
 	return dst;
 }
 
