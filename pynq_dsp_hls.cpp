@@ -1,44 +1,4 @@
-#include <ap_int.h>
-#include <ap_common.h>
-#include <hls_math.h>
-#include <cstdint>
-
-// エフェクトの直列に実行できる総数
-#define EFFECT_STAGE_N (4)
-// 24bit signedの最大値
-#define INTERNAL_FIXED_UNIT (0x7fffff)
-
-// from audio_adau1761.cpp 4byteごとなので4でわってある
-const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
-const ap_uint<32> I2S_DATA_RX_R_REG = 0x01;
-const ap_uint<32> I2S_DATA_TX_L_REG = 0x02;
-const ap_uint<32> I2S_DATA_TX_R_REG = 0x03;
-const ap_uint<32> I2S_STATUS_REG    = 0x04;
-
-// 音データ
-typedef struct {
-    float l; // Lchのデータを格納
-    float r; // Rchのデータを格納
-} SampleData;
-
-// エフェクトの種類
-typedef enum {
-    BYPASS = 0x0, // default
-    DISTORTION,
-    COMPRESSOR,
-    FIR,
-    IIR,
-    DELAY,
-    REVERB,
-    CHORUS,
-    TREMOLO,
-    VIBRATO,
-} EffectId;
-
-// エフェクトの設定用, AXI経由で固定長の領域として見せたいので共用体で定義
-// CPU側で書く時点では固定小数点フォーマットを意識させない
-// 4byte以上の型を扱うと、Lower/Upperのトランザクションを保証できず壊れたデータがセットされる可能性があるので控えるか書き換え完了を保証させるレジスタを増やして転送するなどして工夫する
-#define EFFECT_CONFIG_SIZE (16)
+#include "pynq_dsp_hls.h"
 
 SampleData effect_distortion(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE]) {
 	const float thresh = hls::abs(rawBitsToFloat(config[1])); // 負数が指定されると音が出なくなる想定, 1.0以上の場合は実質効かない(エフェクトの途中で超えていた場合を除く)
@@ -125,7 +85,7 @@ SampleData effect_delay(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE], 
 
 // top level function
 void pynq_dsp_hls(
-        bool lrclk,                       // I2SのLR Clock、開始タイミングの同期用
+        bool lrclk,                             // I2SのLR Clock、開始タイミングの同期用
         volatile ap_uint<32>* physMemPtr,       // AXI4MasterのPointer、basePhysAddrから+5*4byteアクセスする
         volatile ap_uint<32>* extMemPtr,        // AXI4MasterのPointer、Delay/Reberb等で指定されたアドレスにデータを保持する
         ap_uint<32> basePhysAddr,               // 読み出し先の物理ベースアドレス

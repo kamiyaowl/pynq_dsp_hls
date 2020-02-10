@@ -151,6 +151,10 @@ extern "C" {
 # 9 "<command line>" 2
 # 1 "<built-in>" 2
 # 1 "pynq_dsp_hls.cpp" 2
+# 1 "./pynq_dsp_hls.h" 1
+
+
+
 # 1 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_int.h" 1
 # 54 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_int.h"
 # 1 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_common.h" 1
@@ -6358,7 +6362,7 @@ inline bool operator!=(
 }
 # 399 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_fixed.h" 2
 # 368 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\ap_int.h" 2
-# 1 "pynq_dsp_hls.cpp" 2
+# 4 "./pynq_dsp_hls.h" 2
 
 
 # 1 "C:/Xilinx/Vivado/2019.1/common/technology/autopilot\\hls_math.h" 1
@@ -26323,7 +26327,7 @@ namespace hls {
     uint32_t logb(uint32_t);
 
 };
-# 3 "pynq_dsp_hls.cpp" 2
+# 6 "./pynq_dsp_hls.h" 2
 
 # 1 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 1 3
 # 32 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 3
@@ -26374,7 +26378,7 @@ namespace std
 
 }
 # 72 "C:/Xilinx/Vivado/2019.1/win64/tools/clang/bin\\..\\lib\\clang\\3.1/../../../include/c++/4.5.2\\cstdint" 2 3
-# 4 "pynq_dsp_hls.cpp" 2
+# 7 "./pynq_dsp_hls.h" 2
 
 
 
@@ -26413,6 +26417,25 @@ typedef enum {
 
 
 
+
+SampleData effect_distortion(SampleData inData, uint32_t config[(16)]);
+SampleData effect_compressor(SampleData inData, uint32_t config[(16)]);
+SampleData effect_delay(SampleData inData, uint32_t config[(16)], volatile ap_uint<32>* extMemPtr);
+void pynq_dsp_hls(
+        bool lrclk,
+        volatile ap_uint<32>* physMemPtr,
+        volatile ap_uint<32>* extMemPtr,
+        ap_uint<32> basePhysAddr,
+        float* monitorSrcL,
+        float* monitorSrcR,
+        float* monitorDstL,
+        float* monitorDstR,
+        uint32_t* counter,
+        uint32_t* numOfStage,
+        uint32_t* configSizePerStage,
+        uint32_t configReg[(4)][(16)]
+        );
+# 2 "pynq_dsp_hls.cpp" 2
 
 SampleData effect_distortion(SampleData inData, uint32_t config[(16)]) {_ssdm_SpecArrayDimSize(config, 16);
  const float thresh = hls::abs(rawBitsToFloat(config[1]));
