@@ -1,58 +1,108 @@
+#include "pynq_dsp_hls.h"
+
 #include <iostream>
+#include <vector>
 #include <cassert>
-#include <ap_int.h>
-
-// from audio_adau1761.cpp 4byteごとなので4でわってある
-const ap_uint<32> I2S_DATA_RX_L_REG = 0x00;
-const ap_uint<32> I2S_DATA_RX_R_REG = 0x01;
-const ap_uint<32> I2S_DATA_TX_L_REG = 0x02;
-const ap_uint<32> I2S_DATA_TX_R_REG = 0x03;
-const ap_uint<32> I2S_STATUS_REG    = 0x04;
-
-void bypass(
-		volatile ap_uint<32>* physMemPtr, // AXI4MasterのPointer、basePhysAddrから+5*4byteアクセスする
-		ap_uint<32> basePhysAddr // 読み出し先の物理ベースアドレス
-		);
-
-
-#define TEST_BUF_SIZE (64)
-
-typedef struct {
-	std::size_t basePhysAddr;
-	ap_uint<32> status;
-	ap_uint<32> srcL;
-	ap_uint<32> srcR;
-	ap_uint<32> ldst_expect; // l 出力期待値
-	ap_uint<32> rdst_expect; // r 出力期待値
-} BypassVector_t;
 
 template<typename T, std::size_t S>
 std::size_t array_len(const T (&)[S]) {
 	return S;
 }
 
-int main(void) {
-	ap_uint<32> buf[TEST_BUF_SIZE] = {};
-	BypassVector_t vectors[] = {
-			{ 0x0, 0x0, 0xaa, 0x55, 0x0, 0x0 },
-			{ 0x0, 0x1, 0xaa, 0x55, 0xaa, 0x55 },
-			{ 0x10, 0x0, 0xaa, 0x55, 0x0, 0x0 },
-			{ 0x10, 0x1, 0xaa, 0x55, 0xaa, 0x55 },
-	};
-	for (std::size_t i = 0; i < array_len(vectors); i++) {
-		// 期待値をセット
-		const std::size_t baseIndex = vectors[i].basePhysAddr / 4;
-		buf[baseIndex + I2S_DATA_RX_L_REG] = vectors[i].srcL;
-		buf[baseIndex + I2S_DATA_RX_R_REG] = vectors[i].srcR;
-		buf[baseIndex + I2S_DATA_TX_L_REG] = 0x0;
-		buf[baseIndex + I2S_DATA_TX_R_REG] = 0x0;
-		buf[baseIndex + I2S_STATUS_REG] = vectors[i].status;
-		// テストする
-		bypass((volatile ap_uint<32>*)&buf,  static_cast<ap_uint<32>>(vectors[i].basePhysAddr));
-		// 結果を検証
-		assert(buf[baseIndex + I2S_DATA_TX_L_REG] == vectors[i].ldst_expect);
-		assert(buf[baseIndex + I2S_DATA_TX_R_REG] == vectors[i].rdst_expect);
+// 期待出力と一致していたらtrueを返します
+bool expect_eq(float dstL, float dstR, float expectL, float expectR) {
+	if (dstL != expectL) {
+		std::cout << "dstL != expectL: (" 
+		          << dstL 
+				  << " != "
+				  << expectL
+				  << " )"
+				  << std::endl;
+		return false;
 	}
+	if (dstR != expectR) {
+		std::cout << "dstR != expectR: ("
+		          << dstL 
+				  << " != "
+				  << expectL
+				  << " )"
+				  << std::endl;
+		return false;
+	}
+	return true;
+}
+
+// distortionの入出力期待値が一致しているか確認します
+bool expect_eq_distortion(float inL, float inR, float thresh, float expectL, float expectR) {
+	uint32_t config[EFFECT_CONFIG_SIZE] = {
+		EffectId::DISTORTION,
+		floatToRawBits(thresh),
+	};
+	SampleData inData = {
+		inL,
+		inR,
+	};
+	const SampleData dst = effect_distortion(inData, config);
+	return expect_eq(dst.l, dst.r, expectL, expectR);
+}
+
+bool tb_distortion(void) {
+	typedef struct {
+		float inL;
+		float inR;
+		float expectL;
+		float expectR;
+		float thresh;
+	} distortion_test_pattern;
+
+	const std::vector<distortion_test_pattern> test_patterns = {
+		// 入力がなければそのまま
+		{ 0, 0, 0, 0, 0,},
+		{ 0, 0, 0, 0, 0.5,},
+		{ 0, 0, 0, 0, 1.0,},
+		// threshより小さい
+		{ 0.2, 0.5, 0.2, 0.5, 1.0,},
+		{ 0.2, 0.5, 0.2, 0.5, 0.5,},
+		// 有効
+		{ 0.2, 0.3, 0.2, 0.3, 0.3,},
+		{ 0.2, 0.2, 0.2, 0.2, 0.2,},
+		{ 0.1, 0.1, 0.1, 0.1, 0.1,},
+		{ 0.0, 0.0, 0.0, 0.0, 0.0,},
+
+		// 負数を設定されても絶対値扱いする
+		{ 0.2, 0.3, 0.2, 0.3, -0.3,},
+		{ 0.2, 0.2, 0.2, 0.2, -0.2,},
+		{ 0.1, 0.1, 0.1, 0.1, -0.1,},
+
+		// 入力値が負, threshより小さい
+		{ -0.2,  0.5, -0.2,  0.5, 1.0,},
+		{ -0.2,  0.5, -0.2,  0.5, 0.5,},
+		{  0.2, -0.5,  0.2, -0.5, 1.0,},
+		{  0.2, -0.5,  0.2, -0.5, 0.5,},
+		// 入力値が負, 有効
+		{ 0.2, -0.3, 0.2, -0.3,  0.3,},
+		{ 0.2, -0.2, 0.2, -0.2,  0.2,},
+		{ 0.1, -0.1, 0.1, -0.1, -0.1,},
+		// 境界値
+		{ 0.99, -0.99, 0.99, -0.99, 1.0,},
+		{ 0.99, -0.99, 0.99, -0.99, 0.999,},
+		{ 0.99, -0.99, 0.98, -0.98, 0.98,},
+
+	};
+
+	std::cout << "[expect_eq_distortion]: start" << std::endl;
+	for (const distortion_test_pattern& p: test_patterns) {
+		if (!expect_eq_distortion(p.inL, p.inR, p.thresh, p.expectL, p.expectR)) {
+			std::cout << "[expect_eq_distortion]: failed" << std::endl;
+			return false;
+		}
+	}
+	std::cout << "[expect_eq_distortion]: pass " << test_patterns.size() << std::endl;
+	return true;
+}
+
+int main(void) {
+	if (!tb_distortion()) return 1;
 
 	return 0;
 }

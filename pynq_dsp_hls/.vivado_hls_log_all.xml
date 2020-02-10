@@ -6,7 +6,10 @@
       <simLog/>
       <mgLog/>
       <packageLog/>
-      <csimLog/>
+      <csimLog>
+        <logs message="ERROR: [SIM 211-100] 'csim_design' failed: compilation error(s)." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T02:18:44.501+0900"/>
+        <logs message="ERROR: [SIM 211-100] 'csim_design' failed: compilation error(s)." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T02:08:48.241+0900"/>
+      </csimLog>
     </logs>
   </errorLogs>
   <warningLogs>
