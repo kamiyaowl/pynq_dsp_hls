@@ -8,7 +8,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity pynq_dsp_hls_AXILiteS_s_axi is
 generic (
-    C_S_AXI_ADDR_WIDTH    : INTEGER := 8;
+    C_S_AXI_ADDR_WIDTH    : INTEGER := 9;
     C_S_AXI_DATA_WIDTH    : INTEGER := 32);
 port (
     ACLK                  :in   STD_LOGIC;
@@ -52,7 +52,7 @@ port (
     numOfStage_ap_vld     :in   STD_LOGIC;
     configSizePerStage    :in   STD_LOGIC_VECTOR(31 downto 0);
     configSizePerStage_ap_vld :in   STD_LOGIC;
-    configReg_address0    :in   STD_LOGIC_VECTOR(4 downto 0);
+    configReg_address0    :in   STD_LOGIC_VECTOR(5 downto 0);
     configReg_ce0         :in   STD_LOGIC;
     configReg_we0         :in   STD_LOGIC;
     configReg_d0          :in   STD_LOGIC_VECTOR(31 downto 0);
@@ -61,68 +61,68 @@ port (
 end entity pynq_dsp_hls_AXILiteS_s_axi;
 
 -- ------------------------Address Info-------------------
--- 0x00 : Control signals
---        bit 0  - ap_start (Read/Write/COH)
---        bit 1  - ap_done (Read/COR)
---        bit 2  - ap_idle (Read)
---        bit 3  - ap_ready (Read)
---        bit 7  - auto_restart (Read/Write)
---        others - reserved
--- 0x04 : Global Interrupt Enable Register
---        bit 0  - Global Interrupt Enable (Read/Write)
---        others - reserved
--- 0x08 : IP Interrupt Enable Register (Read/Write)
---        bit 0  - Channel 0 (ap_done)
---        bit 1  - Channel 1 (ap_ready)
---        others - reserved
--- 0x0c : IP Interrupt Status Register (Read/TOW)
---        bit 0  - Channel 0 (ap_done)
---        bit 1  - Channel 1 (ap_ready)
---        others - reserved
--- 0x10 : Data signal of basePhysAddr_V
---        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
--- 0x14 : reserved
--- 0x18 : Data signal of monitorSrcL
---        bit 31~0 - monitorSrcL[31:0] (Read)
--- 0x1c : Control signal of monitorSrcL
---        bit 0  - monitorSrcL_ap_vld (Read/COR)
---        others - reserved
--- 0x20 : Data signal of monitorSrcR
---        bit 31~0 - monitorSrcR[31:0] (Read)
--- 0x24 : Control signal of monitorSrcR
---        bit 0  - monitorSrcR_ap_vld (Read/COR)
---        others - reserved
--- 0x28 : Data signal of monitorDstL
---        bit 31~0 - monitorDstL[31:0] (Read)
--- 0x2c : Control signal of monitorDstL
---        bit 0  - monitorDstL_ap_vld (Read/COR)
---        others - reserved
--- 0x30 : Data signal of monitorDstR
---        bit 31~0 - monitorDstR[31:0] (Read)
--- 0x34 : Control signal of monitorDstR
---        bit 0  - monitorDstR_ap_vld (Read/COR)
---        others - reserved
--- 0x38 : Data signal of counter_i
---        bit 31~0 - counter_i[31:0] (Read/Write)
--- 0x3c : reserved
--- 0x40 : Data signal of counter_o
---        bit 31~0 - counter_o[31:0] (Read)
--- 0x44 : Control signal of counter_o
---        bit 0  - counter_o_ap_vld (Read/COR)
---        others - reserved
--- 0x48 : Data signal of numOfStage
---        bit 31~0 - numOfStage[31:0] (Read)
--- 0x4c : Control signal of numOfStage
---        bit 0  - numOfStage_ap_vld (Read/COR)
---        others - reserved
--- 0x50 : Data signal of configSizePerStage
---        bit 31~0 - configSizePerStage[31:0] (Read)
--- 0x54 : Control signal of configSizePerStage
---        bit 0  - configSizePerStage_ap_vld (Read/COR)
---        others - reserved
--- 0x80 ~
--- 0xff : Memory 'configReg' (32 * 32b)
---        Word n : bit [31:0] - configReg[n]
+-- 0x000 : Control signals
+--         bit 0  - ap_start (Read/Write/COH)
+--         bit 1  - ap_done (Read/COR)
+--         bit 2  - ap_idle (Read)
+--         bit 3  - ap_ready (Read)
+--         bit 7  - auto_restart (Read/Write)
+--         others - reserved
+-- 0x004 : Global Interrupt Enable Register
+--         bit 0  - Global Interrupt Enable (Read/Write)
+--         others - reserved
+-- 0x008 : IP Interrupt Enable Register (Read/Write)
+--         bit 0  - Channel 0 (ap_done)
+--         bit 1  - Channel 1 (ap_ready)
+--         others - reserved
+-- 0x00c : IP Interrupt Status Register (Read/TOW)
+--         bit 0  - Channel 0 (ap_done)
+--         bit 1  - Channel 1 (ap_ready)
+--         others - reserved
+-- 0x010 : Data signal of basePhysAddr_V
+--         bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
+-- 0x014 : reserved
+-- 0x018 : Data signal of monitorSrcL
+--         bit 31~0 - monitorSrcL[31:0] (Read)
+-- 0x01c : Control signal of monitorSrcL
+--         bit 0  - monitorSrcL_ap_vld (Read/COR)
+--         others - reserved
+-- 0x020 : Data signal of monitorSrcR
+--         bit 31~0 - monitorSrcR[31:0] (Read)
+-- 0x024 : Control signal of monitorSrcR
+--         bit 0  - monitorSrcR_ap_vld (Read/COR)
+--         others - reserved
+-- 0x028 : Data signal of monitorDstL
+--         bit 31~0 - monitorDstL[31:0] (Read)
+-- 0x02c : Control signal of monitorDstL
+--         bit 0  - monitorDstL_ap_vld (Read/COR)
+--         others - reserved
+-- 0x030 : Data signal of monitorDstR
+--         bit 31~0 - monitorDstR[31:0] (Read)
+-- 0x034 : Control signal of monitorDstR
+--         bit 0  - monitorDstR_ap_vld (Read/COR)
+--         others - reserved
+-- 0x038 : Data signal of counter_i
+--         bit 31~0 - counter_i[31:0] (Read/Write)
+-- 0x03c : reserved
+-- 0x040 : Data signal of counter_o
+--         bit 31~0 - counter_o[31:0] (Read)
+-- 0x044 : Control signal of counter_o
+--         bit 0  - counter_o_ap_vld (Read/COR)
+--         others - reserved
+-- 0x048 : Data signal of numOfStage
+--         bit 31~0 - numOfStage[31:0] (Read)
+-- 0x04c : Control signal of numOfStage
+--         bit 0  - numOfStage_ap_vld (Read/COR)
+--         others - reserved
+-- 0x050 : Data signal of configSizePerStage
+--         bit 31~0 - configSizePerStage[31:0] (Read)
+-- 0x054 : Control signal of configSizePerStage
+--         bit 0  - configSizePerStage_ap_vld (Read/COR)
+--         others - reserved
+-- 0x100 ~
+-- 0x1ff : Memory 'configReg' (64 * 32b)
+--         Word n : bit [31:0] - configReg[n]
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
@@ -130,31 +130,31 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal wstate  : states := wrreset;
     signal rstate  : states := rdreset;
     signal wnext, rnext: states;
-    constant ADDR_AP_CTRL                   : INTEGER := 16#00#;
-    constant ADDR_GIE                       : INTEGER := 16#04#;
-    constant ADDR_IER                       : INTEGER := 16#08#;
-    constant ADDR_ISR                       : INTEGER := 16#0c#;
-    constant ADDR_BASEPHYSADDR_V_DATA_0     : INTEGER := 16#10#;
-    constant ADDR_BASEPHYSADDR_V_CTRL       : INTEGER := 16#14#;
-    constant ADDR_MONITORSRCL_DATA_0        : INTEGER := 16#18#;
-    constant ADDR_MONITORSRCL_CTRL          : INTEGER := 16#1c#;
-    constant ADDR_MONITORSRCR_DATA_0        : INTEGER := 16#20#;
-    constant ADDR_MONITORSRCR_CTRL          : INTEGER := 16#24#;
-    constant ADDR_MONITORDSTL_DATA_0        : INTEGER := 16#28#;
-    constant ADDR_MONITORDSTL_CTRL          : INTEGER := 16#2c#;
-    constant ADDR_MONITORDSTR_DATA_0        : INTEGER := 16#30#;
-    constant ADDR_MONITORDSTR_CTRL          : INTEGER := 16#34#;
-    constant ADDR_COUNTER_I_DATA_0          : INTEGER := 16#38#;
-    constant ADDR_COUNTER_I_CTRL            : INTEGER := 16#3c#;
-    constant ADDR_COUNTER_O_DATA_0          : INTEGER := 16#40#;
-    constant ADDR_COUNTER_O_CTRL            : INTEGER := 16#44#;
-    constant ADDR_NUMOFSTAGE_DATA_0         : INTEGER := 16#48#;
-    constant ADDR_NUMOFSTAGE_CTRL           : INTEGER := 16#4c#;
-    constant ADDR_CONFIGSIZEPERSTAGE_DATA_0 : INTEGER := 16#50#;
-    constant ADDR_CONFIGSIZEPERSTAGE_CTRL   : INTEGER := 16#54#;
-    constant ADDR_CONFIGREG_BASE            : INTEGER := 16#80#;
-    constant ADDR_CONFIGREG_HIGH            : INTEGER := 16#ff#;
-    constant ADDR_BITS         : INTEGER := 8;
+    constant ADDR_AP_CTRL                   : INTEGER := 16#000#;
+    constant ADDR_GIE                       : INTEGER := 16#004#;
+    constant ADDR_IER                       : INTEGER := 16#008#;
+    constant ADDR_ISR                       : INTEGER := 16#00c#;
+    constant ADDR_BASEPHYSADDR_V_DATA_0     : INTEGER := 16#010#;
+    constant ADDR_BASEPHYSADDR_V_CTRL       : INTEGER := 16#014#;
+    constant ADDR_MONITORSRCL_DATA_0        : INTEGER := 16#018#;
+    constant ADDR_MONITORSRCL_CTRL          : INTEGER := 16#01c#;
+    constant ADDR_MONITORSRCR_DATA_0        : INTEGER := 16#020#;
+    constant ADDR_MONITORSRCR_CTRL          : INTEGER := 16#024#;
+    constant ADDR_MONITORDSTL_DATA_0        : INTEGER := 16#028#;
+    constant ADDR_MONITORDSTL_CTRL          : INTEGER := 16#02c#;
+    constant ADDR_MONITORDSTR_DATA_0        : INTEGER := 16#030#;
+    constant ADDR_MONITORDSTR_CTRL          : INTEGER := 16#034#;
+    constant ADDR_COUNTER_I_DATA_0          : INTEGER := 16#038#;
+    constant ADDR_COUNTER_I_CTRL            : INTEGER := 16#03c#;
+    constant ADDR_COUNTER_O_DATA_0          : INTEGER := 16#040#;
+    constant ADDR_COUNTER_O_CTRL            : INTEGER := 16#044#;
+    constant ADDR_NUMOFSTAGE_DATA_0         : INTEGER := 16#048#;
+    constant ADDR_NUMOFSTAGE_CTRL           : INTEGER := 16#04c#;
+    constant ADDR_CONFIGSIZEPERSTAGE_DATA_0 : INTEGER := 16#050#;
+    constant ADDR_CONFIGSIZEPERSTAGE_CTRL   : INTEGER := 16#054#;
+    constant ADDR_CONFIGREG_BASE            : INTEGER := 16#100#;
+    constant ADDR_CONFIGREG_HIGH            : INTEGER := 16#1ff#;
+    constant ADDR_BITS         : INTEGER := 9;
 
     signal waddr               : UNSIGNED(ADDR_BITS-1 downto 0);
     signal wmask               : UNSIGNED(31 downto 0);
@@ -193,13 +193,13 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal int_configSizePerStage : UNSIGNED(31 downto 0) := (others => '0');
     signal int_configSizePerStage_ap_vld : STD_LOGIC;
     -- memory signals
-    signal int_configReg_address0 : UNSIGNED(4 downto 0);
+    signal int_configReg_address0 : UNSIGNED(5 downto 0);
     signal int_configReg_ce0   : STD_LOGIC;
     signal int_configReg_we0   : STD_LOGIC;
     signal int_configReg_be0   : UNSIGNED(3 downto 0);
     signal int_configReg_d0    : UNSIGNED(31 downto 0);
     signal int_configReg_q0    : UNSIGNED(31 downto 0);
-    signal int_configReg_address1 : UNSIGNED(4 downto 0);
+    signal int_configReg_address1 : UNSIGNED(5 downto 0);
     signal int_configReg_ce1   : STD_LOGIC;
     signal int_configReg_we1   : STD_LOGIC;
     signal int_configReg_be1   : UNSIGNED(3 downto 0);
@@ -248,8 +248,8 @@ begin
 int_configReg : pynq_dsp_hls_AXILiteS_s_axi_ram
 generic map (
      BYTES    => 4,
-     DEPTH    => 32,
-     AWIDTH   => log2(32))
+     DEPTH    => 64,
+     AWIDTH   => log2(64))
 port map (
      clk0     => ACLK,
      address0 => int_configReg_address0,
@@ -782,7 +782,7 @@ port map (
     int_configReg_be0    <= (others => configReg_we0);
     int_configReg_d0     <= RESIZE(UNSIGNED(configReg_d0), 32);
     configReg_q0         <= STD_LOGIC_VECTOR(RESIZE(int_configReg_q0, 32));
-    int_configReg_address1 <= raddr(6 downto 2) when ar_hs = '1' else waddr(6 downto 2);
+    int_configReg_address1 <= raddr(7 downto 2) when ar_hs = '1' else waddr(7 downto 2);
     int_configReg_ce1    <= '1' when ar_hs = '1' or (int_configReg_write = '1' and WVALID  = '1') else '0';
     int_configReg_we1    <= '1' when int_configReg_write = '1' and WVALID = '1' else '0';
     int_configReg_be1    <= UNSIGNED(WSTRB);

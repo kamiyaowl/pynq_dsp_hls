@@ -1,8 +1,8 @@
 <InterfaceSummary>
 <RtlPorts>
-<name>lrclk_V</name>
+<name>lrclk</name>
 <CType>
-<TypeName>ap_uint 1</TypeName>
+<TypeName>bool</TypeName>
 <TypeWidth>1</TypeWidth>
 <PhysicalWidth>1</PhysicalWidth>
 </CType>

@@ -81,10 +81,10 @@ configSizePerStage {
 configReg { 
 	dir IO
 	width 32
-	depth 32
+	depth 64
 	mode ap_memory
-	offset 128
-	offset_end 255
+	offset 256
+	offset_end 511
 }
 }
 dict set axilite_register_dict AXILiteS $port_AXILiteS

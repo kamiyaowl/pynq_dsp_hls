@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_fmulcud
 #(parameter
-    ID         = 3,
+    ID         = 4,
     NUM_STAGE  = 4,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

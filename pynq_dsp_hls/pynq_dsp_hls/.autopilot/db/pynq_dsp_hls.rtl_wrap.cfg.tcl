@@ -13,7 +13,7 @@ set Pointer0 "0"
 set Reference0 "0"
 set Dims0 [list 0]
 set Interface0 "wire"
-set DataType0 "[list ap_uint 1 ]"
+set DataType0 "bool"
 set Port0 [list $PortName0 $Interface0 $DataType0 $Pointer0 $Dims0 $Const0 $Volatile0 $ArrayOpt0]
 lappend PortList $Port0
 set PortName1 "physMemPtr"
@@ -143,7 +143,7 @@ set Const11 "0"
 set Volatile11 "0"
 set Pointer11 "0"
 set Reference11 "0"
-set Dims11 [list 4 8]
+set Dims11 [list 4 16]
 set Interface11 "wire"
 set DataType11 "unsigned int"
 set Port11 [list $PortName11 $Interface11 $DataType11 $Pointer11 $Dims11 $Const11 $Volatile11 $ArrayOpt11]

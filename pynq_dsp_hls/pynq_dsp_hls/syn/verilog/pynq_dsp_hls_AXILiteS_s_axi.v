@@ -5,7 +5,7 @@
 `timescale 1ns/1ps
 module pynq_dsp_hls_AXILiteS_s_axi
 #(parameter
-    C_S_AXI_ADDR_WIDTH = 8,
+    C_S_AXI_ADDR_WIDTH = 9,
     C_S_AXI_DATA_WIDTH = 32
 )(
     input  wire                          ACLK,
@@ -49,103 +49,103 @@ module pynq_dsp_hls_AXILiteS_s_axi
     input  wire                          numOfStage_ap_vld,
     input  wire [31:0]                   configSizePerStage,
     input  wire                          configSizePerStage_ap_vld,
-    input  wire [4:0]                    configReg_address0,
+    input  wire [5:0]                    configReg_address0,
     input  wire                          configReg_ce0,
     input  wire                          configReg_we0,
     input  wire [31:0]                   configReg_d0,
     output wire [31:0]                   configReg_q0
 );
 //------------------------Address Info-------------------
-// 0x00 : Control signals
-//        bit 0  - ap_start (Read/Write/COH)
-//        bit 1  - ap_done (Read/COR)
-//        bit 2  - ap_idle (Read)
-//        bit 3  - ap_ready (Read)
-//        bit 7  - auto_restart (Read/Write)
-//        others - reserved
-// 0x04 : Global Interrupt Enable Register
-//        bit 0  - Global Interrupt Enable (Read/Write)
-//        others - reserved
-// 0x08 : IP Interrupt Enable Register (Read/Write)
-//        bit 0  - Channel 0 (ap_done)
-//        bit 1  - Channel 1 (ap_ready)
-//        others - reserved
-// 0x0c : IP Interrupt Status Register (Read/TOW)
-//        bit 0  - Channel 0 (ap_done)
-//        bit 1  - Channel 1 (ap_ready)
-//        others - reserved
-// 0x10 : Data signal of basePhysAddr_V
-//        bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
-// 0x14 : reserved
-// 0x18 : Data signal of monitorSrcL
-//        bit 31~0 - monitorSrcL[31:0] (Read)
-// 0x1c : Control signal of monitorSrcL
-//        bit 0  - monitorSrcL_ap_vld (Read/COR)
-//        others - reserved
-// 0x20 : Data signal of monitorSrcR
-//        bit 31~0 - monitorSrcR[31:0] (Read)
-// 0x24 : Control signal of monitorSrcR
-//        bit 0  - monitorSrcR_ap_vld (Read/COR)
-//        others - reserved
-// 0x28 : Data signal of monitorDstL
-//        bit 31~0 - monitorDstL[31:0] (Read)
-// 0x2c : Control signal of monitorDstL
-//        bit 0  - monitorDstL_ap_vld (Read/COR)
-//        others - reserved
-// 0x30 : Data signal of monitorDstR
-//        bit 31~0 - monitorDstR[31:0] (Read)
-// 0x34 : Control signal of monitorDstR
-//        bit 0  - monitorDstR_ap_vld (Read/COR)
-//        others - reserved
-// 0x38 : Data signal of counter_i
-//        bit 31~0 - counter_i[31:0] (Read/Write)
-// 0x3c : reserved
-// 0x40 : Data signal of counter_o
-//        bit 31~0 - counter_o[31:0] (Read)
-// 0x44 : Control signal of counter_o
-//        bit 0  - counter_o_ap_vld (Read/COR)
-//        others - reserved
-// 0x48 : Data signal of numOfStage
-//        bit 31~0 - numOfStage[31:0] (Read)
-// 0x4c : Control signal of numOfStage
-//        bit 0  - numOfStage_ap_vld (Read/COR)
-//        others - reserved
-// 0x50 : Data signal of configSizePerStage
-//        bit 31~0 - configSizePerStage[31:0] (Read)
-// 0x54 : Control signal of configSizePerStage
-//        bit 0  - configSizePerStage_ap_vld (Read/COR)
-//        others - reserved
-// 0x80 ~
-// 0xff : Memory 'configReg' (32 * 32b)
-//        Word n : bit [31:0] - configReg[n]
+// 0x000 : Control signals
+//         bit 0  - ap_start (Read/Write/COH)
+//         bit 1  - ap_done (Read/COR)
+//         bit 2  - ap_idle (Read)
+//         bit 3  - ap_ready (Read)
+//         bit 7  - auto_restart (Read/Write)
+//         others - reserved
+// 0x004 : Global Interrupt Enable Register
+//         bit 0  - Global Interrupt Enable (Read/Write)
+//         others - reserved
+// 0x008 : IP Interrupt Enable Register (Read/Write)
+//         bit 0  - Channel 0 (ap_done)
+//         bit 1  - Channel 1 (ap_ready)
+//         others - reserved
+// 0x00c : IP Interrupt Status Register (Read/TOW)
+//         bit 0  - Channel 0 (ap_done)
+//         bit 1  - Channel 1 (ap_ready)
+//         others - reserved
+// 0x010 : Data signal of basePhysAddr_V
+//         bit 31~0 - basePhysAddr_V[31:0] (Read/Write)
+// 0x014 : reserved
+// 0x018 : Data signal of monitorSrcL
+//         bit 31~0 - monitorSrcL[31:0] (Read)
+// 0x01c : Control signal of monitorSrcL
+//         bit 0  - monitorSrcL_ap_vld (Read/COR)
+//         others - reserved
+// 0x020 : Data signal of monitorSrcR
+//         bit 31~0 - monitorSrcR[31:0] (Read)
+// 0x024 : Control signal of monitorSrcR
+//         bit 0  - monitorSrcR_ap_vld (Read/COR)
+//         others - reserved
+// 0x028 : Data signal of monitorDstL
+//         bit 31~0 - monitorDstL[31:0] (Read)
+// 0x02c : Control signal of monitorDstL
+//         bit 0  - monitorDstL_ap_vld (Read/COR)
+//         others - reserved
+// 0x030 : Data signal of monitorDstR
+//         bit 31~0 - monitorDstR[31:0] (Read)
+// 0x034 : Control signal of monitorDstR
+//         bit 0  - monitorDstR_ap_vld (Read/COR)
+//         others - reserved
+// 0x038 : Data signal of counter_i
+//         bit 31~0 - counter_i[31:0] (Read/Write)
+// 0x03c : reserved
+// 0x040 : Data signal of counter_o
+//         bit 31~0 - counter_o[31:0] (Read)
+// 0x044 : Control signal of counter_o
+//         bit 0  - counter_o_ap_vld (Read/COR)
+//         others - reserved
+// 0x048 : Data signal of numOfStage
+//         bit 31~0 - numOfStage[31:0] (Read)
+// 0x04c : Control signal of numOfStage
+//         bit 0  - numOfStage_ap_vld (Read/COR)
+//         others - reserved
+// 0x050 : Data signal of configSizePerStage
+//         bit 31~0 - configSizePerStage[31:0] (Read)
+// 0x054 : Control signal of configSizePerStage
+//         bit 0  - configSizePerStage_ap_vld (Read/COR)
+//         others - reserved
+// 0x100 ~
+// 0x1ff : Memory 'configReg' (64 * 32b)
+//         Word n : bit [31:0] - configReg[n]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL                   = 8'h00,
-    ADDR_GIE                       = 8'h04,
-    ADDR_IER                       = 8'h08,
-    ADDR_ISR                       = 8'h0c,
-    ADDR_BASEPHYSADDR_V_DATA_0     = 8'h10,
-    ADDR_BASEPHYSADDR_V_CTRL       = 8'h14,
-    ADDR_MONITORSRCL_DATA_0        = 8'h18,
-    ADDR_MONITORSRCL_CTRL          = 8'h1c,
-    ADDR_MONITORSRCR_DATA_0        = 8'h20,
-    ADDR_MONITORSRCR_CTRL          = 8'h24,
-    ADDR_MONITORDSTL_DATA_0        = 8'h28,
-    ADDR_MONITORDSTL_CTRL          = 8'h2c,
-    ADDR_MONITORDSTR_DATA_0        = 8'h30,
-    ADDR_MONITORDSTR_CTRL          = 8'h34,
-    ADDR_COUNTER_I_DATA_0          = 8'h38,
-    ADDR_COUNTER_I_CTRL            = 8'h3c,
-    ADDR_COUNTER_O_DATA_0          = 8'h40,
-    ADDR_COUNTER_O_CTRL            = 8'h44,
-    ADDR_NUMOFSTAGE_DATA_0         = 8'h48,
-    ADDR_NUMOFSTAGE_CTRL           = 8'h4c,
-    ADDR_CONFIGSIZEPERSTAGE_DATA_0 = 8'h50,
-    ADDR_CONFIGSIZEPERSTAGE_CTRL   = 8'h54,
-    ADDR_CONFIGREG_BASE            = 8'h80,
-    ADDR_CONFIGREG_HIGH            = 8'hff,
+    ADDR_AP_CTRL                   = 9'h000,
+    ADDR_GIE                       = 9'h004,
+    ADDR_IER                       = 9'h008,
+    ADDR_ISR                       = 9'h00c,
+    ADDR_BASEPHYSADDR_V_DATA_0     = 9'h010,
+    ADDR_BASEPHYSADDR_V_CTRL       = 9'h014,
+    ADDR_MONITORSRCL_DATA_0        = 9'h018,
+    ADDR_MONITORSRCL_CTRL          = 9'h01c,
+    ADDR_MONITORSRCR_DATA_0        = 9'h020,
+    ADDR_MONITORSRCR_CTRL          = 9'h024,
+    ADDR_MONITORDSTL_DATA_0        = 9'h028,
+    ADDR_MONITORDSTL_CTRL          = 9'h02c,
+    ADDR_MONITORDSTR_DATA_0        = 9'h030,
+    ADDR_MONITORDSTR_CTRL          = 9'h034,
+    ADDR_COUNTER_I_DATA_0          = 9'h038,
+    ADDR_COUNTER_I_CTRL            = 9'h03c,
+    ADDR_COUNTER_O_DATA_0          = 9'h040,
+    ADDR_COUNTER_O_CTRL            = 9'h044,
+    ADDR_NUMOFSTAGE_DATA_0         = 9'h048,
+    ADDR_NUMOFSTAGE_CTRL           = 9'h04c,
+    ADDR_CONFIGSIZEPERSTAGE_DATA_0 = 9'h050,
+    ADDR_CONFIGSIZEPERSTAGE_CTRL   = 9'h054,
+    ADDR_CONFIGREG_BASE            = 9'h100,
+    ADDR_CONFIGREG_HIGH            = 9'h1ff,
     WRIDLE                         = 2'd0,
     WRDATA                         = 2'd1,
     WRRESP                         = 2'd2,
@@ -153,7 +153,7 @@ localparam
     RDIDLE                         = 2'd0,
     RDDATA                         = 2'd1,
     RDRESET                        = 2'd2,
-    ADDR_BITS         = 8;
+    ADDR_BITS         = 9;
 
 //------------------------Local signal-------------------
     reg  [1:0]                    wstate = WRRESET;
@@ -193,13 +193,13 @@ localparam
     reg  [31:0]                   int_configSizePerStage = 'b0;
     reg                           int_configSizePerStage_ap_vld;
     // memory signals
-    wire [4:0]                    int_configReg_address0;
+    wire [5:0]                    int_configReg_address0;
     wire                          int_configReg_ce0;
     wire                          int_configReg_we0;
     wire [3:0]                    int_configReg_be0;
     wire [31:0]                   int_configReg_d0;
     wire [31:0]                   int_configReg_q0;
-    wire [4:0]                    int_configReg_address1;
+    wire [5:0]                    int_configReg_address1;
     wire                          int_configReg_ce1;
     wire                          int_configReg_we1;
     wire [3:0]                    int_configReg_be1;
@@ -212,7 +212,7 @@ localparam
 // int_configReg
 pynq_dsp_hls_AXILiteS_s_axi_ram #(
     .BYTES    ( 4 ),
-    .DEPTH    ( 32 )
+    .DEPTH    ( 64 )
 ) int_configReg (
     .clk0     ( ACLK ),
     .address0 ( int_configReg_address0 ),
@@ -675,7 +675,7 @@ assign int_configReg_we0      = configReg_we0;
 assign int_configReg_be0      = {4{configReg_we0}};
 assign int_configReg_d0       = configReg_d0;
 assign configReg_q0           = int_configReg_q0;
-assign int_configReg_address1 = ar_hs? raddr[6:2] : waddr[6:2];
+assign int_configReg_address1 = ar_hs? raddr[7:2] : waddr[7:2];
 assign int_configReg_ce1      = ar_hs | (int_configReg_write & WVALID);
 assign int_configReg_we1      = int_configReg_write & WVALID;
 assign int_configReg_be1      = WSTRB;

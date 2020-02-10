@@ -5,9 +5,9 @@
 
 `timescale 1ns/1ps
 
-module pynq_dsp_hls_fcmpg8j
+module pynq_dsp_hls_fcmpeOg
 #(parameter
-    ID         = 19,
+    ID         = 11,
     NUM_STAGE  = 2,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

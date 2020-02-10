@@ -24,18 +24,18 @@
 <EstimatedClockPeriod>7.000</EstimatedClockPeriod>
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
-<Best-caseLatency>5</Best-caseLatency>
-<Average-caseLatency>20</Average-caseLatency>
-<Worst-caseLatency>35</Worst-caseLatency>
-<PipelineInitiationInterval>5 ~ 35</PipelineInitiationInterval>
+<Best-caseLatency>10</Best-caseLatency>
+<Average-caseLatency>29</Average-caseLatency>
+<Worst-caseLatency>50</Worst-caseLatency>
+<PipelineInitiationInterval>10 ~ 50</PipelineInitiationInterval>
 <PipelineType>none</PipelineType>
 </SummaryOfOverallLatency>
 </PerformanceEstimates>
 <AreaEstimates>
 <Resources>
-<DSP48E>7</DSP48E>
-<FF>2139</FF>
-<LUT>3195</LUT>
+<DSP48E>24</DSP48E>
+<FF>3466</FF>
+<LUT>5706</LUT>
 <BRAM_18K>0</BRAM_18K>
 <URAM>0</URAM>
 </Resources>
@@ -159,7 +159,7 @@
 <IOProtocol>ap_memory</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>out</Dir>
-<Bits>5</Bits>
+<Bits>6</Bits>
 <Attribute>address</Attribute>
 </RtlPorts>
 <RtlPorts>
@@ -724,32 +724,32 @@
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
 <Best-caseLatency>11</Best-caseLatency>
-<Average-caseLatency>38</Average-caseLatency>
-<Worst-caseLatency>216</Worst-caseLatency>
-<PipelineInitiationInterval>12 ~ 217</PipelineInitiationInterval>
+<Average-caseLatency>41</Average-caseLatency>
+<Worst-caseLatency>276</Worst-caseLatency>
+<PipelineInitiationInterval>12 ~ 277</PipelineInitiationInterval>
 <PipelineType>none</PipelineType>
 </SummaryOfOverallLatency>
 <SummaryOfLoopLatency>
 <Loop1>
 <Name>Loop 1</Name>
 <TripCount>4</TripCount>
-<Latency>12 ~ 160</Latency>
+<Latency>12 ~ 220</Latency>
 <IterationLatency>
 <range>
 <min>3</min>
-<max>40</max>
+<max>55</max>
 </range>
 </IterationLatency>
-<PipelineDepth>3 ~ 40</PipelineDepth>
+<PipelineDepth>3 ~ 55</PipelineDepth>
 </Loop1>
 </SummaryOfLoopLatency>
 </PerformanceEstimates>
 <AreaEstimates>
 <Resources>
 <BRAM_18K>6</BRAM_18K>
-<DSP48E>13</DSP48E>
-<FF>7858</FF>
-<LUT>12007</LUT>
+<DSP48E>30</DSP48E>
+<FF>9219</FF>
+<LUT>14520</LUT>
 <URAM>0</URAM>
 </Resources>
 </AreaEstimates>
@@ -788,7 +788,7 @@
 <IOProtocol>s_axi</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>in</Dir>
-<Bits>8</Bits>
+<Bits>9</Bits>
 <Attribute>unknown</Attribute>
 <CType>int</CType>
 <HasCtrl>1</HasCtrl>
@@ -879,7 +879,7 @@
 <IOProtocol>s_axi</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>in</Dir>
-<Bits>8</Bits>
+<Bits>9</Bits>
 <Attribute>unknown</Attribute>
 <CType>int</CType>
 <HasCtrl>1</HasCtrl>
@@ -1009,8 +1009,8 @@
 <Attribute>unknown</Attribute>
 </RtlPorts>
 <RtlPorts>
-<name>lrclk_V</name>
-<Object>lrclk_V</Object>
+<name>lrclk</name>
+<Object>lrclk</Object>
 <Type>scalar</Type>
 <Scope></Scope>
 <IOProtocol>ap_none</IOProtocol>
@@ -1018,7 +1018,7 @@
 <Dir>in</Dir>
 <Bits>1</Bits>
 <Attribute>data</Attribute>
-<CType>int</CType>
+<CType>bool</CType>
 </RtlPorts>
 <RtlPorts>
 <name>m_axi_physMemPtr_V_AWVALID</name>

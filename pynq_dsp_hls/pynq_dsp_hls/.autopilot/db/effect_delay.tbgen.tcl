@@ -16,7 +16,7 @@ set C_modelType { int 64 }
 set C_modelArgList {
 	{ inData_l float 32 regular  }
 	{ inData_r float 32 regular  }
-	{ config_r int 32 regular {array 32 { 2 } 1 1 }  }
+	{ config_r int 32 regular {array 64 { 2 } 1 1 }  }
 	{ config_offset int 3 regular  }
 	{ extMemPtr_V int 32 regular {axi_master 2}  }
 }
@@ -38,7 +38,7 @@ set portList {
 	{ ap_ready sc_out sc_logic 1 ready -1 } 
 	{ inData_l sc_in sc_lv 32 signal 0 } 
 	{ inData_r sc_in sc_lv 32 signal 1 } 
-	{ config_r_address0 sc_out sc_lv 5 signal 2 } 
+	{ config_r_address0 sc_out sc_lv 6 signal 2 } 
 	{ config_r_ce0 sc_out sc_logic 1 signal 2 } 
 	{ config_r_we0 sc_out sc_logic 1 signal 2 } 
 	{ config_r_d0 sc_out sc_lv 32 signal 2 } 
@@ -101,7 +101,7 @@ set NewPortList {[
  	{ "name": "ap_ready", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "ready", "bundle":{"name": "ap_ready", "role": "default" }} , 
  	{ "name": "inData_l", "direction": "in", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "inData_l", "role": "default" }} , 
  	{ "name": "inData_r", "direction": "in", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "inData_r", "role": "default" }} , 
- 	{ "name": "config_r_address0", "direction": "out", "datatype": "sc_lv", "bitwidth":5, "type": "signal", "bundle":{"name": "config_r", "role": "address0" }} , 
+ 	{ "name": "config_r_address0", "direction": "out", "datatype": "sc_lv", "bitwidth":6, "type": "signal", "bundle":{"name": "config_r", "role": "address0" }} , 
  	{ "name": "config_r_ce0", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "config_r", "role": "ce0" }} , 
  	{ "name": "config_r_we0", "direction": "out", "datatype": "sc_logic", "bitwidth":1, "type": "signal", "bundle":{"name": "config_r", "role": "we0" }} , 
  	{ "name": "config_r_d0", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "config_r", "role": "d0" }} , 
@@ -156,13 +156,13 @@ set NewPortList {[
  	{ "name": "ap_return_1", "direction": "out", "datatype": "sc_lv", "bitwidth":32, "type": "signal", "bundle":{"name": "ap_return_1", "role": "default" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
 		"CDFG" : "effect_delay",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "5", "EstimateLatencyMax" : "35",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "10", "EstimateLatencyMax" : "50",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -176,30 +176,37 @@ set RtlHierarchyInfo {[
 			{"Name" : "config_offset", "Type" : "None", "Direction" : "I"},
 			{"Name" : "extMemPtr_V", "Type" : "MAXI", "Direction" : "IO",
 				"BlockSignal" : [
+					{"Name" : "extMemPtr_V_blk_n_AR", "Type" : "RtlSignal"},
+					{"Name" : "extMemPtr_V_blk_n_R", "Type" : "RtlSignal"},
 					{"Name" : "extMemPtr_V_blk_n_AW", "Type" : "RtlSignal"},
 					{"Name" : "extMemPtr_V_blk_n_W", "Type" : "RtlSignal"},
-					{"Name" : "extMemPtr_V_blk_n_B", "Type" : "RtlSignal"},
-					{"Name" : "extMemPtr_V_blk_n_AR", "Type" : "RtlSignal"},
-					{"Name" : "extMemPtr_V_blk_n_R", "Type" : "RtlSignal"}]}]},
+					{"Name" : "extMemPtr_V_blk_n_B", "Type" : "RtlSignal"}]}]},
 	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_faddbkb_U1", "Parent" : "0"},
 	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_faddbkb_U2", "Parent" : "0"},
-	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U3", "Parent" : "0"},
-	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitodEe_U4", "Parent" : "0"}]}
+	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_faddbkb_U3", "Parent" : "0"},
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U4", "Parent" : "0"},
+	{"ID" : "5", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U5", "Parent" : "0"},
+	{"ID" : "6", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U6", "Parent" : "0"},
+	{"ID" : "7", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U7", "Parent" : "0"},
+	{"ID" : "8", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U8", "Parent" : "0"},
+	{"ID" : "9", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U9", "Parent" : "0"},
+	{"ID" : "10", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_uitodEe_U10", "Parent" : "0"},
+	{"ID" : "11", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U11", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
 	effect_delay {
-		inData_l {Type I LastRead 4 FirstWrite -1}
-		inData_r {Type I LastRead 4 FirstWrite -1}
-		config_r {Type IO LastRead 5 FirstWrite 6}
+		inData_l {Type I LastRead 7 FirstWrite -1}
+		inData_r {Type I LastRead 7 FirstWrite -1}
+		config_r {Type IO LastRead 8 FirstWrite 9}
 		config_offset {Type I LastRead 0 FirstWrite -1}
-		extMemPtr_V {Type IO LastRead 27 FirstWrite 12}}}
+		extMemPtr_V {Type IO LastRead 46 FirstWrite 44}}}
 
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "5", "Max" : "35"}
-	, {"Name" : "Interval", "Min" : "5", "Max" : "35"}
+	{"Name" : "Latency", "Min" : "10", "Max" : "50"}
+	, {"Name" : "Interval", "Min" : "10", "Max" : "50"}
 ]}
 
 set PipelineEnableSignalInfo {[
@@ -208,7 +215,7 @@ set PipelineEnableSignalInfo {[
 set Spec2ImplPortList { 
 	inData_l { ap_none {  { inData_l in_data 0 32 } } }
 	inData_r { ap_none {  { inData_r in_data 0 32 } } }
-	config_r { ap_memory {  { config_r_address0 mem_address 1 5 }  { config_r_ce0 mem_ce 1 1 }  { config_r_we0 mem_we 1 1 }  { config_r_d0 mem_din 1 32 }  { config_r_q0 mem_dout 0 32 } } }
+	config_r { ap_memory {  { config_r_address0 mem_address 1 6 }  { config_r_ce0 mem_ce 1 1 }  { config_r_we0 mem_we 1 1 }  { config_r_d0 mem_din 1 32 }  { config_r_q0 mem_dout 0 32 } } }
 	config_offset { ap_none {  { config_offset in_data 0 3 } } }
 	extMemPtr_V { m_axi {  { m_axi_extMemPtr_V_AWVALID VALID 1 1 }  { m_axi_extMemPtr_V_AWREADY READY 0 1 }  { m_axi_extMemPtr_V_AWADDR ADDR 1 32 }  { m_axi_extMemPtr_V_AWID ID 1 1 }  { m_axi_extMemPtr_V_AWLEN LEN 1 32 }  { m_axi_extMemPtr_V_AWSIZE SIZE 1 3 }  { m_axi_extMemPtr_V_AWBURST BURST 1 2 }  { m_axi_extMemPtr_V_AWLOCK LOCK 1 2 }  { m_axi_extMemPtr_V_AWCACHE CACHE 1 4 }  { m_axi_extMemPtr_V_AWPROT PROT 1 3 }  { m_axi_extMemPtr_V_AWQOS QOS 1 4 }  { m_axi_extMemPtr_V_AWREGION REGION 1 4 }  { m_axi_extMemPtr_V_AWUSER USER 1 1 }  { m_axi_extMemPtr_V_WVALID VALID 1 1 }  { m_axi_extMemPtr_V_WREADY READY 0 1 }  { m_axi_extMemPtr_V_WDATA DATA 1 32 }  { m_axi_extMemPtr_V_WSTRB STRB 1 4 }  { m_axi_extMemPtr_V_WLAST LAST 1 1 }  { m_axi_extMemPtr_V_WID ID 1 1 }  { m_axi_extMemPtr_V_WUSER USER 1 1 }  { m_axi_extMemPtr_V_ARVALID VALID 1 1 }  { m_axi_extMemPtr_V_ARREADY READY 0 1 }  { m_axi_extMemPtr_V_ARADDR ADDR 1 32 }  { m_axi_extMemPtr_V_ARID ID 1 1 }  { m_axi_extMemPtr_V_ARLEN LEN 1 32 }  { m_axi_extMemPtr_V_ARSIZE SIZE 1 3 }  { m_axi_extMemPtr_V_ARBURST BURST 1 2 }  { m_axi_extMemPtr_V_ARLOCK LOCK 1 2 }  { m_axi_extMemPtr_V_ARCACHE CACHE 1 4 }  { m_axi_extMemPtr_V_ARPROT PROT 1 3 }  { m_axi_extMemPtr_V_ARQOS QOS 1 4 }  { m_axi_extMemPtr_V_ARREGION REGION 1 4 }  { m_axi_extMemPtr_V_ARUSER USER 1 1 }  { m_axi_extMemPtr_V_RVALID VALID 0 1 }  { m_axi_extMemPtr_V_RREADY READY 1 1 }  { m_axi_extMemPtr_V_RDATA DATA 0 32 }  { m_axi_extMemPtr_V_RLAST LAST 0 1 }  { m_axi_extMemPtr_V_RID ID 0 1 }  { m_axi_extMemPtr_V_RUSER USER 0 1 }  { m_axi_extMemPtr_V_RRESP RESP 0 2 }  { m_axi_extMemPtr_V_BVALID VALID 0 1 }  { m_axi_extMemPtr_V_BREADY READY 1 1 }  { m_axi_extMemPtr_V_BRESP RESP 0 2 }  { m_axi_extMemPtr_V_BID ID 0 1 }  { m_axi_extMemPtr_V_BUSER USER 0 1 } } }
 }

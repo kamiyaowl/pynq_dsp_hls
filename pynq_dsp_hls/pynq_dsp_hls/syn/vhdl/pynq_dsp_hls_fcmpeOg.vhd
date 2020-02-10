@@ -5,9 +5,9 @@
 Library ieee;
 use ieee.std_logic_1164.all;
 
-entity pynq_dsp_hls_fcmpg8j is
+entity pynq_dsp_hls_fcmpeOg is
     generic (
-        ID         : integer := 19;
+        ID         : integer := 11;
         NUM_STAGE  : integer := 2;
         din0_WIDTH : integer := 32;
         din1_WIDTH : integer := 32;
@@ -24,7 +24,7 @@ entity pynq_dsp_hls_fcmpg8j is
     );
 end entity;
 
-architecture arch of pynq_dsp_hls_fcmpg8j is
+architecture arch of pynq_dsp_hls_fcmpeOg is
     --------------------- Component ---------------------
     component pynq_dsp_hls_ap_fcmp_0_no_dsp_32 is
         port (
