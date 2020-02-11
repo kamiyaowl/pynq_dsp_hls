@@ -269,13 +269,13 @@ set NewPortList {[
  	{ "name": "m_axi_extMemPtr_V_BUSER", "direction": "in", "datatype": "sc_lv", "bitwidth":1, "type": "signal", "bundle":{"name": "extMemPtr_V", "role": "BUSER" }}  ]}
 
 set RtlHierarchyInfo {[
-	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"],
+	{"ID" : "0", "Level" : "0", "Path" : "`AUTOTB_DUT_INST", "Parent" : "", "Child" : ["1", "2", "3", "4", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27"],
 		"CDFG" : "pynq_dsp_hls",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
 		"Pipeline" : "None", "UnalignedPipeline" : "0", "RewindPipeline" : "0", "ProcessNetwork" : "0",
 		"II" : "0",
-		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "11", "EstimateLatencyMax" : "276",
+		"VariableLatency" : "1", "ExactLatency" : "-1", "EstimateLatencyMin" : "11", "EstimateLatencyMax" : "277",
 		"Combinational" : "0",
 		"Datapath" : "0",
 		"ClockEnable" : "0",
@@ -283,7 +283,7 @@ set RtlHierarchyInfo {[
 		"InDataflowNetwork" : "0",
 		"HasNonBlockingOperation" : "0",
 		"WaitState" : [
-			{"State" : "ap_ST_fsm_state46", "FSM" : "ap_CS_fsm", "SubInstance" : "grp_effect_delay_fu_396"}],
+			{"State" : "ap_ST_fsm_state46", "FSM" : "ap_CS_fsm", "SubInstance" : "grp_effect_delay_fu_398"}],
 		"Port" : [
 			{"Name" : "lrclk", "Type" : "None", "Direction" : "I"},
 			{"Name" : "physMemPtr_V", "Type" : "MAXI", "Direction" : "IO",
@@ -295,7 +295,7 @@ set RtlHierarchyInfo {[
 					{"Name" : "physMemPtr_V_blk_n_B", "Type" : "RtlSignal"}]},
 			{"Name" : "extMemPtr_V", "Type" : "MAXI", "Direction" : "IO",
 				"SubConnect" : [
-					{"ID" : "4", "SubInstance" : "grp_effect_delay_fu_396", "Port" : "extMemPtr_V"}]},
+					{"ID" : "4", "SubInstance" : "grp_effect_delay_fu_398", "Port" : "extMemPtr_V"}]},
 			{"Name" : "basePhysAddr_V", "Type" : "None", "Direction" : "I"},
 			{"Name" : "monitorSrcL", "Type" : "Vld", "Direction" : "O"},
 			{"Name" : "monitorSrcR", "Type" : "Vld", "Direction" : "O"},
@@ -306,13 +306,13 @@ set RtlHierarchyInfo {[
 			{"Name" : "configSizePerStage", "Type" : "Vld", "Direction" : "O"},
 			{"Name" : "configReg", "Type" : "Memory", "Direction" : "IO",
 				"SubConnect" : [
-					{"ID" : "4", "SubInstance" : "grp_effect_delay_fu_396", "Port" : "config_r"}]},
+					{"ID" : "4", "SubInstance" : "grp_effect_delay_fu_398", "Port" : "config_r"}]},
 			{"Name" : "readyRch", "Type" : "OVld", "Direction" : "IO"},
 			{"Name" : "readyLch", "Type" : "OVld", "Direction" : "IO"}]},
 	{"ID" : "1", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_AXILiteS_s_axi_U", "Parent" : "0"},
 	{"ID" : "2", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_physMemPtr_V_m_axi_U", "Parent" : "0"},
 	{"ID" : "3", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_extMemPtr_V_m_axi_U", "Parent" : "0"},
-	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396", "Parent" : "0", "Child" : ["5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
+	{"ID" : "4", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398", "Parent" : "0", "Child" : ["5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"],
 		"CDFG" : "effect_delay",
 		"Protocol" : "ap_ctrl_hs",
 		"ControlExist" : "1", "ap_start" : "1", "ap_ready" : "1", "ap_done" : "1", "ap_continue" : "0", "ap_idle" : "1",
@@ -337,27 +337,29 @@ set RtlHierarchyInfo {[
 					{"Name" : "extMemPtr_V_blk_n_AW", "Type" : "RtlSignal"},
 					{"Name" : "extMemPtr_V_blk_n_W", "Type" : "RtlSignal"},
 					{"Name" : "extMemPtr_V_blk_n_B", "Type" : "RtlSignal"}]}]},
-	{"ID" : "5", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_faddbkb_U1", "Parent" : "4"},
-	{"ID" : "6", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_faddbkb_U2", "Parent" : "4"},
-	{"ID" : "7", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_faddbkb_U3", "Parent" : "4"},
-	{"ID" : "8", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U4", "Parent" : "4"},
-	{"ID" : "9", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U5", "Parent" : "4"},
-	{"ID" : "10", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U6", "Parent" : "4"},
-	{"ID" : "11", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U7", "Parent" : "4"},
-	{"ID" : "12", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U8", "Parent" : "4"},
-	{"ID" : "13", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fmulcud_U9", "Parent" : "4"},
-	{"ID" : "14", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_uitodEe_U10", "Parent" : "4"},
-	{"ID" : "15", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_396.pynq_dsp_hls_fcmpeOg_U11", "Parent" : "4"},
-	{"ID" : "16", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U21", "Parent" : "0"},
-	{"ID" : "17", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U22", "Parent" : "0"},
-	{"ID" : "18", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivfYi_U23", "Parent" : "0"},
-	{"ID" : "19", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivfYi_U24", "Parent" : "0"},
-	{"ID" : "20", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitog8j_U25", "Parent" : "0"},
-	{"ID" : "21", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitog8j_U26", "Parent" : "0"},
-	{"ID" : "22", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U27", "Parent" : "0"},
-	{"ID" : "23", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U28", "Parent" : "0"},
+	{"ID" : "5", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_faddbkb_U1", "Parent" : "4"},
+	{"ID" : "6", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_faddbkb_U2", "Parent" : "4"},
+	{"ID" : "7", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_faddbkb_U3", "Parent" : "4"},
+	{"ID" : "8", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U4", "Parent" : "4"},
+	{"ID" : "9", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U5", "Parent" : "4"},
+	{"ID" : "10", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U6", "Parent" : "4"},
+	{"ID" : "11", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U7", "Parent" : "4"},
+	{"ID" : "12", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U8", "Parent" : "4"},
+	{"ID" : "13", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fmulcud_U9", "Parent" : "4"},
+	{"ID" : "14", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_uitodEe_U10", "Parent" : "4"},
+	{"ID" : "15", "Level" : "2", "Path" : "`AUTOTB_DUT_INST.grp_effect_delay_fu_398.pynq_dsp_hls_fcmpeOg_U11", "Parent" : "4"},
+	{"ID" : "16", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_faddfYi_U21", "Parent" : "0"},
+	{"ID" : "17", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_faddfYi_U22", "Parent" : "0"},
+	{"ID" : "18", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U23", "Parent" : "0"},
+	{"ID" : "19", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fmulcud_U24", "Parent" : "0"},
+	{"ID" : "20", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivg8j_U25", "Parent" : "0"},
+	{"ID" : "21", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fdivg8j_U26", "Parent" : "0"},
+	{"ID" : "22", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitohbi_U27", "Parent" : "0"},
+	{"ID" : "23", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_sitohbi_U28", "Parent" : "0"},
 	{"ID" : "24", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U29", "Parent" : "0"},
-	{"ID" : "25", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U30", "Parent" : "0"}]}
+	{"ID" : "25", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U30", "Parent" : "0"},
+	{"ID" : "26", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U31", "Parent" : "0"},
+	{"ID" : "27", "Level" : "1", "Path" : "`AUTOTB_DUT_INST.pynq_dsp_hls_fcmpeOg_U32", "Parent" : "0"}]}
 
 
 set ArgLastReadFirstWriteLatency {
@@ -373,7 +375,7 @@ set ArgLastReadFirstWriteLatency {
 		counter {Type IO LastRead 17 FirstWrite 18}
 		numOfStage {Type O LastRead -1 FirstWrite 9}
 		configSizePerStage {Type O LastRead -1 FirstWrite 9}
-		configReg {Type IO LastRead 45 FirstWrite 9}
+		configReg {Type IO LastRead 52 FirstWrite 9}
 		readyRch {Type IO LastRead -1 FirstWrite -1}
 		readyLch {Type IO LastRead -1 FirstWrite -1}}
 	effect_delay {
@@ -386,8 +388,8 @@ set ArgLastReadFirstWriteLatency {
 set hasDtUnsupportedChannel 0
 
 set PerformanceInfo {[
-	{"Name" : "Latency", "Min" : "11", "Max" : "276"}
-	, {"Name" : "Interval", "Min" : "12", "Max" : "277"}
+	{"Name" : "Latency", "Min" : "11", "Max" : "277"}
+	, {"Name" : "Interval", "Min" : "12", "Max" : "278"}
 ]}
 
 set PipelineEnableSignalInfo {[

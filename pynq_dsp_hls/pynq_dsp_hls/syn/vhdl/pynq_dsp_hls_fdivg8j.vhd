@@ -5,9 +5,9 @@
 Library ieee;
 use ieee.std_logic_1164.all;
 
-entity pynq_dsp_hls_fdivfYi is
+entity pynq_dsp_hls_fdivg8j is
     generic (
-        ID         : integer := 23;
+        ID         : integer := 25;
         NUM_STAGE  : integer := 16;
         din0_WIDTH : integer := 32;
         din1_WIDTH : integer := 32;
@@ -23,7 +23,7 @@ entity pynq_dsp_hls_fdivfYi is
     );
 end entity;
 
-architecture arch of pynq_dsp_hls_fdivfYi is
+architecture arch of pynq_dsp_hls_fdivg8j is
     --------------------- Component ---------------------
     component pynq_dsp_hls_ap_fdiv_14_no_dsp_32 is
         port (

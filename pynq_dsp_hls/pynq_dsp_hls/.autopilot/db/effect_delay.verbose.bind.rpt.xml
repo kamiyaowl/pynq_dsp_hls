@@ -1,7 +1,7 @@
 <profile>
 
 <section name = "Vivado HLS Report for 'effect_delay'" level="0">
-<item name = "Date">Tue Feb 11 01:45:04 2020
+<item name = "Date">Tue Feb 11 14:56:16 2020
 </item>
 <item name = "Version">2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)</item>
 <item name = "Project">pynq_dsp_hls</item>

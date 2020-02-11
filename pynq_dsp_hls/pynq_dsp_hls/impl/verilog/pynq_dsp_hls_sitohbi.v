@@ -5,9 +5,9 @@
 
 `timescale 1ns/1ps
 
-module pynq_dsp_hls_sitog8j
+module pynq_dsp_hls_sitohbi
 #(parameter
-    ID         = 25,
+    ID         = 27,
     NUM_STAGE  = 6,
     din0_WIDTH = 32,
     dout_WIDTH = 32

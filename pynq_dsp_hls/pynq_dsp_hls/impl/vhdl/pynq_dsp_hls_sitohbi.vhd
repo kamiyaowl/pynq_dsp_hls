@@ -5,9 +5,9 @@
 Library ieee;
 use ieee.std_logic_1164.all;
 
-entity pynq_dsp_hls_sitog8j is
+entity pynq_dsp_hls_sitohbi is
     generic (
-        ID         : integer := 25;
+        ID         : integer := 27;
         NUM_STAGE  : integer := 6;
         din0_WIDTH : integer := 32;
         dout_WIDTH : integer := 32
@@ -21,7 +21,7 @@ entity pynq_dsp_hls_sitog8j is
     );
 end entity;
 
-architecture arch of pynq_dsp_hls_sitog8j is
+architecture arch of pynq_dsp_hls_sitohbi is
     --------------------- Component ---------------------
     component pynq_dsp_hls_ap_sitofp_4_no_dsp_32 is
         port (

@@ -2,9 +2,9 @@
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2019.1.3 (64-bit)
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // ==============================================================
-#ifndef __pynq_dsp_hls_fdivfYi__HH__
-#define __pynq_dsp_hls_fdivfYi__HH__
-#include "ACMP_fdiv.h"
+#ifndef __pynq_dsp_hls_faddfYi__HH__
+#define __pynq_dsp_hls_faddfYi__HH__
+#include "ACMP_faddfsub.h"
 #include <systemc>
 
 template<
@@ -13,25 +13,27 @@ template<
     int din0_WIDTH,
     int din1_WIDTH,
     int dout_WIDTH>
-SC_MODULE(pynq_dsp_hls_fdivfYi) {
+SC_MODULE(pynq_dsp_hls_faddfYi) {
     sc_core::sc_in_clk clk;
     sc_core::sc_in<sc_dt::sc_logic> reset;
     sc_core::sc_in<sc_dt::sc_logic> ce;
     sc_core::sc_in< sc_dt::sc_lv<din0_WIDTH> >   din0;
     sc_core::sc_in< sc_dt::sc_lv<din1_WIDTH> >   din1;
+    sc_core::sc_in< sc_dt::sc_lv<2> >   opcode;
     sc_core::sc_out< sc_dt::sc_lv<dout_WIDTH> >   dout;
 
 
 
-    ACMP_fdiv<ID, 16, din0_WIDTH, din1_WIDTH, dout_WIDTH> ACMP_fdiv_U;
+    ACMP_faddfsub<ID, 7, din0_WIDTH, din1_WIDTH, dout_WIDTH> ACMP_faddfsub_U;
 
-    SC_CTOR(pynq_dsp_hls_fdivfYi):  ACMP_fdiv_U ("ACMP_fdiv_U") {
-        ACMP_fdiv_U.clk(clk);
-        ACMP_fdiv_U.reset(reset);
-        ACMP_fdiv_U.ce(ce);
-        ACMP_fdiv_U.din0(din0);
-        ACMP_fdiv_U.din1(din1);
-        ACMP_fdiv_U.dout(dout);
+    SC_CTOR(pynq_dsp_hls_faddfYi):  ACMP_faddfsub_U ("ACMP_faddfsub_U") {
+        ACMP_faddfsub_U.clk(clk);
+        ACMP_faddfsub_U.reset(reset);
+        ACMP_faddfsub_U.ce(ce);
+        ACMP_faddfsub_U.din0(din0);
+        ACMP_faddfsub_U.din1(din1);
+        ACMP_faddfsub_U.dout(dout);
+        ACMP_faddfsub_U.opcode(opcode);
 
     }
 

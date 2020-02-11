@@ -2,8 +2,8 @@
 // Vivado(TM) HLS - High-Level Synthesis from C, C++ and SystemC v2019.1.3 (64-bit)
 // Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
 // ==============================================================
-#ifndef __pynq_dsp_hls_sitog8j__HH__
-#define __pynq_dsp_hls_sitog8j__HH__
+#ifndef __pynq_dsp_hls_sitohbi__HH__
+#define __pynq_dsp_hls_sitohbi__HH__
 #include "ACMP_sitofp.h"
 #include <systemc>
 
@@ -12,7 +12,7 @@ template<
     int NUM_STAGE,
     int din0_WIDTH,
     int dout_WIDTH>
-SC_MODULE(pynq_dsp_hls_sitog8j) {
+SC_MODULE(pynq_dsp_hls_sitohbi) {
     sc_core::sc_in_clk clk;
     sc_core::sc_in<sc_dt::sc_logic> reset;
     sc_core::sc_in<sc_dt::sc_logic> ce;
@@ -23,7 +23,7 @@ SC_MODULE(pynq_dsp_hls_sitog8j) {
 
     ACMP_sitofp<ID, 6, din0_WIDTH, dout_WIDTH> ACMP_sitofp_U;
 
-    SC_CTOR(pynq_dsp_hls_sitog8j):  ACMP_sitofp_U ("ACMP_sitofp_U") {
+    SC_CTOR(pynq_dsp_hls_sitohbi):  ACMP_sitofp_U ("ACMP_sitofp_U") {
         ACMP_sitofp_U.clk(clk);
         ACMP_sitofp_U.reset(reset);
         ACMP_sitofp_U.ce(ce);

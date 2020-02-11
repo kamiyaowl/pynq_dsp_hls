@@ -1,7 +1,104 @@
 # This script segment is generated automatically by AutoPilot
 
-set id 23
-set name pynq_dsp_hls_fdivfYi
+set id 21
+set name pynq_dsp_hls_faddfYi
+set corename simcore_faddfsub
+set op faddfsub
+set stage_num 7
+set max_latency -1
+set registered_input 1
+set impl_style full_dsp
+set Futype4reduceCEFanout 1
+set clk_width 1
+set clk_signed 0
+set reset_width 1
+set reset_signed 0
+set in0_width 32
+set in0_signed 0
+set in1_width 32
+set in1_signed 0
+set opcode_width 2
+set opcode_signed 0
+set ce_width 1
+set ce_signed 0
+set out_width 32
+if {${::AESL::PGuard_simmodel_gen}} {
+if {[info proc ap_gen_simcore_faddfsub] == "ap_gen_simcore_faddfsub"} {
+eval "ap_gen_simcore_faddfsub { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    style ${impl_style} \
+    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
+    clk_width ${clk_width} \
+    clk_signed ${clk_signed} \
+    reset_width ${reset_width} \
+    reset_signed ${reset_signed} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    opcode_width ${opcode_width} \
+    opcode_signed ${opcode_signed} \
+    ce_width ${ce_width} \
+    ce_signed ${ce_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_faddfsub, check your AutoPilot builtin lib"
+}
+}
+
+
+if {${::AESL::PGuard_rtl_comp_handler}} {
+	::AP::rtl_comp_handler ${name}
+}
+
+
+set op faddfsub
+set corename FAddSub
+if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
+if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {
+eval "::AESL_LIB_XILINX_FPV6::fpv6_gen { \
+    id ${id} \
+    name ${name} \
+    corename ${corename} \
+    op ${op} \
+    reset_level 1 \
+    sync_rst true \
+    stage_num ${stage_num} \
+    max_latency ${max_latency} \
+    registered_input ${registered_input} \
+    style ${impl_style} \
+    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
+    clk_width ${clk_width} \
+    clk_signed ${clk_signed} \
+    reset_width ${reset_width} \
+    reset_signed ${reset_signed} \
+    in0_width ${in0_width} \
+    in0_signed ${in0_signed} \
+    in1_width ${in1_width} \
+    in1_signed ${in1_signed} \
+    opcode_width ${opcode_width} \
+    opcode_signed ${opcode_signed} \
+    ce_width ${ce_width} \
+    ce_signed ${ce_signed} \
+    out_width ${out_width} \
+}"
+} else {
+puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your platform lib"
+}
+}
+
+
+set id 25
+set name pynq_dsp_hls_fdivg8j
 set corename simcore_fdiv
 set op fdiv
 set stage_num 16
@@ -88,8 +185,8 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 25
-set name pynq_dsp_hls_sitog8j
+set id 27
+set name pynq_dsp_hls_sitohbi
 set corename simcore_sitofp
 set op sitofp
 set stage_num 6
@@ -271,7 +368,7 @@ dict set axilite_register_dict AXILiteS $port_AXILiteS
 if {${::AESL::PGuard_simmodel_gen}} {
 	if {[info proc ::AESL_LIB_XILADAPTER::s_axilite_gen] == "::AESL_LIB_XILADAPTER::s_axilite_gen"} {
 		eval "::AESL_LIB_XILADAPTER::s_axilite_gen { \
-			id 33 \
+			id 36 \
 			corename pynq_dsp_hls_AXILiteS_axilite \
 			name pynq_dsp_hls_AXILiteS_s_axi \
 			ports {$port_AXILiteS} \
@@ -291,7 +388,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 35 \
+    id 38 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -312,7 +409,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 36 \
+    id 39 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -332,7 +429,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 34 \
+    id 37 \
     name lrclk \
     type other \
     dir I \

@@ -5,9 +5,9 @@
 
 `timescale 1ns/1ps
 
-module pynq_dsp_hls_fdivfYi
+module pynq_dsp_hls_fdivg8j
 #(parameter
-    ID         = 23,
+    ID         = 25,
     NUM_STAGE  = 16,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

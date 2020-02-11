@@ -101,8 +101,9 @@ bool tb_eq(const std::string name, bool (*test_func)(T), const std::vector<T>& t
 	return true;
 }
 
+const std::vector<distortion_eq_args> distortion_eq_patterns = {
+	// inL, inR, expectL, expectR, thresh
 
-const std::vector<distortion_eq_args> distortion_patterns = {
 	// 入力がなければそのまま
 	{ 0, 0, 0, 0, 0,},
 	{ 0, 0, 0, 0, 0.5,},
@@ -136,10 +137,24 @@ const std::vector<distortion_eq_args> distortion_patterns = {
 	{ 0.99, -0.99, 0.98, -0.98, 0.98,},
 };
 
+const std::vector<compressor_eq_args> compressor_eq_patterns = {
+	// inL, inR, expectL, expectR, thresh, ratio
+	{ 0.0,  0.0,  0.0,  0.0, 0.0, 0.0,},
+	{ 0.0,  0.0,  0.0,  0.0, 0.5, 0.0,},
+	{ 0.0,  0.0,  0.0,  0.0, 0.5, 0.5,},
+	{ 0.0,  0.0,  0.0,  0.0, 1.0, 0.5,},
+	// threshより小さい
+	{ 0.4, -0.3,  0.4, -0.3, 0.8, 0.5,},
+	{-0.4,  0.3, -0.4,  0.3, 0.8, 0.5,},
+	{ 0.5,  0.5,  0.4, -0.3, 0.5, 0.5,},
+	{ 0.5,  0.5, -0.4,  0.3, 0.5, 0.5,},
+};
+
 
 //Todo: テストが増えてきたらTest Driverを分離する?
 int main(void) {
-	if (!tb_eq("distortion", expect_eq_distortion, distortion_patterns)) return 1;
+	if (!tb_eq("expect_eq_distortion", expect_eq_distortion, distortion_eq_patterns)) return 1;
+	if (!tb_eq("expect_eq_compressor", expect_eq_compressor, compressor_eq_patterns)) return 1;
 
 	return 0;
 }
