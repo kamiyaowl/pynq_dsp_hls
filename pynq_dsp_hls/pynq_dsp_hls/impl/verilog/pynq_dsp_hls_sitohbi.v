@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_sitohbi
 #(parameter
-    ID         = 27,
+    ID         = 29,
     NUM_STAGE  = 6,
     din0_WIDTH = 32,
     dout_WIDTH = 32

@@ -26404,13 +26404,8 @@ typedef enum {
     BYPASS = 0x0,
     DISTORTION,
     COMPRESSOR,
-    FIR,
-    IIR,
     DELAY,
-    REVERB,
-    CHORUS,
-    TREMOLO,
-    VIBRATO,
+    IIR,
 } EffectId;
 
 
@@ -26533,6 +26528,57 @@ SampleData effect_delay(SampleData inData, uint32_t config[(16)], volatile ap_ui
     return dst;
 }
 
+SampleData effect_iir(SampleData inData, uint32_t config[(16)]) {_ssdm_SpecArrayDimSize(config, 16);
+    const uint32_t AZ1L_IDX = 8;
+    const uint32_t AZ1R_IDX = 9;
+    const uint32_t AZ2L_IDX = 10;
+    const uint32_t AZ2R_IDX = 11;
+    const uint32_t BZ1L_IDX = 12;
+    const uint32_t BZ1R_IDX = 13;
+    const uint32_t BZ2L_IDX = 14;
+    const uint32_t BZ2R_IDX = 15;
+
+
+    const float a1 = rawBitsToFloat(config[3]);
+    const float a2 = rawBitsToFloat(config[4]);
+    const float b0 = rawBitsToFloat(config[5]);
+    const float b1 = rawBitsToFloat(config[6]);
+    const float b2 = rawBitsToFloat(config[7]);
+
+
+    const float az1L = rawBitsToFloat(config[AZ1L_IDX]);
+    const float az1R = rawBitsToFloat(config[AZ1R_IDX]);
+    const float az2L = rawBitsToFloat(config[AZ2L_IDX]);
+    const float az2R = rawBitsToFloat(config[AZ2R_IDX]);
+    const float bz1L = rawBitsToFloat(config[BZ1L_IDX]);
+    const float bz1R = rawBitsToFloat(config[BZ1R_IDX]);
+    const float bz2L = rawBitsToFloat(config[BZ2L_IDX]);
+    const float bz2R = rawBitsToFloat(config[BZ2R_IDX]);
+
+
+    const float bz0L = inData.l;
+    const float bz0R = inData.r;
+
+    const float az0L = (bz0L * b0) + (bz1L * b1) + (bz2L * b2) + (az1L * a1) + (az2L * a2);
+    const float az0R = (bz0R * b0) + (bz1R * b1) + (bz2R * b2) + (az1R * a1) + (az2R * a2);
+
+
+    config[AZ1L_IDX] = floatToRawBits(az0L);
+    config[AZ1R_IDX] = floatToRawBits(az0R);
+    config[AZ2L_IDX] = floatToRawBits(az1L);
+    config[AZ2R_IDX] = floatToRawBits(az1L);
+    config[BZ1L_IDX] = floatToRawBits(bz0L);
+    config[BZ1R_IDX] = floatToRawBits(bz0R);
+    config[BZ2L_IDX] = floatToRawBits(bz1L);
+    config[BZ2R_IDX] = floatToRawBits(bz1R);
+
+
+    SampleData dst;
+    dst.l = az0L;
+    dst.r = az0R;
+    return dst;
+}
+
 
 void pynq_dsp_hls(
         bool lrclk,
@@ -26600,47 +26646,49 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
     const float floatSrcL = srcL.to_float() / (0x7fffff);
     const float floatSrcR = srcR.to_float() / (0x7fffff);
 
-    SampleData currentData;
-    currentData.l = floatSrcL;
-    currentData.r = floatSrcR;
 
+
+    static SampleData srcDatas[(4)] = {};
+    srcDatas[0].l = floatSrcL;
+    srcDatas[0].r = floatSrcR;
+
+    SampleData dstDatas[(4)];
     for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
-
      const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
         switch (id) {
             case EffectId::DISTORTION:
-                currentData = effect_distortion(currentData, configReg[stageIndex]);
+                dstDatas[stageIndex] = effect_distortion(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::COMPRESSOR:
-                currentData = effect_compressor(currentData, configReg[stageIndex]);
+                dstDatas[stageIndex] = effect_compressor(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::DELAY:
-                currentData = effect_delay(currentData, configReg[stageIndex], extMemPtr);
+                dstDatas[stageIndex] = effect_delay(srcDatas[stageIndex], configReg[stageIndex], extMemPtr);
                 break;
-            case EffectId::FIR:
             case EffectId::IIR:
-            case EffectId::REVERB:
-            case EffectId::CHORUS:
-            case EffectId::TREMOLO:
-            case EffectId::VIBRATO:
-
+                dstDatas[stageIndex] = effect_iir(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::BYPASS:
             default:
-
+                dstDatas[stageIndex].l = srcDatas[stageIndex].l;
+                dstDatas[stageIndex].r = srcDatas[stageIndex].r;
                 break;
         }
-
     }
 
-    const float floatDstL = currentData.l * (0x7fffff);
-    const float floatDstR = currentData.r * (0x7fffff);
+
+    const float floatDstL = dstDatas[(4) - 1].l * (0x7fffff);
+    const float floatDstR = dstDatas[(4) - 1].r * (0x7fffff);
     const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
     const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
-
-
     physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
     physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
+
+
+    for (ap_uint<32> stageIndex = 0; stageIndex < ((4) - 1); stageIndex++) {
+        srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
+        srcDatas[stageIndex + 1].r = dstDatas[stageIndex].r;
+    }
 
 
     *monitorSrcL = floatSrcL;

@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_fdivg8j
 #(parameter
-    ID         = 25,
+    ID         = 27,
     NUM_STAGE  = 16,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

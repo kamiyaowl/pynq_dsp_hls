@@ -29,13 +29,8 @@ typedef enum {
     BYPASS = 0x0, // default
     DISTORTION,
     COMPRESSOR,
-    FIR,
-    IIR,
     DELAY,
-    REVERB,
-    CHORUS,
-    TREMOLO,
-    VIBRATO,
+    IIR,
 } EffectId;
 
 // エフェクトの設定用, AXI経由で固定長の領域として見せたいので共用体で定義

@@ -12,10 +12,18 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T14:56:18.328+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T14:56:18.313+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T14:55:49.165+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-02-11T14:55:49.121+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_3' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.907+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_2' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.894+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_1' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.884+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_3' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.872+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_2' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.858+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_1' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.846+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_0' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.834+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_0' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.821+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.808+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.793+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:50:58.627+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:50:58.564+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.208+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.169+0900" type="Warning"/>
         <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.781+0900" type="Warning"/>

@@ -5,10 +5,10 @@
 <ModuleName>pynq_dsp_hls</ModuleName>
 <InstancesList>
 <Instance>
-<InstName>grp_effect_delay_fu_398</InstName>
+<InstName>grp_effect_delay_fu_1218</InstName>
 <ModuleName>effect_delay</ModuleName>
 <IsCompInst>true</IsCompInst>
-<ID>398</ID>
+<ID>1218</ID>
 </Instance>
 </InstancesList>
 </TopModule>
@@ -720,36 +720,43 @@
 <SummaryOfTimingAnalysis>
 <TargetClockPeriod>8.00</TargetClockPeriod>
 <ClockUncertainty>1.00</ClockUncertainty>
-<EstimatedClockPeriod>7.000</EstimatedClockPeriod>
+<EstimatedClockPeriod>7.503</EstimatedClockPeriod>
 </SummaryOfTimingAnalysis>
 <SummaryOfOverallLatency>
 <Best-caseLatency>11</Best-caseLatency>
-<Average-caseLatency>45</Average-caseLatency>
-<Worst-caseLatency>277</Worst-caseLatency>
-<PipelineInitiationInterval>12 ~ 278</PipelineInitiationInterval>
+<Average-caseLatency>58</Average-caseLatency>
+<Worst-caseLatency>288</Worst-caseLatency>
+<PipelineInitiationInterval>12 ~ 289</PipelineInitiationInterval>
 <PipelineType>none</PipelineType>
 </SummaryOfOverallLatency>
 <SummaryOfLoopLatency>
 <Loop1>
 <Name>Loop 1</Name>
 <TripCount>4</TripCount>
-<Latency>12 ~ 220</Latency>
+<Latency>16 ~ 224</Latency>
 <IterationLatency>
 <range>
-<min>3</min>
-<max>55</max>
+<min>4</min>
+<max>56</max>
 </range>
 </IterationLatency>
-<PipelineDepth>3 ~ 55</PipelineDepth>
+<PipelineDepth>4 ~ 56</PipelineDepth>
 </Loop1>
+<Loop2>
+<Name>Loop 2</Name>
+<TripCount>3</TripCount>
+<Latency>6</Latency>
+<IterationLatency>2</IterationLatency>
+<PipelineDepth>2</PipelineDepth>
+</Loop2>
 </SummaryOfLoopLatency>
 </PerformanceEstimates>
 <AreaEstimates>
 <Resources>
 <BRAM_18K>6</BRAM_18K>
-<DSP48E>34</DSP48E>
-<FF>10037</FF>
-<LUT>15645</LUT>
+<DSP48E>40</DSP48E>
+<FF>12259</FF>
+<LUT>17592</LUT>
 <URAM>0</URAM>
 </Resources>
 </AreaEstimates>

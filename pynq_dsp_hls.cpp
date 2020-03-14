@@ -96,6 +96,57 @@ SampleData effect_delay(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE], 
     return dst;
 }
 
+SampleData effect_iir(SampleData inData, uint32_t config[EFFECT_CONFIG_SIZE]) {
+    const uint32_t AZ1L_IDX = 8;
+    const uint32_t AZ1R_IDX = 9;
+    const uint32_t AZ2L_IDX = 10;
+    const uint32_t AZ2R_IDX = 11;
+    const uint32_t BZ1L_IDX = 12;
+    const uint32_t BZ1R_IDX = 13;
+    const uint32_t BZ2L_IDX = 14;
+    const uint32_t BZ2R_IDX = 15;
+
+    // const float a0 = hls::abs(rawBitsToFloat(config[2])); // scipyはa0=1固定で返してくる
+    const float a1 = rawBitsToFloat(config[3]);
+    const float a2 = rawBitsToFloat(config[4]);
+    const float b0 = rawBitsToFloat(config[5]);
+    const float b1 = rawBitsToFloat(config[6]);
+    const float b2 = rawBitsToFloat(config[7]);
+
+    // floatでtapの変数を読み戻す
+    const float az1L = rawBitsToFloat(config[AZ1L_IDX]);
+    const float az1R = rawBitsToFloat(config[AZ1R_IDX]);
+    const float az2L = rawBitsToFloat(config[AZ2L_IDX]);
+    const float az2R = rawBitsToFloat(config[AZ2R_IDX]);
+    const float bz1L = rawBitsToFloat(config[BZ1L_IDX]);
+    const float bz1R = rawBitsToFloat(config[BZ1R_IDX]);
+    const float bz2L = rawBitsToFloat(config[BZ2L_IDX]);
+    const float bz2R = rawBitsToFloat(config[BZ2R_IDX]);
+
+    // bz0は入力そのまま
+    const float bz0L = inData.l;
+    const float bz0R = inData.r;
+    // az0(dst相当)は愚直に計算 a0=1固定
+    const float az0L = (bz0L * b0) + (bz1L * b1) + (bz2L * b2) + (az1L * a1) + (az2L * a2);
+    const float az0R = (bz0R * b0) + (bz1R * b1) + (bz2R * b2) + (az1R * a1) + (az2R * a2);
+
+    // 現在の値をconfigに遅延値として保存しておく
+    config[AZ1L_IDX] = floatToRawBits(az0L);
+    config[AZ1R_IDX] = floatToRawBits(az0R);
+    config[AZ2L_IDX] = floatToRawBits(az1L);
+    config[AZ2R_IDX] = floatToRawBits(az1L);
+    config[BZ1L_IDX] = floatToRawBits(bz0L);
+    config[BZ1R_IDX] = floatToRawBits(bz0R);
+    config[BZ2L_IDX] = floatToRawBits(bz1L);
+    config[BZ2R_IDX] = floatToRawBits(bz1R);
+
+    // 結果を返す
+    SampleData dst;
+    dst.l = az0L;
+    dst.r = az0R;
+    return dst;
+}
+
 // top level function
 void pynq_dsp_hls(
         bool lrclk,                             // I2SのLR Clock、開始タイミングの同期用
@@ -162,50 +213,52 @@ void pynq_dsp_hls(
     const ap_int<24> srcR = rawR.range(23, 0);
     const float floatSrcL = srcL.to_float() / INTERNAL_FIXED_UNIT; // max 1.0に収まるようにする
     const float floatSrcR = srcR.to_float() / INTERNAL_FIXED_UNIT;
-    // 処理中の音声データ格納先を作成
-    SampleData currentData;
-    currentData.l = floatSrcL;
-    currentData.r = floatSrcR;
 
+
+    // 処�?中の音声�?ータ格納�??
+    static SampleData srcDatas[EFFECT_STAGE_N] = {};
+    srcDatas[0].l = floatSrcL;
+    srcDatas[0].r = floatSrcR;
+
+    SampleData dstDatas[EFFECT_STAGE_N];
     for (ap_uint<32> stageIndex = 0; stageIndex < EFFECT_STAGE_N; stageIndex++) {
-        // エフェクトで分岐して処理
     	const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
         switch (id) {
             case EffectId::DISTORTION:
-                currentData = effect_distortion(currentData, configReg[stageIndex]);
+                dstDatas[stageIndex] = effect_distortion(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::COMPRESSOR:
-                currentData = effect_compressor(currentData, configReg[stageIndex]);
+                dstDatas[stageIndex] = effect_compressor(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::DELAY:
-                currentData = effect_delay(currentData, configReg[stageIndex], extMemPtr);
+                dstDatas[stageIndex] = effect_delay(srcDatas[stageIndex], configReg[stageIndex], extMemPtr);
                 break;
-            case EffectId::FIR:
             case EffectId::IIR:
-            case EffectId::REVERB:
-            case EffectId::CHORUS:
-            case EffectId::TREMOLO:
-            case EffectId::VIBRATO:
-                // TODO: not implemented
+                dstDatas[stageIndex] = effect_iir(srcDatas[stageIndex], configReg[stageIndex]);
                 break;
             case EffectId::BYPASS:
             default:
-                // bypassは何もしない
+                dstDatas[stageIndex].l = srcDatas[stageIndex].l;
+                dstDatas[stageIndex].r = srcDatas[stageIndex].r;
                 break;
         }
-
     }
-    // エフェクトを掛けた音声データをfixedからどうにかもとの単位に戻す
-    const float floatDstL = currentData.l * INTERNAL_FIXED_UNIT; // max 1.0から元の符号なしに戻す
-    const float floatDstR = currentData.r * INTERNAL_FIXED_UNIT;
+
+    // 計算結果を浮動小数点からもとの形式に戻して反映する
+    const float floatDstL = dstDatas[EFFECT_STAGE_N - 1].l * INTERNAL_FIXED_UNIT;
+    const float floatDstR = dstDatas[EFFECT_STAGE_N - 1].r * INTERNAL_FIXED_UNIT;
     const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
     const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
-
-    // L/R chのデータを設定
     physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
     physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
 
-    // その他デバッグ情報
+    // srcDatasに次使うデータをセット
+    for (ap_uint<32> stageIndex = 0; stageIndex < (EFFECT_STAGE_N - 1); stageIndex++) {
+        srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
+        srcDatas[stageIndex + 1].r = dstDatas[stageIndex].r;
+    }
+
+    // Debug info
     *monitorSrcL = floatSrcL;
     *monitorSrcR = floatSrcR;
     *monitorDstL = floatDstL;

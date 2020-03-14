@@ -3,7 +3,9 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <limits>
 #include <cassert>
+#include <cmath>
 
 template<typename T, std::size_t S>
 std::size_t array_len(const T (&)[S]) {
@@ -12,7 +14,9 @@ std::size_t array_len(const T (&)[S]) {
 
 // 期待出力と一致していたらtrueを返します
 bool expect_eq(float dstL, float dstR, float expectL, float expectR) {
-	if (dstL != expectL) {
+	const float e = std::numeric_limits<float>::epsilon();
+
+	if (std::abs(dstL - expectL) >= e) {
 		std::cout << "dstL != expectL: (" 
 		          << dstL 
 				  << " != "
@@ -21,7 +25,7 @@ bool expect_eq(float dstL, float dstR, float expectL, float expectR) {
 				  << std::endl;
 		return false;
 	}
-	if (dstR != expectR) {
+	if (std::abs(dstR - expectR) >= e) {
 		std::cout << "dstR != expectR: ("
 		          << dstL 
 				  << " != "
@@ -139,6 +143,8 @@ const std::vector<distortion_eq_args> distortion_eq_patterns = {
 
 const std::vector<compressor_eq_args> compressor_eq_patterns = {
 	// inL, inR, expectL, expectR, thresh, ratio
+
+	// 入力値なし
 	{ 0.0,  0.0,  0.0,  0.0, 0.0, 0.0,},
 	{ 0.0,  0.0,  0.0,  0.0, 0.5, 0.0,},
 	{ 0.0,  0.0,  0.0,  0.0, 0.5, 0.5,},
@@ -146,8 +152,12 @@ const std::vector<compressor_eq_args> compressor_eq_patterns = {
 	// threshより小さい
 	{ 0.4, -0.3,  0.4, -0.3, 0.8, 0.5,},
 	{-0.4,  0.3, -0.4,  0.3, 0.8, 0.5,},
-	{ 0.5,  0.5,  0.4, -0.3, 0.5, 0.5,},
-	{ 0.5,  0.5, -0.4,  0.3, 0.5, 0.5,},
+	{ 0.5,  0.5,  0.5,  0.5, 0.5, 0.5,},
+	{ 0.5,  0.5,  0.5,  0.5, 0.5, 0.5,},
+	// 有効, ratio固定
+	{ 0.7, -0.7,  0.6, -0.6, 0.5, 0.5,},
+	{ 0.9, -0.9,  0.7, -0.7, 0.5, 0.5,},
+	{ 0.9, -0.9,  0.5, -0.5, 0.1, 0.5,},
 };
 
 
