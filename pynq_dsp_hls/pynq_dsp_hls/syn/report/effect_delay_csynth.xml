@@ -32,8 +32,8 @@
 <AreaEstimates>
 <Resources>
 <DSP48E>24</DSP48E>
-<FF>3466</FF>
-<LUT>5706</LUT>
+<FF>3472</FF>
+<LUT>5724</LUT>
 <BRAM_18K>0</BRAM_18K>
 <URAM>0</URAM>
 </Resources>
@@ -165,7 +165,7 @@
 <IOProtocol>ap_memory</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>out</Dir>
-<Bits>6</Bits>
+<Bits>8</Bits>
 <Attribute>address</Attribute>
 </RtlPorts>
 <RtlPorts>
@@ -220,7 +220,7 @@
 <IOProtocol>ap_none</IOProtocol>
 <IOConfig></IOConfig>
 <Dir>in</Dir>
-<Bits>3</Bits>
+<Bits>5</Bits>
 <Attribute>data</Attribute>
 </RtlPorts>
 <RtlPorts>

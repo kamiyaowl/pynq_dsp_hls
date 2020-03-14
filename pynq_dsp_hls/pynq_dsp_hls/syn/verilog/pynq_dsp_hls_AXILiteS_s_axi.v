@@ -5,7 +5,7 @@
 `timescale 1ns/1ps
 module pynq_dsp_hls_AXILiteS_s_axi
 #(parameter
-    C_S_AXI_ADDR_WIDTH = 9,
+    C_S_AXI_ADDR_WIDTH = 11,
     C_S_AXI_DATA_WIDTH = 32
 )(
     input  wire                          ACLK,
@@ -49,7 +49,7 @@ module pynq_dsp_hls_AXILiteS_s_axi
     input  wire                          numOfStage_ap_vld,
     input  wire [31:0]                   configSizePerStage,
     input  wire                          configSizePerStage_ap_vld,
-    input  wire [5:0]                    configReg_address0,
+    input  wire [7:0]                    configReg_address0,
     input  wire                          configReg_ce0,
     input  wire                          configReg_we0,
     input  wire [31:0]                   configReg_d0,
@@ -115,37 +115,37 @@ module pynq_dsp_hls_AXILiteS_s_axi
 // 0x054 : Control signal of configSizePerStage
 //         bit 0  - configSizePerStage_ap_vld (Read/COR)
 //         others - reserved
-// 0x100 ~
-// 0x1ff : Memory 'configReg' (64 * 32b)
+// 0x400 ~
+// 0x7ff : Memory 'configReg' (256 * 32b)
 //         Word n : bit [31:0] - configReg[n]
 // (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
 //------------------------Parameter----------------------
 localparam
-    ADDR_AP_CTRL                   = 9'h000,
-    ADDR_GIE                       = 9'h004,
-    ADDR_IER                       = 9'h008,
-    ADDR_ISR                       = 9'h00c,
-    ADDR_BASEPHYSADDR_V_DATA_0     = 9'h010,
-    ADDR_BASEPHYSADDR_V_CTRL       = 9'h014,
-    ADDR_MONITORSRCL_DATA_0        = 9'h018,
-    ADDR_MONITORSRCL_CTRL          = 9'h01c,
-    ADDR_MONITORSRCR_DATA_0        = 9'h020,
-    ADDR_MONITORSRCR_CTRL          = 9'h024,
-    ADDR_MONITORDSTL_DATA_0        = 9'h028,
-    ADDR_MONITORDSTL_CTRL          = 9'h02c,
-    ADDR_MONITORDSTR_DATA_0        = 9'h030,
-    ADDR_MONITORDSTR_CTRL          = 9'h034,
-    ADDR_COUNTER_I_DATA_0          = 9'h038,
-    ADDR_COUNTER_I_CTRL            = 9'h03c,
-    ADDR_COUNTER_O_DATA_0          = 9'h040,
-    ADDR_COUNTER_O_CTRL            = 9'h044,
-    ADDR_NUMOFSTAGE_DATA_0         = 9'h048,
-    ADDR_NUMOFSTAGE_CTRL           = 9'h04c,
-    ADDR_CONFIGSIZEPERSTAGE_DATA_0 = 9'h050,
-    ADDR_CONFIGSIZEPERSTAGE_CTRL   = 9'h054,
-    ADDR_CONFIGREG_BASE            = 9'h100,
-    ADDR_CONFIGREG_HIGH            = 9'h1ff,
+    ADDR_AP_CTRL                   = 11'h000,
+    ADDR_GIE                       = 11'h004,
+    ADDR_IER                       = 11'h008,
+    ADDR_ISR                       = 11'h00c,
+    ADDR_BASEPHYSADDR_V_DATA_0     = 11'h010,
+    ADDR_BASEPHYSADDR_V_CTRL       = 11'h014,
+    ADDR_MONITORSRCL_DATA_0        = 11'h018,
+    ADDR_MONITORSRCL_CTRL          = 11'h01c,
+    ADDR_MONITORSRCR_DATA_0        = 11'h020,
+    ADDR_MONITORSRCR_CTRL          = 11'h024,
+    ADDR_MONITORDSTL_DATA_0        = 11'h028,
+    ADDR_MONITORDSTL_CTRL          = 11'h02c,
+    ADDR_MONITORDSTR_DATA_0        = 11'h030,
+    ADDR_MONITORDSTR_CTRL          = 11'h034,
+    ADDR_COUNTER_I_DATA_0          = 11'h038,
+    ADDR_COUNTER_I_CTRL            = 11'h03c,
+    ADDR_COUNTER_O_DATA_0          = 11'h040,
+    ADDR_COUNTER_O_CTRL            = 11'h044,
+    ADDR_NUMOFSTAGE_DATA_0         = 11'h048,
+    ADDR_NUMOFSTAGE_CTRL           = 11'h04c,
+    ADDR_CONFIGSIZEPERSTAGE_DATA_0 = 11'h050,
+    ADDR_CONFIGSIZEPERSTAGE_CTRL   = 11'h054,
+    ADDR_CONFIGREG_BASE            = 11'h400,
+    ADDR_CONFIGREG_HIGH            = 11'h7ff,
     WRIDLE                         = 2'd0,
     WRDATA                         = 2'd1,
     WRRESP                         = 2'd2,
@@ -153,7 +153,7 @@ localparam
     RDIDLE                         = 2'd0,
     RDDATA                         = 2'd1,
     RDRESET                        = 2'd2,
-    ADDR_BITS         = 9;
+    ADDR_BITS         = 11;
 
 //------------------------Local signal-------------------
     reg  [1:0]                    wstate = WRRESET;
@@ -193,13 +193,13 @@ localparam
     reg  [31:0]                   int_configSizePerStage = 'b0;
     reg                           int_configSizePerStage_ap_vld;
     // memory signals
-    wire [5:0]                    int_configReg_address0;
+    wire [7:0]                    int_configReg_address0;
     wire                          int_configReg_ce0;
     wire                          int_configReg_we0;
     wire [3:0]                    int_configReg_be0;
     wire [31:0]                   int_configReg_d0;
     wire [31:0]                   int_configReg_q0;
-    wire [5:0]                    int_configReg_address1;
+    wire [7:0]                    int_configReg_address1;
     wire                          int_configReg_ce1;
     wire                          int_configReg_we1;
     wire [3:0]                    int_configReg_be1;
@@ -212,7 +212,7 @@ localparam
 // int_configReg
 pynq_dsp_hls_AXILiteS_s_axi_ram #(
     .BYTES    ( 4 ),
-    .DEPTH    ( 64 )
+    .DEPTH    ( 256 )
 ) int_configReg (
     .clk0     ( ACLK ),
     .address0 ( int_configReg_address0 ),
@@ -675,7 +675,7 @@ assign int_configReg_we0      = configReg_we0;
 assign int_configReg_be0      = {4{configReg_we0}};
 assign int_configReg_d0       = configReg_d0;
 assign configReg_q0           = int_configReg_q0;
-assign int_configReg_address1 = ar_hs? raddr[7:2] : waddr[7:2];
+assign int_configReg_address1 = ar_hs? raddr[9:2] : waddr[9:2];
 assign int_configReg_ce1      = ar_hs | (int_configReg_write & WVALID);
 assign int_configReg_we1      = int_configReg_write & WVALID;
 assign int_configReg_be1      = WSTRB;

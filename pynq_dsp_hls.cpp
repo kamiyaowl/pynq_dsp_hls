@@ -222,6 +222,7 @@ void pynq_dsp_hls(
 
     SampleData dstDatas[EFFECT_STAGE_N];
     for (ap_uint<32> stageIndex = 0; stageIndex < EFFECT_STAGE_N; stageIndex++) {
+#pragma HLS UNROLL
     	const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
         switch (id) {
             case EffectId::DISTORTION:
@@ -254,6 +255,7 @@ void pynq_dsp_hls(
 
     // srcDatasに次使うデータをセット
     for (ap_uint<32> stageIndex = 0; stageIndex < (EFFECT_STAGE_N - 1); stageIndex++) {
+#pragma HLS UNROLL
         srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
         srcDatas[stageIndex + 1].r = dstDatas[stageIndex].r;
     }

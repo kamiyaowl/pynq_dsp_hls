@@ -7,7 +7,7 @@
 #include <cstdint>
 
 // エフェクトの直列に実行できる総数
-#define EFFECT_STAGE_N (4)
+#define EFFECT_STAGE_N (16)
 // 24bit signedの最大値
 #define INTERNAL_FIXED_UNIT (0x7fffff)
 

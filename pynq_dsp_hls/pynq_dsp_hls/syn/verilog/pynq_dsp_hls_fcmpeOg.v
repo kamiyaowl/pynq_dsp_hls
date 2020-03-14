@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_fcmpeOg
 #(parameter
-    ID         = 11,
+    ID         = 22,
     NUM_STAGE  = 2,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

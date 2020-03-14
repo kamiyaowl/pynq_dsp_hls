@@ -1,104 +1,7 @@
 # This script segment is generated automatically by AutoPilot
 
-set id 21
-set name pynq_dsp_hls_faddfYi
-set corename simcore_faddfsub
-set op faddfsub
-set stage_num 7
-set max_latency -1
-set registered_input 1
-set impl_style full_dsp
-set Futype4reduceCEFanout 1
-set clk_width 1
-set clk_signed 0
-set reset_width 1
-set reset_signed 0
-set in0_width 32
-set in0_signed 0
-set in1_width 32
-set in1_signed 0
-set opcode_width 2
-set opcode_signed 0
-set ce_width 1
-set ce_signed 0
-set out_width 32
-if {${::AESL::PGuard_simmodel_gen}} {
-if {[info proc ap_gen_simcore_faddfsub] == "ap_gen_simcore_faddfsub"} {
-eval "ap_gen_simcore_faddfsub { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
-    reset_level 1 \
-    sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    style ${impl_style} \
-    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
-    clk_width ${clk_width} \
-    clk_signed ${clk_signed} \
-    reset_width ${reset_width} \
-    reset_signed ${reset_signed} \
-    in0_width ${in0_width} \
-    in0_signed ${in0_signed} \
-    in1_width ${in1_width} \
-    in1_signed ${in1_signed} \
-    opcode_width ${opcode_width} \
-    opcode_signed ${opcode_signed} \
-    ce_width ${ce_width} \
-    ce_signed ${ce_signed} \
-    out_width ${out_width} \
-}"
-} else {
-puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_faddfsub, check your AutoPilot builtin lib"
-}
-}
-
-
-if {${::AESL::PGuard_rtl_comp_handler}} {
-	::AP::rtl_comp_handler ${name}
-}
-
-
-set op faddfsub
-set corename FAddSub
-if {${::AESL::PGuard_autocg_gen} && (${::AESL::PGuard_autocg_fpip} || ${::AESL::PGuard_autocg_fpv6en} || ${::AESL::PGuard_autocg_hpen})} {
-if {[info proc ::AESL_LIB_XILINX_FPV6::fpv6_gen] == "::AESL_LIB_XILINX_FPV6::fpv6_gen"} {
-eval "::AESL_LIB_XILINX_FPV6::fpv6_gen { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
-    reset_level 1 \
-    sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    style ${impl_style} \
-    Futype4reduceCEFanout ${Futype4reduceCEFanout} \
-    clk_width ${clk_width} \
-    clk_signed ${clk_signed} \
-    reset_width ${reset_width} \
-    reset_signed ${reset_signed} \
-    in0_width ${in0_width} \
-    in0_signed ${in0_signed} \
-    in1_width ${in1_width} \
-    in1_signed ${in1_signed} \
-    opcode_width ${opcode_width} \
-    opcode_signed ${opcode_signed} \
-    ce_width ${ce_width} \
-    ce_signed ${ce_signed} \
-    out_width ${out_width} \
-}"
-} else {
-puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your platform lib"
-}
-}
-
-
-set id 27
-set name pynq_dsp_hls_fdivg8j
+set id 50
+set name pynq_dsp_hls_fdivibs
 set corename simcore_fdiv
 set op fdiv
 set stage_num 16
@@ -185,8 +88,8 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 29
-set name pynq_dsp_hls_sitohbi
+set id 52
+set name pynq_dsp_hls_sitojbC
 set corename simcore_sitofp
 set op sitofp
 set stage_num 6
@@ -267,88 +170,89 @@ puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_XILINX_FPV6::fpv6_gen, check your p
 }
 
 
-set id 35
-set name pynq_dsp_hls_mux_ibs
-set corename simcore_mux
-set op mux
-set stage_num 1
-set max_latency -1
-set registered_input 1
-set din0_width 32
-set din0_signed 0
-set din1_width 32
-set din1_signed 0
-set din2_width 32
-set din2_signed 0
-set din3_width 32
-set din3_signed 0
-set din4_width 2
-set din4_signed 0
-set dout_width 32
+# Memory (RAM/ROM)  definition:
+set ID 56
+set hasByteEnable 0
+set MemName pynq_dsp_hls_srcDg8j
+set CoreName ap_simcore_mem
+set PortList { 2 0 }
+set DataWd 32
+set AddrRange 16
+set AddrWd 4
+set impl_style block
+set TrueReset 0
+set IsROM 0
+set ROMData { }
+set HasInitializer 1
+set Initializer $ROMData
+set NumOfStage 2
+set MaxLatency -1
+set DelayBudget 2.322
+set ClkPeriod 8
+set RegisteredInput 0
 if {${::AESL::PGuard_simmodel_gen}} {
-if {[info proc ap_gen_simcore_mux] == "ap_gen_simcore_mux"} {
-eval "ap_gen_simcore_mux { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
+if {[info proc ap_gen_simcore_mem] == "ap_gen_simcore_mem"} {
+    eval "ap_gen_simcore_mem { \
+    id ${ID} \
+    name ${MemName} \
+    corename ${CoreName}  \
+    op mem \
+    hasByteEnable ${hasByteEnable} \
     reset_level 1 \
     sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    din0_width ${din0_width} \
-    din0_signed ${din0_signed} \
-    din1_width ${din1_width} \
-    din1_signed ${din1_signed} \
-    din2_width ${din2_width} \
-    din2_signed ${din2_signed} \
-    din3_width ${din3_width} \
-    din3_signed ${din3_signed} \
-    din4_width ${din4_width} \
-    din4_signed ${din4_signed} \
-    dout_width ${dout_width} \
-}"
+    stage_num ${NumOfStage}  \
+    registered_input ${RegisteredInput} \
+    port_num 2 \
+    port_list \{${PortList}\} \
+    data_wd ${DataWd} \
+    addr_wd ${AddrWd} \
+    addr_range ${AddrRange} \
+    style ${impl_style} \
+    true_reset ${TrueReset} \
+    delay_budget ${DelayBudget} \
+    clk_period ${ClkPeriod} \
+    HasInitializer ${HasInitializer} \
+    rom_data \{${ROMData}\} \
+ } "
 } else {
-puts "@W \[IMPL-100\] Cannot find ap_gen_simcore_mux, check your AutoPilot builtin lib"
+    puts "@W \[IMPL-102\] Cannot find ap_gen_simcore_mem, check your platform lib"
 }
 }
 
 
 if {${::AESL::PGuard_rtl_comp_handler}} {
-	::AP::rtl_comp_handler ${name}
+  ::AP::rtl_comp_handler $MemName
 }
 
 
-set op mux
-set corename MuxnS
+set CoreName RAM
 if {${::AESL::PGuard_autocg_gen} && ${::AESL::PGuard_autocg_ipmgen}} {
-if {[info proc ::AESL_LIB_VIRTEX::xil_gen_pipemux] == "::AESL_LIB_VIRTEX::xil_gen_pipemux"} {
-eval "::AESL_LIB_VIRTEX::xil_gen_pipemux { \
-    id ${id} \
-    name ${name} \
-    corename ${corename} \
-    op ${op} \
+if {[info proc ::AESL_LIB_VIRTEX::xil_gen_RAM] == "::AESL_LIB_VIRTEX::xil_gen_RAM"} {
+    eval "::AESL_LIB_VIRTEX::xil_gen_RAM { \
+    id ${ID} \
+    name ${MemName} \
+    corename ${CoreName}  \
+    op mem \
+    hasByteEnable ${hasByteEnable} \
     reset_level 1 \
     sync_rst true \
-    stage_num ${stage_num} \
-    max_latency ${max_latency} \
-    registered_input ${registered_input} \
-    din0_width ${din0_width} \
-    din0_signed ${din0_signed} \
-    din1_width ${din1_width} \
-    din1_signed ${din1_signed} \
-    din2_width ${din2_width} \
-    din2_signed ${din2_signed} \
-    din3_width ${din3_width} \
-    din3_signed ${din3_signed} \
-    din4_width ${din4_width} \
-    din4_signed ${din4_signed} \
-    dout_width ${dout_width} \
-}"
-} else {
-puts "@W \[IMPL-101\] Cannot find ::AESL_LIB_VIRTEX::xil_gen_pipemux, check your platform lib"
-}
+    stage_num ${NumOfStage}  \
+    registered_input ${RegisteredInput} \
+    port_num 2 \
+    port_list \{${PortList}\} \
+    data_wd ${DataWd} \
+    addr_wd ${AddrWd} \
+    addr_range ${AddrRange} \
+    style ${impl_style} \
+    true_reset ${TrueReset} \
+    delay_budget ${DelayBudget} \
+    clk_period ${ClkPeriod} \
+    HasInitializer ${HasInitializer} \
+    rom_data \{${ROMData}\} \
+ } "
+  } else {
+    puts "@W \[IMPL-104\] Cannot find ::AESL_LIB_VIRTEX::xil_gen_RAM, check your platform lib"
+  }
 }
 
 
@@ -440,10 +344,10 @@ configSizePerStage {
 configReg { 
 	dir IO
 	width 32
-	depth 64
+	depth 256
 	mode ap_memory
-	offset 256
-	offset_end 511
+	offset 1024
+	offset_end 2047
 }
 }
 dict set axilite_register_dict AXILiteS $port_AXILiteS
@@ -453,7 +357,7 @@ dict set axilite_register_dict AXILiteS $port_AXILiteS
 if {${::AESL::PGuard_simmodel_gen}} {
 	if {[info proc ::AESL_LIB_XILADAPTER::s_axilite_gen] == "::AESL_LIB_XILADAPTER::s_axilite_gen"} {
 		eval "::AESL_LIB_XILADAPTER::s_axilite_gen { \
-			id 49 \
+			id 57 \
 			corename pynq_dsp_hls_AXILiteS_axilite \
 			name pynq_dsp_hls_AXILiteS_s_axi \
 			ports {$port_AXILiteS} \
@@ -473,7 +377,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 51 \
+    id 59 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -494,7 +398,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 if {${::AESL::PGuard_simmodel_gen}} {
 if {[info proc ::AESL_LIB_XILADAPTER::m_axi_gen] == "::AESL_LIB_XILADAPTER::m_axi_gen"} {
 eval "::AESL_LIB_XILADAPTER::m_axi_gen { \
-    id 52 \
+    id 60 \
     corename {m_axi} \
     op interface \
     max_latency -1 \ 
@@ -514,7 +418,7 @@ if {${::AESL::PGuard_rtl_comp_handler}} {
 # Direct connection:
 if {${::AESL::PGuard_autoexp_gen}} {
 eval "cg_default_interface_gen_dc { \
-    id 50 \
+    id 58 \
     name lrclk \
     type other \
     dir I \

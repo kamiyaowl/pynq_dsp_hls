@@ -26428,7 +26428,7 @@ void pynq_dsp_hls(
         uint32_t* counter,
         uint32_t* numOfStage,
         uint32_t* configSizePerStage,
-        uint32_t configReg[(4)][(16)]
+        uint32_t configReg[(16)][(16)]
         );
 # 2 "pynq_dsp_hls.cpp" 2
 
@@ -26592,8 +26592,8 @@ void pynq_dsp_hls(
         uint32_t* counter,
         uint32_t* numOfStage,
         uint32_t* configSizePerStage,
-        uint32_t configReg[(4)][(16)]
-        ){_ssdm_SpecArrayDimSize(configReg, 4);
+        uint32_t configReg[(16)][(16)]
+        ){_ssdm_SpecArrayDimSize(configReg, 16);
 _ssdm_op_SpecInterface(0, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(lrclk, "ap_none", 1, 1, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 _ssdm_op_SpecInterface(physMemPtr, "m_axi", 0, 0, "", 0, 32, "", "", "", 16, 16, 16, 16, "", "");
@@ -26609,7 +26609,7 @@ _ssdm_op_SpecInterface(configSizePerStage, "s_axilite", 1, 1, "", 0, 0, "", "", 
 _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0, 0, 0, "", "");
 
 
- *numOfStage = (4);
+ *numOfStage = (16);
     *configSizePerStage = (16);
 
 
@@ -26648,13 +26648,14 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
 
 
 
-    static SampleData srcDatas[(4)] = {};
+    static SampleData srcDatas[(16)] = {};
     srcDatas[0].l = floatSrcL;
     srcDatas[0].r = floatSrcR;
 
-    SampleData dstDatas[(4)];
-    for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
-     const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
+    SampleData dstDatas[(16)];
+    for (ap_uint<32> stageIndex = 0; stageIndex < (16); stageIndex++) {
+_ssdm_Unroll(0,0,0, "");
+ const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
         switch (id) {
             case EffectId::DISTORTION:
                 dstDatas[stageIndex] = effect_distortion(srcDatas[stageIndex], configReg[stageIndex]);
@@ -26677,16 +26678,17 @@ _ssdm_op_SpecInterface(configReg, "s_axilite", 0, 0, "", 0, 0, "", "", "", 0, 0,
     }
 
 
-    const float floatDstL = dstDatas[(4) - 1].l * (0x7fffff);
-    const float floatDstR = dstDatas[(4) - 1].r * (0x7fffff);
+    const float floatDstL = dstDatas[(16) - 1].l * (0x7fffff);
+    const float floatDstR = dstDatas[(16) - 1].r * (0x7fffff);
     const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
     const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
     physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
     physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
 
 
-    for (ap_uint<32> stageIndex = 0; stageIndex < ((4) - 1); stageIndex++) {
-        srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
+    for (ap_uint<32> stageIndex = 0; stageIndex < ((16) - 1); stageIndex++) {
+_ssdm_Unroll(0,0,0, "");
+ srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
         srcDatas[stageIndex + 1].r = dstDatas[stageIndex].r;
     }
 

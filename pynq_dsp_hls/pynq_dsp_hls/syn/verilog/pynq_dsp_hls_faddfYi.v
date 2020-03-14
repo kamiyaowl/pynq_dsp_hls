@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_faddfYi
 #(parameter
-    ID         = 21,
+    ID         = 30,
     NUM_STAGE  = 7,
     din0_WIDTH = 32,
     din1_WIDTH = 32,

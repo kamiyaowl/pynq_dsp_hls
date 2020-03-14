@@ -12,26 +12,22 @@
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_3' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.907+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_2' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.894+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_1' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.884+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_3' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.872+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_2' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.858+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_1' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.846+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_r_0' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.834+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'srcDatas_l_0' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.821+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.808+0900" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:51:27.793+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:50:58.627+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T01:50:58.564+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.208+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="bypass" date="2020-01-30T01:03:42.169+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.781+0900" type="Warning"/>
-        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="compressor" date="2020-01-30T01:00:35.741+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyLch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:30:41.074+0900" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Register 'readyRch' is power-on initialization." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:30:41.058+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-484] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:30:08.259+0900" type="Warning"/>
+        <logs message="WARNING: [HLS 200-483] The 'config_sdx -optimization_level' command is deprecated and will be removed in a future release. Use 'config_export -vivado_optimization_level' as its replacement." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:30:08.219+0900" type="Warning"/>
       </synLog>
       <simLog/>
       <mgLog/>
-      <packageLog/>
+      <packageLog>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_uitofp_4_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:47.471+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_sitofp_4_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:44.027+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fmul_2_max_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:40.578+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fdiv_14_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:37.109+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fcmp_0_no_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:33.907+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_faddfsub_5_full_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:30.821+0900" type="Warning"/>
+        <logs message="WARNING: [IP_Flow 19-4832] The IP name 'pynq_dsp_hls_ap_fadd_5_full_dsp_32' you have specified is long. The Windows operating system has path length limitations. It is recommended you use shorter names to reduce the likelihood of issues." projectName="pynq_dsp_hls" solutionName="pynq_dsp_hls" date="2020-03-15T02:37:27.862+0900" type="Warning"/>
+      </packageLog>
       <csimLog/>
     </logs>
   </warningLogs>

@@ -143,7 +143,7 @@ set Const11 "0"
 set Volatile11 "0"
 set Pointer11 "0"
 set Reference11 "0"
-set Dims11 [list 4 16]
+set Dims11 [list 16 16]
 set Interface11 "wire"
 set DataType11 "unsigned int"
 set Port11 [list $PortName11 $Interface11 $DataType11 $Pointer11 $Dims11 $Const11 $Volatile11 $ArrayOpt11]

@@ -18,4 +18,4 @@ set_clock_uncertainty 12.5%
 csim_design
 csynth_design
 cosim_design -wave_debug -trace_level port -tool xsim
-export_design -rtl verilog -format ip_catalog -description "Audio DSP" -vendor "kamiyaowl" -version "0.2" -display_name "PYNQ DSP HLS"
+export_design -rtl verilog -format ip_catalog -description "Audio DSP" -vendor "kamiyaowl" -version "0.3" -display_name "PYNQ DSP HLS"

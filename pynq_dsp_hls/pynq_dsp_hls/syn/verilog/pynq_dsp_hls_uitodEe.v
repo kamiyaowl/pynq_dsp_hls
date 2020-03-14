@@ -7,7 +7,7 @@
 
 module pynq_dsp_hls_uitodEe
 #(parameter
-    ID         = 10,
+    ID         = 21,
     NUM_STAGE  = 6,
     din0_WIDTH = 32,
     dout_WIDTH = 32

@@ -26428,7 +26428,7 @@ void pynq_dsp_hls(
         uint32_t* counter,
         uint32_t* numOfStage,
         uint32_t* configSizePerStage,
-        uint32_t configReg[(4)][(16)]
+        uint32_t configReg[(16)][(16)]
         );
 # 2 "pynq_dsp_hls.cpp" 2
 
@@ -26592,8 +26592,8 @@ void pynq_dsp_hls(
         uint32_t* counter,
         uint32_t* numOfStage,
         uint32_t* configSizePerStage,
-        uint32_t configReg[(4)][(16)]
-        ){_ssdm_SpecArrayDimSize(configReg, 4);
+        uint32_t configReg[(16)][(16)]
+        ){_ssdm_SpecArrayDimSize(configReg, 16);
 #pragma HLS INTERFACE s_axilite port=return
 #pragma HLS INTERFACE ap_none register port=&lrclk
 #pragma HLS INTERFACE m_axi depth=32 port=&physMemPtr
@@ -26609,7 +26609,7 @@ void pynq_dsp_hls(
 #pragma HLS INTERFACE s_axilite port=&configReg
 
 
- *numOfStage = (4);
+ *numOfStage = (16);
     *configSizePerStage = (16);
 
 
@@ -26648,13 +26648,14 @@ void pynq_dsp_hls(
 
 
 
-    static SampleData srcDatas[(4)] = {};
+    static SampleData srcDatas[(16)] = {};
     srcDatas[0].l = floatSrcL;
     srcDatas[0].r = floatSrcR;
 
-    SampleData dstDatas[(4)];
-    for (ap_uint<32> stageIndex = 0; stageIndex < (4); stageIndex++) {
-     const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
+    SampleData dstDatas[(16)];
+    for (ap_uint<32> stageIndex = 0; stageIndex < (16); stageIndex++) {
+#pragma HLS UNROLL
+ const EffectId id = static_cast<EffectId>(configReg[stageIndex][0]);
         switch (id) {
             case EffectId::DISTORTION:
                 dstDatas[stageIndex] = effect_distortion(srcDatas[stageIndex], configReg[stageIndex]);
@@ -26677,16 +26678,17 @@ void pynq_dsp_hls(
     }
 
 
-    const float floatDstL = dstDatas[(4) - 1].l * (0x7fffff);
-    const float floatDstR = dstDatas[(4) - 1].r * (0x7fffff);
+    const float floatDstL = dstDatas[(16) - 1].l * (0x7fffff);
+    const float floatDstR = dstDatas[(16) - 1].r * (0x7fffff);
     const ap_int<24> dstL = static_cast<ap_int<24>>(floatDstL);
     const ap_int<24> dstR = static_cast<ap_int<24>>(floatDstR);
     physMemPtr[addr + I2S_DATA_TX_L_REG] = static_cast<ap_uint<32>>(dstL);
     physMemPtr[addr + I2S_DATA_TX_R_REG] = static_cast<ap_uint<32>>(dstR);
 
 
-    for (ap_uint<32> stageIndex = 0; stageIndex < ((4) - 1); stageIndex++) {
-        srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
+    for (ap_uint<32> stageIndex = 0; stageIndex < ((16) - 1); stageIndex++) {
+#pragma HLS UNROLL
+ srcDatas[stageIndex + 1].l = dstDatas[stageIndex].l;
         srcDatas[stageIndex + 1].r = dstDatas[stageIndex].r;
     }
 

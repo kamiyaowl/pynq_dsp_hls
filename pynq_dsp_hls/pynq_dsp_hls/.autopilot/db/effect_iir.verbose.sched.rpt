@@ -1,0 +1,605 @@
+
+
+================================================================
+== Vivado HLS Report for 'effect_iir'
+================================================================
+* Date:           Sun Mar 15 02:30:33 2020
+
+* Version:        2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)
+* Project:        pynq_dsp_hls
+* Solution:       pynq_dsp_hls
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |   8.00|     6.442|        1.00|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |   37|   37|   37|   37|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 38
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 20 
+20 --> 21 
+21 --> 22 
+22 --> 23 
+23 --> 24 
+24 --> 25 
+25 --> 26 
+26 --> 27 
+27 --> 28 
+28 --> 29 
+29 --> 30 
+30 --> 31 
+31 --> 32 
+32 --> 33 
+33 --> 34 
+34 --> 35 
+35 --> 36 
+36 --> 37 
+37 --> 38 
+38 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.26>
+ST_1 : Operation 39 [1/1] (0.00ns)   --->   "%config_offset_read = call i5 @_ssdm_op_Read.ap_auto.i5(i5 %config_offset)" [pynq_dsp_hls.cpp:110]   --->   Operation 39 'read' 'config_offset_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 40 [1/1] (0.00ns)   --->   "%tmp_15 = call i9 @_ssdm_op_BitConcatenate.i9.i5.i4(i5 %config_offset_read, i4 0)" [pynq_dsp_hls.cpp:110]   --->   Operation 40 'bitconcatenate' 'tmp_15' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 41 [1/1] (0.00ns)   --->   "%or_ln112 = or i9 %tmp_15, 5" [pynq_dsp_hls.cpp:112]   --->   Operation 41 'or' 'or_ln112' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 42 [1/1] (0.00ns)   --->   "%tmp_18 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln112)" [pynq_dsp_hls.cpp:112]   --->   Operation 42 'bitconcatenate' 'tmp_18' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 43 [1/1] (0.00ns)   --->   "%config_addr_2 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_18" [pynq_dsp_hls.cpp:112]   --->   Operation 43 'getelementptr' 'config_addr_2' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 44 [2/2] (2.26ns)   --->   "%config_load_2 = load i32* %config_addr_2, align 4" [pynq_dsp_hls.cpp:112]   --->   Operation 44 'load' 'config_load_2' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 2 <SV = 1> <Delay = 2.26>
+ST_2 : Operation 45 [1/1] (0.00ns)   --->   "%or_ln113 = or i9 %tmp_15, 6" [pynq_dsp_hls.cpp:113]   --->   Operation 45 'or' 'or_ln113' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 46 [1/1] (0.00ns)   --->   "%tmp_19 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln113)" [pynq_dsp_hls.cpp:113]   --->   Operation 46 'bitconcatenate' 'tmp_19' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 47 [1/1] (0.00ns)   --->   "%config_addr_3 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_19" [pynq_dsp_hls.cpp:113]   --->   Operation 47 'getelementptr' 'config_addr_3' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 48 [1/2] (2.26ns)   --->   "%config_load_2 = load i32* %config_addr_2, align 4" [pynq_dsp_hls.cpp:112]   --->   Operation 48 'load' 'config_load_2' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_2 : Operation 49 [2/2] (2.26ns)   --->   "%config_load_3 = load i32* %config_addr_3, align 4" [pynq_dsp_hls.cpp:113]   --->   Operation 49 'load' 'config_load_3' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 3 <SV = 2> <Delay = 2.26>
+ST_3 : Operation 50 [1/1] (0.00ns)   --->   "%or_ln121 = or i9 %tmp_15, 12" [pynq_dsp_hls.cpp:121]   --->   Operation 50 'or' 'or_ln121' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 51 [1/1] (0.00ns)   --->   "%tmp_25 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln121)" [pynq_dsp_hls.cpp:121]   --->   Operation 51 'bitconcatenate' 'tmp_25' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 52 [1/1] (0.00ns)   --->   "%config_addr_9 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_25" [pynq_dsp_hls.cpp:121]   --->   Operation 52 'getelementptr' 'config_addr_9' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 53 [1/2] (2.26ns)   --->   "%config_load_3 = load i32* %config_addr_3, align 4" [pynq_dsp_hls.cpp:113]   --->   Operation 53 'load' 'config_load_3' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_3 : Operation 54 [2/2] (2.26ns)   --->   "%config_load_9 = load i32* %config_addr_9, align 4" [pynq_dsp_hls.cpp:121]   --->   Operation 54 'load' 'config_load_9' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 4 <SV = 3> <Delay = 2.26>
+ST_4 : Operation 55 [1/1] (0.00ns)   --->   "%or_ln122 = or i9 %tmp_15, 13" [pynq_dsp_hls.cpp:122]   --->   Operation 55 'or' 'or_ln122' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 56 [1/1] (0.00ns)   --->   "%tmp_26 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln122)" [pynq_dsp_hls.cpp:122]   --->   Operation 56 'bitconcatenate' 'tmp_26' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 57 [1/1] (0.00ns)   --->   "%config_addr_10 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_26" [pynq_dsp_hls.cpp:122]   --->   Operation 57 'getelementptr' 'config_addr_10' <Predicate = true> <Delay = 0.00>
+ST_4 : Operation 58 [1/2] (2.26ns)   --->   "%config_load_9 = load i32* %config_addr_9, align 4" [pynq_dsp_hls.cpp:121]   --->   Operation 58 'load' 'config_load_9' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_4 : Operation 59 [2/2] (2.26ns)   --->   "%config_load_10 = load i32* %config_addr_10, align 4" [pynq_dsp_hls.cpp:122]   --->   Operation 59 'load' 'config_load_10' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 5 <SV = 4> <Delay = 5.70>
+ST_5 : Operation 60 [1/1] (0.00ns)   --->   "%inData_l_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_l)" [pynq_dsp_hls.cpp:110]   --->   Operation 60 'read' 'inData_l_read' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 61 [1/1] (0.00ns)   --->   "%b0 = bitcast i32 %config_load_2 to float" [pynq_dsp_hls.cpp:112]   --->   Operation 61 'bitcast' 'b0' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 62 [1/1] (0.00ns)   --->   "%b1 = bitcast i32 %config_load_3 to float" [pynq_dsp_hls.cpp:113]   --->   Operation 62 'bitcast' 'b1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 63 [1/1] (0.00ns)   --->   "%bz1L = bitcast i32 %config_load_9 to float" [pynq_dsp_hls.cpp:121]   --->   Operation 63 'bitcast' 'bz1L' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 64 [1/2] (2.26ns)   --->   "%config_load_10 = load i32* %config_addr_10, align 4" [pynq_dsp_hls.cpp:122]   --->   Operation 64 'load' 'config_load_10' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_5 : Operation 65 [4/4] (5.70ns)   --->   "%tmp = fmul float %b0, %inData_l_read" [pynq_dsp_hls.cpp:130]   --->   Operation 65 'fmul' 'tmp' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 66 [4/4] (5.70ns)   --->   "%tmp_4 = fmul float %bz1L, %b1" [pynq_dsp_hls.cpp:130]   --->   Operation 66 'fmul' 'tmp_4' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 6 <SV = 5> <Delay = 5.70>
+ST_6 : Operation 67 [1/1] (0.00ns)   --->   "%inData_r_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_r)" [pynq_dsp_hls.cpp:110]   --->   Operation 67 'read' 'inData_r_read' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 68 [1/1] (0.00ns)   --->   "%bz1R = bitcast i32 %config_load_10 to float" [pynq_dsp_hls.cpp:122]   --->   Operation 68 'bitcast' 'bz1R' <Predicate = true> <Delay = 0.00>
+ST_6 : Operation 69 [3/4] (5.70ns)   --->   "%tmp = fmul float %b0, %inData_l_read" [pynq_dsp_hls.cpp:130]   --->   Operation 69 'fmul' 'tmp' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 70 [3/4] (5.70ns)   --->   "%tmp_4 = fmul float %bz1L, %b1" [pynq_dsp_hls.cpp:130]   --->   Operation 70 'fmul' 'tmp_4' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 71 [4/4] (5.70ns)   --->   "%tmp_1 = fmul float %b0, %inData_r_read" [pynq_dsp_hls.cpp:131]   --->   Operation 71 'fmul' 'tmp_1' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 72 [4/4] (5.70ns)   --->   "%tmp_2 = fmul float %bz1R, %b1" [pynq_dsp_hls.cpp:131]   --->   Operation 72 'fmul' 'tmp_2' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 5.70>
+ST_7 : Operation 73 [2/4] (5.70ns)   --->   "%tmp = fmul float %b0, %inData_l_read" [pynq_dsp_hls.cpp:130]   --->   Operation 73 'fmul' 'tmp' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 74 [2/4] (5.70ns)   --->   "%tmp_4 = fmul float %bz1L, %b1" [pynq_dsp_hls.cpp:130]   --->   Operation 74 'fmul' 'tmp_4' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 75 [3/4] (5.70ns)   --->   "%tmp_1 = fmul float %b0, %inData_r_read" [pynq_dsp_hls.cpp:131]   --->   Operation 75 'fmul' 'tmp_1' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 76 [3/4] (5.70ns)   --->   "%tmp_2 = fmul float %bz1R, %b1" [pynq_dsp_hls.cpp:131]   --->   Operation 76 'fmul' 'tmp_2' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 5.70>
+ST_8 : Operation 77 [1/4] (5.70ns)   --->   "%tmp = fmul float %b0, %inData_l_read" [pynq_dsp_hls.cpp:130]   --->   Operation 77 'fmul' 'tmp' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 78 [1/4] (5.70ns)   --->   "%tmp_4 = fmul float %bz1L, %b1" [pynq_dsp_hls.cpp:130]   --->   Operation 78 'fmul' 'tmp_4' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 79 [2/4] (5.70ns)   --->   "%tmp_1 = fmul float %b0, %inData_r_read" [pynq_dsp_hls.cpp:131]   --->   Operation 79 'fmul' 'tmp_1' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 80 [2/4] (5.70ns)   --->   "%tmp_2 = fmul float %bz1R, %b1" [pynq_dsp_hls.cpp:131]   --->   Operation 80 'fmul' 'tmp_2' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 6.44>
+ST_9 : Operation 81 [1/1] (0.00ns)   --->   "%or_ln114 = or i9 %tmp_15, 7" [pynq_dsp_hls.cpp:114]   --->   Operation 81 'or' 'or_ln114' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 82 [1/1] (0.00ns)   --->   "%tmp_20 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln114)" [pynq_dsp_hls.cpp:114]   --->   Operation 82 'bitconcatenate' 'tmp_20' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 83 [1/1] (0.00ns)   --->   "%config_addr_4 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_20" [pynq_dsp_hls.cpp:114]   --->   Operation 83 'getelementptr' 'config_addr_4' <Predicate = true> <Delay = 0.00>
+ST_9 : Operation 84 [2/2] (2.26ns)   --->   "%config_load_4 = load i32* %config_addr_4, align 4" [pynq_dsp_hls.cpp:114]   --->   Operation 84 'load' 'config_load_4' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_9 : Operation 85 [7/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 85 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 86 [1/4] (5.70ns)   --->   "%tmp_1 = fmul float %b0, %inData_r_read" [pynq_dsp_hls.cpp:131]   --->   Operation 86 'fmul' 'tmp_1' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 87 [1/4] (5.70ns)   --->   "%tmp_2 = fmul float %bz1R, %b1" [pynq_dsp_hls.cpp:131]   --->   Operation 87 'fmul' 'tmp_2' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 6.44>
+ST_10 : Operation 88 [1/1] (0.00ns)   --->   "%or_ln123 = or i9 %tmp_15, 14" [pynq_dsp_hls.cpp:123]   --->   Operation 88 'or' 'or_ln123' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 89 [1/1] (0.00ns)   --->   "%tmp_27 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln123)" [pynq_dsp_hls.cpp:123]   --->   Operation 89 'bitconcatenate' 'tmp_27' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 90 [1/1] (0.00ns)   --->   "%config_addr_11 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_27" [pynq_dsp_hls.cpp:123]   --->   Operation 90 'getelementptr' 'config_addr_11' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 91 [1/2] (2.26ns)   --->   "%config_load_4 = load i32* %config_addr_4, align 4" [pynq_dsp_hls.cpp:114]   --->   Operation 91 'load' 'config_load_4' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_10 : Operation 92 [2/2] (2.26ns)   --->   "%config_load_11 = load i32* %config_addr_11, align 4" [pynq_dsp_hls.cpp:123]   --->   Operation 92 'load' 'config_load_11' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_10 : Operation 93 [6/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 93 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 94 [7/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 94 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 6.44>
+ST_11 : Operation 95 [1/1] (0.00ns)   --->   "%or_ln124 = or i9 %tmp_15, 15" [pynq_dsp_hls.cpp:124]   --->   Operation 95 'or' 'or_ln124' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 96 [1/1] (0.00ns)   --->   "%tmp_28 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln124)" [pynq_dsp_hls.cpp:124]   --->   Operation 96 'bitconcatenate' 'tmp_28' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 97 [1/1] (0.00ns)   --->   "%config_addr_12 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_28" [pynq_dsp_hls.cpp:124]   --->   Operation 97 'getelementptr' 'config_addr_12' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 98 [1/2] (2.26ns)   --->   "%config_load_11 = load i32* %config_addr_11, align 4" [pynq_dsp_hls.cpp:123]   --->   Operation 98 'load' 'config_load_11' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_11 : Operation 99 [2/2] (2.26ns)   --->   "%config_load_12 = load i32* %config_addr_12, align 4" [pynq_dsp_hls.cpp:124]   --->   Operation 99 'load' 'config_load_12' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_11 : Operation 100 [5/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 100 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 101 [6/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 101 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 6.44>
+ST_12 : Operation 102 [1/1] (0.00ns)   --->   "%or_ln110 = or i9 %tmp_15, 3" [pynq_dsp_hls.cpp:110]   --->   Operation 102 'or' 'or_ln110' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 103 [1/1] (0.00ns)   --->   "%tmp_16 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln110)" [pynq_dsp_hls.cpp:110]   --->   Operation 103 'bitconcatenate' 'tmp_16' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 104 [1/1] (0.00ns)   --->   "%config_addr = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_16" [pynq_dsp_hls.cpp:110]   --->   Operation 104 'getelementptr' 'config_addr' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 105 [2/2] (2.26ns)   --->   "%config_load = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:110]   --->   Operation 105 'load' 'config_load' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_12 : Operation 106 [1/1] (0.00ns)   --->   "%b2 = bitcast i32 %config_load_4 to float" [pynq_dsp_hls.cpp:114]   --->   Operation 106 'bitcast' 'b2' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 107 [1/1] (0.00ns)   --->   "%bz2L = bitcast i32 %config_load_11 to float" [pynq_dsp_hls.cpp:123]   --->   Operation 107 'bitcast' 'bz2L' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 108 [1/2] (2.26ns)   --->   "%config_load_12 = load i32* %config_addr_12, align 4" [pynq_dsp_hls.cpp:124]   --->   Operation 108 'load' 'config_load_12' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_12 : Operation 109 [4/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 109 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 110 [4/4] (5.70ns)   --->   "%tmp_6 = fmul float %bz2L, %b2" [pynq_dsp_hls.cpp:130]   --->   Operation 110 'fmul' 'tmp_6' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 111 [5/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 111 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 13 <SV = 12> <Delay = 6.44>
+ST_13 : Operation 112 [1/1] (0.00ns)   --->   "%or_ln117 = or i9 %tmp_15, 8" [pynq_dsp_hls.cpp:117]   --->   Operation 112 'or' 'or_ln117' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 113 [1/1] (0.00ns)   --->   "%tmp_21 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln117)" [pynq_dsp_hls.cpp:117]   --->   Operation 113 'bitconcatenate' 'tmp_21' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 114 [1/1] (0.00ns)   --->   "%config_addr_5 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_21" [pynq_dsp_hls.cpp:117]   --->   Operation 114 'getelementptr' 'config_addr_5' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 115 [1/2] (2.26ns)   --->   "%config_load = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:110]   --->   Operation 115 'load' 'config_load' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_13 : Operation 116 [2/2] (2.26ns)   --->   "%config_load_5 = load i32* %config_addr_5, align 4" [pynq_dsp_hls.cpp:117]   --->   Operation 116 'load' 'config_load_5' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_13 : Operation 117 [1/1] (0.00ns)   --->   "%bz2R = bitcast i32 %config_load_12 to float" [pynq_dsp_hls.cpp:124]   --->   Operation 117 'bitcast' 'bz2R' <Predicate = true> <Delay = 0.00>
+ST_13 : Operation 118 [3/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 118 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 119 [3/4] (5.70ns)   --->   "%tmp_6 = fmul float %bz2L, %b2" [pynq_dsp_hls.cpp:130]   --->   Operation 119 'fmul' 'tmp_6' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 120 [4/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 120 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 121 [4/4] (5.70ns)   --->   "%tmp_10 = fmul float %bz2R, %b2" [pynq_dsp_hls.cpp:131]   --->   Operation 121 'fmul' 'tmp_10' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 14 <SV = 13> <Delay = 6.44>
+ST_14 : Operation 122 [1/1] (0.00ns)   --->   "%or_ln118 = or i9 %tmp_15, 9" [pynq_dsp_hls.cpp:118]   --->   Operation 122 'or' 'or_ln118' <Predicate = true> <Delay = 0.00>
+ST_14 : Operation 123 [1/1] (0.00ns)   --->   "%tmp_22 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln118)" [pynq_dsp_hls.cpp:118]   --->   Operation 123 'bitconcatenate' 'tmp_22' <Predicate = true> <Delay = 0.00>
+ST_14 : Operation 124 [1/1] (0.00ns)   --->   "%config_addr_6 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_22" [pynq_dsp_hls.cpp:118]   --->   Operation 124 'getelementptr' 'config_addr_6' <Predicate = true> <Delay = 0.00>
+ST_14 : Operation 125 [1/2] (2.26ns)   --->   "%config_load_5 = load i32* %config_addr_5, align 4" [pynq_dsp_hls.cpp:117]   --->   Operation 125 'load' 'config_load_5' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_14 : Operation 126 [2/2] (2.26ns)   --->   "%config_load_6 = load i32* %config_addr_6, align 4" [pynq_dsp_hls.cpp:118]   --->   Operation 126 'load' 'config_load_6' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_14 : Operation 127 [2/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 127 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_14 : Operation 128 [2/4] (5.70ns)   --->   "%tmp_6 = fmul float %bz2L, %b2" [pynq_dsp_hls.cpp:130]   --->   Operation 128 'fmul' 'tmp_6' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_14 : Operation 129 [3/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 129 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_14 : Operation 130 [3/4] (5.70ns)   --->   "%tmp_10 = fmul float %bz2R, %b2" [pynq_dsp_hls.cpp:131]   --->   Operation 130 'fmul' 'tmp_10' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 14> <Delay = 6.44>
+ST_15 : Operation 131 [1/1] (0.00ns)   --->   "%or_ln111 = or i9 %tmp_15, 4" [pynq_dsp_hls.cpp:111]   --->   Operation 131 'or' 'or_ln111' <Predicate = true> <Delay = 0.00>
+ST_15 : Operation 132 [1/1] (0.00ns)   --->   "%tmp_17 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln111)" [pynq_dsp_hls.cpp:111]   --->   Operation 132 'bitconcatenate' 'tmp_17' <Predicate = true> <Delay = 0.00>
+ST_15 : Operation 133 [1/1] (0.00ns)   --->   "%config_addr_1 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_17" [pynq_dsp_hls.cpp:111]   --->   Operation 133 'getelementptr' 'config_addr_1' <Predicate = true> <Delay = 0.00>
+ST_15 : Operation 134 [2/2] (2.26ns)   --->   "%config_load_1 = load i32* %config_addr_1, align 4" [pynq_dsp_hls.cpp:111]   --->   Operation 134 'load' 'config_load_1' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_15 : Operation 135 [1/2] (2.26ns)   --->   "%config_load_6 = load i32* %config_addr_6, align 4" [pynq_dsp_hls.cpp:118]   --->   Operation 135 'load' 'config_load_6' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_15 : Operation 136 [1/7] (6.44ns)   --->   "%tmp_5 = fadd float %tmp, %tmp_4" [pynq_dsp_hls.cpp:130]   --->   Operation 136 'fadd' 'tmp_5' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_15 : Operation 137 [1/4] (5.70ns)   --->   "%tmp_6 = fmul float %bz2L, %b2" [pynq_dsp_hls.cpp:130]   --->   Operation 137 'fmul' 'tmp_6' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_15 : Operation 138 [2/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 138 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_15 : Operation 139 [2/4] (5.70ns)   --->   "%tmp_10 = fmul float %bz2R, %b2" [pynq_dsp_hls.cpp:131]   --->   Operation 139 'fmul' 'tmp_10' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 15> <Delay = 6.44>
+ST_16 : Operation 140 [1/1] (0.00ns)   --->   "%or_ln119 = or i9 %tmp_15, 10" [pynq_dsp_hls.cpp:119]   --->   Operation 140 'or' 'or_ln119' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 141 [1/1] (0.00ns)   --->   "%tmp_23 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln119)" [pynq_dsp_hls.cpp:119]   --->   Operation 141 'bitconcatenate' 'tmp_23' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 142 [1/1] (0.00ns)   --->   "%config_addr_7 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_23" [pynq_dsp_hls.cpp:119]   --->   Operation 142 'getelementptr' 'config_addr_7' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 143 [1/1] (0.00ns)   --->   "%or_ln120 = or i9 %tmp_15, 11" [pynq_dsp_hls.cpp:120]   --->   Operation 143 'or' 'or_ln120' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 144 [1/1] (0.00ns)   --->   "%tmp_24 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln120)" [pynq_dsp_hls.cpp:120]   --->   Operation 144 'bitconcatenate' 'tmp_24' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 145 [1/1] (0.00ns)   --->   "%config_addr_8 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_24" [pynq_dsp_hls.cpp:120]   --->   Operation 145 'getelementptr' 'config_addr_8' <Predicate = true> <Delay = 0.00>
+ST_16 : Operation 146 [1/2] (2.26ns)   --->   "%config_load_1 = load i32* %config_addr_1, align 4" [pynq_dsp_hls.cpp:111]   --->   Operation 146 'load' 'config_load_1' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_16 : Operation 147 [2/2] (2.26ns)   --->   "%config_load_7 = load i32* %config_addr_7, align 4" [pynq_dsp_hls.cpp:119]   --->   Operation 147 'load' 'config_load_7' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_16 : Operation 148 [7/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 148 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_16 : Operation 149 [1/7] (6.44ns)   --->   "%tmp_3 = fadd float %tmp_1, %tmp_2" [pynq_dsp_hls.cpp:131]   --->   Operation 149 'fadd' 'tmp_3' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_16 : Operation 150 [1/4] (5.70ns)   --->   "%tmp_10 = fmul float %bz2R, %b2" [pynq_dsp_hls.cpp:131]   --->   Operation 150 'fmul' 'tmp_10' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 16> <Delay = 6.44>
+ST_17 : Operation 151 [1/2] (2.26ns)   --->   "%config_load_7 = load i32* %config_addr_7, align 4" [pynq_dsp_hls.cpp:119]   --->   Operation 151 'load' 'config_load_7' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_17 : Operation 152 [2/2] (2.26ns)   --->   "%config_load_8 = load i32* %config_addr_8, align 4" [pynq_dsp_hls.cpp:120]   --->   Operation 152 'load' 'config_load_8' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_17 : Operation 153 [6/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 153 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 154 [7/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 154 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 18 <SV = 17> <Delay = 6.44>
+ST_18 : Operation 155 [1/2] (2.26ns)   --->   "%config_load_8 = load i32* %config_addr_8, align 4" [pynq_dsp_hls.cpp:120]   --->   Operation 155 'load' 'config_load_8' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_18 : Operation 156 [5/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 156 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 157 [6/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 157 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 158 [1/1] (2.26ns)   --->   "store i32 %config_load_5, i32* %config_addr_7, align 4" [pynq_dsp_hls.cpp:136]   --->   Operation 158 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 19 <SV = 18> <Delay = 6.44>
+ST_19 : Operation 159 [1/1] (0.00ns)   --->   "%a1 = bitcast i32 %config_load to float" [pynq_dsp_hls.cpp:110]   --->   Operation 159 'bitcast' 'a1' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 160 [1/1] (0.00ns)   --->   "%a2 = bitcast i32 %config_load_1 to float" [pynq_dsp_hls.cpp:111]   --->   Operation 160 'bitcast' 'a2' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 161 [1/1] (0.00ns)   --->   "%az1L = bitcast i32 %config_load_5 to float" [pynq_dsp_hls.cpp:117]   --->   Operation 161 'bitcast' 'az1L' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 162 [1/1] (0.00ns)   --->   "%az1R = bitcast i32 %config_load_6 to float" [pynq_dsp_hls.cpp:118]   --->   Operation 162 'bitcast' 'az1R' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 163 [1/1] (0.00ns)   --->   "%az2L = bitcast i32 %config_load_7 to float" [pynq_dsp_hls.cpp:119]   --->   Operation 163 'bitcast' 'az2L' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 164 [1/1] (0.00ns)   --->   "%az2R = bitcast i32 %config_load_8 to float" [pynq_dsp_hls.cpp:120]   --->   Operation 164 'bitcast' 'az2R' <Predicate = true> <Delay = 0.00>
+ST_19 : Operation 165 [4/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 165 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 166 [4/4] (5.70ns)   --->   "%tmp_8 = fmul float %az1L, %a1" [pynq_dsp_hls.cpp:130]   --->   Operation 166 'fmul' 'tmp_8' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 167 [4/4] (5.70ns)   --->   "%tmp_s = fmul float %az2L, %a2" [pynq_dsp_hls.cpp:130]   --->   Operation 167 'fmul' 'tmp_s' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 168 [5/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 168 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 169 [4/4] (5.70ns)   --->   "%tmp_12 = fmul float %az1R, %a1" [pynq_dsp_hls.cpp:131]   --->   Operation 169 'fmul' 'tmp_12' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 170 [4/4] (5.70ns)   --->   "%tmp_14 = fmul float %az2R, %a2" [pynq_dsp_hls.cpp:131]   --->   Operation 170 'fmul' 'tmp_14' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 171 [1/1] (2.26ns)   --->   "store i32 %config_load_5, i32* %config_addr_8, align 4" [pynq_dsp_hls.cpp:137]   --->   Operation 171 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 20 <SV = 19> <Delay = 6.44>
+ST_20 : Operation 172 [3/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 172 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 173 [3/4] (5.70ns)   --->   "%tmp_8 = fmul float %az1L, %a1" [pynq_dsp_hls.cpp:130]   --->   Operation 173 'fmul' 'tmp_8' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 174 [3/4] (5.70ns)   --->   "%tmp_s = fmul float %az2L, %a2" [pynq_dsp_hls.cpp:130]   --->   Operation 174 'fmul' 'tmp_s' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 175 [4/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 175 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 176 [3/4] (5.70ns)   --->   "%tmp_12 = fmul float %az1R, %a1" [pynq_dsp_hls.cpp:131]   --->   Operation 176 'fmul' 'tmp_12' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 177 [3/4] (5.70ns)   --->   "%tmp_14 = fmul float %az2R, %a2" [pynq_dsp_hls.cpp:131]   --->   Operation 177 'fmul' 'tmp_14' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 178 [1/1] (0.00ns)   --->   "%bitcast_ln705_2 = bitcast float %inData_l_read to i32" [pynq_dsp_hls.cpp:138]   --->   Operation 178 'bitcast' 'bitcast_ln705_2' <Predicate = true> <Delay = 0.00>
+ST_20 : Operation 179 [1/1] (2.26ns)   --->   "store i32 %bitcast_ln705_2, i32* %config_addr_9, align 4" [pynq_dsp_hls.cpp:138]   --->   Operation 179 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 21 <SV = 20> <Delay = 6.44>
+ST_21 : Operation 180 [2/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 180 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 181 [2/4] (5.70ns)   --->   "%tmp_8 = fmul float %az1L, %a1" [pynq_dsp_hls.cpp:130]   --->   Operation 181 'fmul' 'tmp_8' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 182 [2/4] (5.70ns)   --->   "%tmp_s = fmul float %az2L, %a2" [pynq_dsp_hls.cpp:130]   --->   Operation 182 'fmul' 'tmp_s' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 183 [3/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 183 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 184 [2/4] (5.70ns)   --->   "%tmp_12 = fmul float %az1R, %a1" [pynq_dsp_hls.cpp:131]   --->   Operation 184 'fmul' 'tmp_12' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 185 [2/4] (5.70ns)   --->   "%tmp_14 = fmul float %az2R, %a2" [pynq_dsp_hls.cpp:131]   --->   Operation 185 'fmul' 'tmp_14' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 186 [1/1] (0.00ns)   --->   "%bitcast_ln705_3 = bitcast float %inData_r_read to i32" [pynq_dsp_hls.cpp:139]   --->   Operation 186 'bitcast' 'bitcast_ln705_3' <Predicate = true> <Delay = 0.00>
+ST_21 : Operation 187 [1/1] (2.26ns)   --->   "store i32 %bitcast_ln705_3, i32* %config_addr_10, align 4" [pynq_dsp_hls.cpp:139]   --->   Operation 187 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 22 <SV = 21> <Delay = 6.44>
+ST_22 : Operation 188 [1/7] (6.44ns)   --->   "%tmp_7 = fadd float %tmp_5, %tmp_6" [pynq_dsp_hls.cpp:130]   --->   Operation 188 'fadd' 'tmp_7' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 189 [1/4] (5.70ns)   --->   "%tmp_8 = fmul float %az1L, %a1" [pynq_dsp_hls.cpp:130]   --->   Operation 189 'fmul' 'tmp_8' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 190 [1/4] (5.70ns)   --->   "%tmp_s = fmul float %az2L, %a2" [pynq_dsp_hls.cpp:130]   --->   Operation 190 'fmul' 'tmp_s' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 191 [2/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 191 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 192 [1/4] (5.70ns)   --->   "%tmp_12 = fmul float %az1R, %a1" [pynq_dsp_hls.cpp:131]   --->   Operation 192 'fmul' 'tmp_12' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 193 [1/4] (5.70ns)   --->   "%tmp_14 = fmul float %az2R, %a2" [pynq_dsp_hls.cpp:131]   --->   Operation 193 'fmul' 'tmp_14' <Predicate = true> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 194 [1/1] (2.26ns)   --->   "store i32 %config_load_9, i32* %config_addr_11, align 4" [pynq_dsp_hls.cpp:140]   --->   Operation 194 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 23 <SV = 22> <Delay = 6.44>
+ST_23 : Operation 195 [7/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 195 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 196 [1/7] (6.44ns)   --->   "%tmp_11 = fadd float %tmp_3, %tmp_10" [pynq_dsp_hls.cpp:131]   --->   Operation 196 'fadd' 'tmp_11' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 197 [1/1] (2.26ns)   --->   "store i32 %config_load_10, i32* %config_addr_12, align 4" [pynq_dsp_hls.cpp:141]   --->   Operation 197 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 24 <SV = 23> <Delay = 6.44>
+ST_24 : Operation 198 [6/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 198 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_24 : Operation 199 [7/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 199 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 25 <SV = 24> <Delay = 6.44>
+ST_25 : Operation 200 [5/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 200 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_25 : Operation 201 [6/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 201 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 26 <SV = 25> <Delay = 6.44>
+ST_26 : Operation 202 [4/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 202 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_26 : Operation 203 [5/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 203 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 27 <SV = 26> <Delay = 6.44>
+ST_27 : Operation 204 [3/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 204 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_27 : Operation 205 [4/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 205 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 28 <SV = 27> <Delay = 6.44>
+ST_28 : Operation 206 [2/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 206 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_28 : Operation 207 [3/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 207 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 29 <SV = 28> <Delay = 6.44>
+ST_29 : Operation 208 [1/7] (6.44ns)   --->   "%tmp_9 = fadd float %tmp_7, %tmp_8" [pynq_dsp_hls.cpp:130]   --->   Operation 208 'fadd' 'tmp_9' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_29 : Operation 209 [2/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 209 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 30 <SV = 29> <Delay = 6.44>
+ST_30 : Operation 210 [7/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 210 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_30 : Operation 211 [1/7] (6.44ns)   --->   "%tmp_13 = fadd float %tmp_11, %tmp_12" [pynq_dsp_hls.cpp:131]   --->   Operation 211 'fadd' 'tmp_13' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 31 <SV = 30> <Delay = 6.44>
+ST_31 : Operation 212 [6/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 212 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_31 : Operation 213 [7/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 213 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 32 <SV = 31> <Delay = 6.44>
+ST_32 : Operation 214 [5/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 214 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_32 : Operation 215 [6/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 215 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 33 <SV = 32> <Delay = 6.44>
+ST_33 : Operation 216 [4/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 216 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_33 : Operation 217 [5/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 217 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 34 <SV = 33> <Delay = 6.44>
+ST_34 : Operation 218 [3/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 218 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_34 : Operation 219 [4/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 219 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 35 <SV = 34> <Delay = 6.44>
+ST_35 : Operation 220 [2/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 220 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_35 : Operation 221 [3/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 221 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 36 <SV = 35> <Delay = 6.44>
+ST_36 : Operation 222 [1/7] (6.44ns)   --->   "%az0L = fadd float %tmp_9, %tmp_s" [pynq_dsp_hls.cpp:130]   --->   Operation 222 'fadd' 'az0L' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_36 : Operation 223 [2/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 223 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 37 <SV = 36> <Delay = 6.44>
+ST_37 : Operation 224 [1/7] (6.44ns)   --->   "%az0R = fadd float %tmp_13, %tmp_14" [pynq_dsp_hls.cpp:131]   --->   Operation 224 'fadd' 'az0R' <Predicate = true> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_37 : Operation 225 [1/1] (0.00ns)   --->   "%bitcast_ln705 = bitcast float %az0L to i32" [pynq_dsp_hls.cpp:134]   --->   Operation 225 'bitcast' 'bitcast_ln705' <Predicate = true> <Delay = 0.00>
+ST_37 : Operation 226 [1/1] (2.26ns)   --->   "store i32 %bitcast_ln705, i32* %config_addr_5, align 4" [pynq_dsp_hls.cpp:134]   --->   Operation 226 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 38 <SV = 37> <Delay = 2.26>
+ST_38 : Operation 227 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecMemCore([256 x i32]* %config_r, [1 x i8]* @p_str8, [7 x i8]* @RAM_1P_str, [1 x i8]* @p_str8, i32 -1, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8)"   --->   Operation 227 'specmemcore' 'empty' <Predicate = true> <Delay = 0.00>
+ST_38 : Operation 228 [1/1] (0.00ns)   --->   "%bitcast_ln705_1 = bitcast float %az0R to i32" [pynq_dsp_hls.cpp:135]   --->   Operation 228 'bitcast' 'bitcast_ln705_1' <Predicate = true> <Delay = 0.00>
+ST_38 : Operation 229 [1/1] (2.26ns)   --->   "store i32 %bitcast_ln705_1, i32* %config_addr_6, align 4" [pynq_dsp_hls.cpp:135]   --->   Operation 229 'store' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_38 : Operation 230 [1/1] (0.00ns)   --->   "%mrv = insertvalue { float, float } undef, float %az0L, 0" [pynq_dsp_hls.cpp:147]   --->   Operation 230 'insertvalue' 'mrv' <Predicate = true> <Delay = 0.00>
+ST_38 : Operation 231 [1/1] (0.00ns)   --->   "%mrv_1 = insertvalue { float, float } %mrv, float %az0R, 1" [pynq_dsp_hls.cpp:147]   --->   Operation 231 'insertvalue' 'mrv_1' <Predicate = true> <Delay = 0.00>
+ST_38 : Operation 232 [1/1] (0.00ns)   --->   "ret { float, float } %mrv_1" [pynq_dsp_hls.cpp:147]   --->   Operation 232 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 8ns, clock uncertainty: 1ns.
+
+ <State 1>: 2.27ns
+The critical path consists of the following:
+	wire read on port 'config_offset' (pynq_dsp_hls.cpp:110) [6]  (0 ns)
+	'or' operation ('or_ln112', pynq_dsp_hls.cpp:112) [16]  (0 ns)
+	'getelementptr' operation ('config_addr_2', pynq_dsp_hls.cpp:112) [18]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:112) on array 'config_r' [53]  (2.27 ns)
+
+ <State 2>: 2.27ns
+The critical path consists of the following:
+	'or' operation ('or_ln113', pynq_dsp_hls.cpp:113) [19]  (0 ns)
+	'getelementptr' operation ('config_addr_3', pynq_dsp_hls.cpp:113) [21]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:113) on array 'config_r' [55]  (2.27 ns)
+
+ <State 3>: 2.27ns
+The critical path consists of the following:
+	'or' operation ('or_ln121', pynq_dsp_hls.cpp:121) [37]  (0 ns)
+	'getelementptr' operation ('config_addr_9', pynq_dsp_hls.cpp:121) [39]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:121) on array 'config_r' [67]  (2.27 ns)
+
+ <State 4>: 2.27ns
+The critical path consists of the following:
+	'or' operation ('or_ln122', pynq_dsp_hls.cpp:122) [40]  (0 ns)
+	'getelementptr' operation ('config_addr_10', pynq_dsp_hls.cpp:122) [42]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:122) on array 'config_r' [69]  (2.27 ns)
+
+ <State 5>: 5.7ns
+The critical path consists of the following:
+	wire read on port 'inData_l' (pynq_dsp_hls.cpp:110) [8]  (0 ns)
+	'fmul' operation ('tmp', pynq_dsp_hls.cpp:130) [75]  (5.7 ns)
+
+ <State 6>: 5.7ns
+The critical path consists of the following:
+	wire read on port 'inData_r' (pynq_dsp_hls.cpp:110) [7]  (0 ns)
+	'fmul' operation ('tmp_1', pynq_dsp_hls.cpp:131) [84]  (5.7 ns)
+
+ <State 7>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp', pynq_dsp_hls.cpp:130) [75]  (5.7 ns)
+
+ <State 8>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp', pynq_dsp_hls.cpp:130) [75]  (5.7 ns)
+
+ <State 9>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 10>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 11>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 12>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 13>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 14>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 15>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_5', pynq_dsp_hls.cpp:130) [77]  (6.44 ns)
+
+ <State 16>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 17>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 18>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 19>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 20>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 21>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 22>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_7', pynq_dsp_hls.cpp:130) [79]  (6.44 ns)
+
+ <State 23>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 24>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 25>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 26>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 27>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 28>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 29>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('tmp_9', pynq_dsp_hls.cpp:130) [81]  (6.44 ns)
+
+ <State 30>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 31>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 32>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 33>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 34>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 35>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 36>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0L', pynq_dsp_hls.cpp:130) [83]  (6.44 ns)
+
+ <State 37>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('az0R', pynq_dsp_hls.cpp:131) [92]  (6.44 ns)
+
+ <State 38>: 2.27ns
+The critical path consists of the following:
+	'store' operation ('store_ln135', pynq_dsp_hls.cpp:135) of variable 'bitcast_ln705_1', pynq_dsp_hls.cpp:135 on array 'config_r' [96]  (2.27 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+	State 24
+	State 25
+	State 26
+	State 27
+	State 28
+	State 29
+	State 30
+	State 31
+	State 32
+	State 33
+	State 34
+	State 35
+	State 36
+	State 37
+	State 38
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

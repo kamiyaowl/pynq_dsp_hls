@@ -7,7 +7,7 @@ use ieee.std_logic_1164.all;
 
 entity pynq_dsp_hls_faddfYi is
     generic (
-        ID         : integer := 21;
+        ID         : integer := 30;
         NUM_STAGE  : integer := 7;
         din0_WIDTH : integer := 32;
         din1_WIDTH : integer := 32;

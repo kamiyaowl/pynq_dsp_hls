@@ -1,0 +1,401 @@
+
+
+================================================================
+== Vivado HLS Report for 'effect_compressor'
+================================================================
+* Date:           Sun Mar 15 02:30:35 2020
+
+* Version:        2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)
+* Project:        pynq_dsp_hls
+* Solution:       pynq_dsp_hls
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |   8.00|     6.442|        1.00|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |   22|   22|   22|   22|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 23
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 6 
+6 --> 7 
+7 --> 8 
+8 --> 9 
+9 --> 10 
+10 --> 11 
+11 --> 12 
+12 --> 13 
+13 --> 14 
+14 --> 15 
+15 --> 16 
+16 --> 17 
+17 --> 18 
+18 --> 19 
+19 --> 20 
+20 --> 21 
+21 --> 22 
+22 --> 23 
+23 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.26>
+ST_1 : Operation 24 [1/1] (0.00ns)   --->   "%config_offset_read = call i5 @_ssdm_op_Read.ap_auto.i5(i5 %config_offset)" [pynq_dsp_hls.cpp:17]   --->   Operation 24 'read' 'config_offset_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 25 [1/1] (0.00ns)   --->   "%tmp_43 = call i9 @_ssdm_op_BitConcatenate.i9.i5.i4(i5 %config_offset_read, i4 0)" [pynq_dsp_hls.cpp:17]   --->   Operation 25 'bitconcatenate' 'tmp_43' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 26 [1/1] (0.00ns)   --->   "%or_ln17 = or i9 %tmp_43, 1" [pynq_dsp_hls.cpp:17]   --->   Operation 26 'or' 'or_ln17' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 27 [1/1] (0.00ns)   --->   "%tmp_44 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln17)" [pynq_dsp_hls.cpp:17]   --->   Operation 27 'bitconcatenate' 'tmp_44' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 28 [1/1] (0.00ns)   --->   "%config_addr = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_44" [pynq_dsp_hls.cpp:17]   --->   Operation 28 'getelementptr' 'config_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 29 [2/2] (2.26ns)   --->   "%p_Val2_s = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:17]   --->   Operation 29 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 2 <SV = 1> <Delay = 5.69>
+ST_2 : Operation 30 [1/2] (2.26ns)   --->   "%p_Val2_s = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:17]   --->   Operation 30 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_2 : Operation 31 [1/1] (0.00ns)   --->   "%trunc_ln368 = trunc i32 %p_Val2_s to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:17]   --->   Operation 31 'trunc' 'trunc_ln368' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 32 [1/1] (0.00ns)   --->   "%trunc_ln31 = trunc i32 %p_Val2_s to i23" [pynq_dsp_hls.cpp:31]   --->   Operation 32 'trunc' 'trunc_ln31' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 33 [1/1] (0.00ns)   --->   "%tmp_31 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_s, i32 23, i32 30)" [pynq_dsp_hls.cpp:24]   --->   Operation 33 'partselect' 'tmp_31' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 34 [1/1] (1.55ns)   --->   "%icmp_ln24_2 = icmp ne i8 %tmp_31, -1" [pynq_dsp_hls.cpp:24]   --->   Operation 34 'icmp' 'icmp_ln24_2' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 35 [1/1] (2.44ns)   --->   "%icmp_ln24_3 = icmp eq i23 %trunc_ln31, 0" [pynq_dsp_hls.cpp:24]   --->   Operation 35 'icmp' 'icmp_ln24_3' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 36 [1/1] (0.97ns)   --->   "%or_ln24_1 = or i1 %icmp_ln24_3, %icmp_ln24_2" [pynq_dsp_hls.cpp:24]   --->   Operation 36 'or' 'or_ln24_1' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+
+State 3 <SV = 2> <Delay = 5.43>
+ST_3 : Operation 37 [1/1] (0.00ns)   --->   "%inData_r_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_r)" [pynq_dsp_hls.cpp:17]   --->   Operation 37 'read' 'inData_r_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 38 [1/1] (0.00ns)   --->   "%inData_l_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_l)" [pynq_dsp_hls.cpp:17]   --->   Operation 38 'read' 'inData_l_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 39 [1/1] (0.00ns)   --->   "%p_Result_s = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:17]   --->   Operation 39 'bitconcatenate' 'p_Result_s' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 40 [1/1] (0.00ns)   --->   "%thresh = bitcast i32 %p_Result_s to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:17]   --->   Operation 40 'bitcast' 'thresh' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 41 [1/1] (0.00ns)   --->   "%p_Val2_13 = bitcast float %inData_l_read to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:310->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:12->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:21]   --->   Operation 41 'bitcast' 'p_Val2_13' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 42 [1/1] (0.00ns)   --->   "%trunc_ln368_5 = trunc i32 %p_Val2_13 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:21]   --->   Operation 42 'trunc' 'trunc_ln368_5' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 43 [1/1] (0.00ns)   --->   "%trunc_ln24 = trunc i32 %p_Val2_13 to i23" [pynq_dsp_hls.cpp:24]   --->   Operation 43 'trunc' 'trunc_ln24' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 44 [1/1] (0.00ns)   --->   "%p_Result_10 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_5)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:21]   --->   Operation 44 'bitconcatenate' 'p_Result_10' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 45 [1/1] (0.00ns)   --->   "%absL = bitcast i32 %p_Result_10 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:21]   --->   Operation 45 'bitcast' 'absL' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 46 [1/1] (0.00ns)   --->   "%p_Val2_14 = bitcast float %inData_r_read to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:310->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:12->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:22]   --->   Operation 46 'bitcast' 'p_Val2_14' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 47 [1/1] (0.00ns)   --->   "%trunc_ln368_6 = trunc i32 %p_Val2_14 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:22]   --->   Operation 47 'trunc' 'trunc_ln368_6' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 48 [1/1] (0.00ns)   --->   "%trunc_ln31_1 = trunc i32 %p_Val2_14 to i23" [pynq_dsp_hls.cpp:31]   --->   Operation 48 'trunc' 'trunc_ln31_1' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 49 [1/1] (0.00ns)   --->   "%p_Result_11 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_6)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:22]   --->   Operation 49 'bitconcatenate' 'p_Result_11' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 50 [1/1] (0.00ns)   --->   "%absR = bitcast i32 %p_Result_11 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:22]   --->   Operation 50 'bitcast' 'absR' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 51 [1/1] (0.00ns)   --->   "%tmp_30 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_13, i32 23, i32 30)" [pynq_dsp_hls.cpp:24]   --->   Operation 51 'partselect' 'tmp_30' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 52 [1/1] (1.55ns)   --->   "%icmp_ln24 = icmp ne i8 %tmp_30, -1" [pynq_dsp_hls.cpp:24]   --->   Operation 52 'icmp' 'icmp_ln24' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 53 [1/1] (2.44ns)   --->   "%icmp_ln24_1 = icmp eq i23 %trunc_ln24, 0" [pynq_dsp_hls.cpp:24]   --->   Operation 53 'icmp' 'icmp_ln24_1' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 54 [1/1] (0.97ns)   --->   "%or_ln24 = or i1 %icmp_ln24_1, %icmp_ln24" [pynq_dsp_hls.cpp:24]   --->   Operation 54 'or' 'or_ln24' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 55 [2/2] (5.43ns)   --->   "%tmp_32 = fcmp olt float %absL, %thresh" [pynq_dsp_hls.cpp:24]   --->   Operation 55 'fcmp' 'tmp_32' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 56 [1/1] (0.00ns)   --->   "%tmp_35 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_14, i32 23, i32 30)" [pynq_dsp_hls.cpp:31]   --->   Operation 56 'partselect' 'tmp_35' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 57 [1/1] (1.55ns)   --->   "%icmp_ln31 = icmp ne i8 %tmp_35, -1" [pynq_dsp_hls.cpp:31]   --->   Operation 57 'icmp' 'icmp_ln31' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 58 [1/1] (2.44ns)   --->   "%icmp_ln31_1 = icmp eq i23 %trunc_ln31_1, 0" [pynq_dsp_hls.cpp:31]   --->   Operation 58 'icmp' 'icmp_ln31_1' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 59 [1/1] (0.97ns)   --->   "%or_ln31 = or i1 %icmp_ln31_1, %icmp_ln31" [pynq_dsp_hls.cpp:31]   --->   Operation 59 'or' 'or_ln31' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 60 [2/2] (5.43ns)   --->   "%tmp_37 = fcmp olt float %absR, %thresh" [pynq_dsp_hls.cpp:31]   --->   Operation 60 'fcmp' 'tmp_37' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 6.40>
+ST_4 : Operation 61 [1/1] (0.00ns) (grouped into LUT with out node and_ln24_1)   --->   "%and_ln24 = and i1 %or_ln24, %or_ln24_1" [pynq_dsp_hls.cpp:24]   --->   Operation 61 'and' 'and_ln24' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 62 [1/2] (5.43ns)   --->   "%tmp_32 = fcmp olt float %absL, %thresh" [pynq_dsp_hls.cpp:24]   --->   Operation 62 'fcmp' 'tmp_32' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 63 [1/1] (0.97ns) (out node of the LUT)   --->   "%and_ln24_1 = and i1 %and_ln24, %tmp_32" [pynq_dsp_hls.cpp:24]   --->   Operation 63 'and' 'and_ln24_1' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 64 [1/1] (0.00ns) (grouped into LUT with out node and_ln31_1)   --->   "%and_ln31 = and i1 %or_ln31, %or_ln24_1" [pynq_dsp_hls.cpp:31]   --->   Operation 64 'and' 'and_ln31' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 65 [1/2] (5.43ns)   --->   "%tmp_37 = fcmp olt float %absR, %thresh" [pynq_dsp_hls.cpp:31]   --->   Operation 65 'fcmp' 'tmp_37' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 66 [1/1] (0.97ns) (out node of the LUT)   --->   "%and_ln31_1 = and i1 %and_ln31, %tmp_37" [pynq_dsp_hls.cpp:31]   --->   Operation 66 'and' 'and_ln31_1' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+
+State 5 <SV = 4> <Delay = 6.44>
+ST_5 : Operation 67 [7/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 67 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 68 [7/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 68 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 6 <SV = 5> <Delay = 6.44>
+ST_6 : Operation 69 [6/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 69 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_6 : Operation 70 [6/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 70 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 7 <SV = 6> <Delay = 6.44>
+ST_7 : Operation 71 [5/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 71 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_7 : Operation 72 [5/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 72 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 8 <SV = 7> <Delay = 6.44>
+ST_8 : Operation 73 [4/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 73 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_8 : Operation 74 [4/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 74 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 9 <SV = 8> <Delay = 6.44>
+ST_9 : Operation 75 [3/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 75 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_9 : Operation 76 [3/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 76 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 10 <SV = 9> <Delay = 6.44>
+ST_10 : Operation 77 [1/1] (0.00ns)   --->   "%or_ln18 = or i9 %tmp_43, 2" [pynq_dsp_hls.cpp:18]   --->   Operation 77 'or' 'or_ln18' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 78 [1/1] (0.00ns)   --->   "%tmp_45 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln18)" [pynq_dsp_hls.cpp:18]   --->   Operation 78 'bitconcatenate' 'tmp_45' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 79 [1/1] (0.00ns)   --->   "%config_addr_21 = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_45" [pynq_dsp_hls.cpp:18]   --->   Operation 79 'getelementptr' 'config_addr_21' <Predicate = true> <Delay = 0.00>
+ST_10 : Operation 80 [2/2] (2.26ns)   --->   "%p_Val2_12 = load i32* %config_addr_21, align 4" [pynq_dsp_hls.cpp:18]   --->   Operation 80 'load' 'p_Val2_12' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_10 : Operation 81 [2/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 81 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_10 : Operation 82 [2/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 82 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 11 <SV = 10> <Delay = 6.44>
+ST_11 : Operation 83 [1/2] (2.26ns)   --->   "%p_Val2_12 = load i32* %config_addr_21, align 4" [pynq_dsp_hls.cpp:18]   --->   Operation 83 'load' 'p_Val2_12' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_11 : Operation 84 [1/1] (0.00ns)   --->   "%trunc_ln368_4 = trunc i32 %p_Val2_12 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:18]   --->   Operation 84 'trunc' 'trunc_ln368_4' <Predicate = true> <Delay = 0.00>
+ST_11 : Operation 85 [1/7] (6.44ns)   --->   "%tmp_s = fsub float %absL, %thresh" [pynq_dsp_hls.cpp:27]   --->   Operation 85 'fsub' 'tmp_s' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_11 : Operation 86 [1/7] (6.44ns)   --->   "%tmp_25 = fsub float %absR, %thresh" [pynq_dsp_hls.cpp:34]   --->   Operation 86 'fsub' 'tmp_25' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 12 <SV = 11> <Delay = 5.70>
+ST_12 : Operation 87 [1/1] (0.00ns)   --->   "%p_Result_9 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_4)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:18]   --->   Operation 87 'bitconcatenate' 'p_Result_9' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 88 [1/1] (0.00ns)   --->   "%ratio = bitcast i32 %p_Result_9 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:18]   --->   Operation 88 'bitcast' 'ratio' <Predicate = true> <Delay = 0.00>
+ST_12 : Operation 89 [4/4] (5.70ns)   --->   "%tmp_22 = fmul float %tmp_s, %ratio" [pynq_dsp_hls.cpp:27]   --->   Operation 89 'fmul' 'tmp_22' <Predicate = (!and_ln24_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_12 : Operation 90 [4/4] (5.70ns)   --->   "%tmp_26 = fmul float %tmp_25, %ratio" [pynq_dsp_hls.cpp:34]   --->   Operation 90 'fmul' 'tmp_26' <Predicate = (!and_ln31_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 13 <SV = 12> <Delay = 5.70>
+ST_13 : Operation 91 [3/4] (5.70ns)   --->   "%tmp_22 = fmul float %tmp_s, %ratio" [pynq_dsp_hls.cpp:27]   --->   Operation 91 'fmul' 'tmp_22' <Predicate = (!and_ln24_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_13 : Operation 92 [3/4] (5.70ns)   --->   "%tmp_26 = fmul float %tmp_25, %ratio" [pynq_dsp_hls.cpp:34]   --->   Operation 92 'fmul' 'tmp_26' <Predicate = (!and_ln31_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 14 <SV = 13> <Delay = 5.70>
+ST_14 : Operation 93 [2/4] (5.70ns)   --->   "%tmp_22 = fmul float %tmp_s, %ratio" [pynq_dsp_hls.cpp:27]   --->   Operation 93 'fmul' 'tmp_22' <Predicate = (!and_ln24_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_14 : Operation 94 [2/4] (5.70ns)   --->   "%tmp_26 = fmul float %tmp_25, %ratio" [pynq_dsp_hls.cpp:34]   --->   Operation 94 'fmul' 'tmp_26' <Predicate = (!and_ln31_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 15 <SV = 14> <Delay = 5.70>
+ST_15 : Operation 95 [1/4] (5.70ns)   --->   "%tmp_22 = fmul float %tmp_s, %ratio" [pynq_dsp_hls.cpp:27]   --->   Operation 95 'fmul' 'tmp_22' <Predicate = (!and_ln24_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+ST_15 : Operation 96 [1/4] (5.70ns)   --->   "%tmp_26 = fmul float %tmp_25, %ratio" [pynq_dsp_hls.cpp:34]   --->   Operation 96 'fmul' 'tmp_26' <Predicate = (!and_ln31_1)> <Delay = 5.70> <Core = "FMul">   --->   Core 106 'FMul' <Latency = 3> <II = 1> <Delay = 5.70> <FuncUnit> <Opcode : 'fmul'> <InPorts = 2> <OutPorts = 1>
+
+State 16 <SV = 15> <Delay = 6.44>
+ST_16 : Operation 97 [7/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 97 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_16 : Operation 98 [7/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 98 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 17 <SV = 16> <Delay = 6.44>
+ST_17 : Operation 99 [6/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 99 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_17 : Operation 100 [6/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 100 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 18 <SV = 17> <Delay = 6.44>
+ST_18 : Operation 101 [5/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 101 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_18 : Operation 102 [5/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 102 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 19 <SV = 18> <Delay = 6.44>
+ST_19 : Operation 103 [4/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 103 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_19 : Operation 104 [4/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 104 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 20 <SV = 19> <Delay = 6.44>
+ST_20 : Operation 105 [3/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 105 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_20 : Operation 106 [3/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 106 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+
+State 21 <SV = 20> <Delay = 6.44>
+ST_21 : Operation 107 [2/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 107 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 108 [2/2] (5.43ns)   --->   "%tmp_34 = fcmp olt float %inData_l_read, 0.000000e+00" [pynq_dsp_hls.cpp:28]   --->   Operation 108 'fcmp' 'tmp_34' <Predicate = (!and_ln24_1)> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 109 [2/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 109 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_21 : Operation 110 [2/2] (5.43ns)   --->   "%tmp_39 = fcmp olt float %inData_r_read, 0.000000e+00" [pynq_dsp_hls.cpp:35]   --->   Operation 110 'fcmp' 'tmp_39' <Predicate = (!and_ln31_1)> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 22 <SV = 21> <Delay = 6.44>
+ST_22 : Operation 111 [1/7] (6.44ns)   --->   "%absDst = fadd float %thresh, %tmp_22" [pynq_dsp_hls.cpp:27]   --->   Operation 111 'fadd' 'absDst' <Predicate = (!and_ln24_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 112 [1/2] (5.43ns)   --->   "%tmp_34 = fcmp olt float %inData_l_read, 0.000000e+00" [pynq_dsp_hls.cpp:28]   --->   Operation 112 'fcmp' 'tmp_34' <Predicate = (!and_ln24_1)> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 113 [1/7] (6.44ns)   --->   "%absDst_1 = fadd float %thresh, %tmp_26" [pynq_dsp_hls.cpp:34]   --->   Operation 113 'fadd' 'absDst_1' <Predicate = (!and_ln31_1)> <Delay = 6.44> <Core = "FAddSub">   --->   Core 105 'FAddSub' <Latency = 6> <II = 1> <Delay = 6.44> <FuncUnit> <Opcode : 'fadd' 'fsub'> <InPorts = 2> <OutPorts = 1>
+ST_22 : Operation 114 [1/2] (5.43ns)   --->   "%tmp_39 = fcmp olt float %inData_r_read, 0.000000e+00" [pynq_dsp_hls.cpp:35]   --->   Operation 114 'fcmp' 'tmp_39' <Predicate = (!and_ln31_1)> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 23 <SV = 22> <Delay = 1.69>
+ST_23 : Operation 115 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecMemCore([256 x i32]* %config_r, [1 x i8]* @p_str8, [7 x i8]* @RAM_1P_str, [1 x i8]* @p_str8, i32 -1, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8)"   --->   Operation 115 'specmemcore' 'empty' <Predicate = true> <Delay = 0.00>
+ST_23 : Operation 116 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%and_ln28 = and i1 %or_ln24, %tmp_34" [pynq_dsp_hls.cpp:28]   --->   Operation 116 'and' 'and_ln28' <Predicate = (!and_ln24_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 117 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%bitcast_ln28 = bitcast float %absDst to i32" [pynq_dsp_hls.cpp:28]   --->   Operation 117 'bitcast' 'bitcast_ln28' <Predicate = (!and_ln24_1)> <Delay = 0.00>
+ST_23 : Operation 118 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%xor_ln28 = xor i32 %bitcast_ln28, -2147483648" [pynq_dsp_hls.cpp:28]   --->   Operation 118 'xor' 'xor_ln28' <Predicate = (!and_ln24_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 119 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%bitcast_ln28_1 = bitcast i32 %xor_ln28 to float" [pynq_dsp_hls.cpp:28]   --->   Operation 119 'bitcast' 'bitcast_ln28_1' <Predicate = (!and_ln24_1)> <Delay = 0.00>
+ST_23 : Operation 120 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%xor_ln24 = xor i1 %and_ln24_1, true" [pynq_dsp_hls.cpp:24]   --->   Operation 120 'xor' 'xor_ln24' <Predicate = (!and_ln24_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 121 [1/1] (0.00ns) (grouped into LUT with out node select_ln28)   --->   "%and_ln28_1 = and i1 %and_ln28, %xor_ln24" [pynq_dsp_hls.cpp:28]   --->   Operation 121 'and' 'and_ln28_1' <Predicate = (!and_ln24_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 122 [1/1] (0.99ns) (out node of the LUT)   --->   "%select_ln28 = select i1 %and_ln28_1, float %bitcast_ln28_1, float %absDst" [pynq_dsp_hls.cpp:28]   --->   Operation 122 'select' 'select_ln28' <Predicate = (!and_ln24_1)> <Delay = 0.99> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_23 : Operation 123 [1/1] (0.69ns) (out node of the LUT)   --->   "%dst_l = select i1 %and_ln24_1, float %inData_l_read, float %select_ln28" [pynq_dsp_hls.cpp:24]   --->   Operation 123 'select' 'dst_l' <Predicate = true> <Delay = 0.69> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_23 : Operation 124 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%and_ln35 = and i1 %or_ln31, %tmp_39" [pynq_dsp_hls.cpp:35]   --->   Operation 124 'and' 'and_ln35' <Predicate = (!and_ln31_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 125 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%bitcast_ln35 = bitcast float %absDst_1 to i32" [pynq_dsp_hls.cpp:35]   --->   Operation 125 'bitcast' 'bitcast_ln35' <Predicate = (!and_ln31_1)> <Delay = 0.00>
+ST_23 : Operation 126 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%xor_ln35 = xor i32 %bitcast_ln35, -2147483648" [pynq_dsp_hls.cpp:35]   --->   Operation 126 'xor' 'xor_ln35' <Predicate = (!and_ln31_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 127 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%bitcast_ln35_1 = bitcast i32 %xor_ln35 to float" [pynq_dsp_hls.cpp:35]   --->   Operation 127 'bitcast' 'bitcast_ln35_1' <Predicate = (!and_ln31_1)> <Delay = 0.00>
+ST_23 : Operation 128 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%xor_ln31 = xor i1 %and_ln31_1, true" [pynq_dsp_hls.cpp:31]   --->   Operation 128 'xor' 'xor_ln31' <Predicate = (!and_ln31_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 129 [1/1] (0.00ns) (grouped into LUT with out node select_ln35)   --->   "%and_ln35_1 = and i1 %and_ln35, %xor_ln31" [pynq_dsp_hls.cpp:35]   --->   Operation 129 'and' 'and_ln35_1' <Predicate = (!and_ln31_1)> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.97> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_23 : Operation 130 [1/1] (0.99ns) (out node of the LUT)   --->   "%select_ln35 = select i1 %and_ln35_1, float %bitcast_ln35_1, float %absDst_1" [pynq_dsp_hls.cpp:35]   --->   Operation 130 'select' 'select_ln35' <Predicate = (!and_ln31_1)> <Delay = 0.99> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_23 : Operation 131 [1/1] (0.69ns) (out node of the LUT)   --->   "%dst_r = select i1 %and_ln31_1, float %inData_r_read, float %select_ln35" [pynq_dsp_hls.cpp:31]   --->   Operation 131 'select' 'dst_r' <Predicate = true> <Delay = 0.69> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_23 : Operation 132 [1/1] (0.00ns)   --->   "%mrv = insertvalue { float, float } undef, float %dst_l, 0" [pynq_dsp_hls.cpp:38]   --->   Operation 132 'insertvalue' 'mrv' <Predicate = true> <Delay = 0.00>
+ST_23 : Operation 133 [1/1] (0.00ns)   --->   "%mrv_1 = insertvalue { float, float } %mrv, float %dst_r, 1" [pynq_dsp_hls.cpp:38]   --->   Operation 133 'insertvalue' 'mrv_1' <Predicate = true> <Delay = 0.00>
+ST_23 : Operation 134 [1/1] (0.00ns)   --->   "ret { float, float } %mrv_1" [pynq_dsp_hls.cpp:38]   --->   Operation 134 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 8ns, clock uncertainty: 1ns.
+
+ <State 1>: 2.27ns
+The critical path consists of the following:
+	wire read on port 'config_offset' (pynq_dsp_hls.cpp:17) [6]  (0 ns)
+	'or' operation ('or_ln17', pynq_dsp_hls.cpp:17) [10]  (0 ns)
+	'getelementptr' operation ('config_addr', pynq_dsp_hls.cpp:17) [12]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:17) on array 'config_r' [16]  (2.27 ns)
+
+ <State 2>: 5.69ns
+The critical path consists of the following:
+	'load' operation ('pi', pynq_dsp_hls.cpp:17) on array 'config_r' [16]  (2.27 ns)
+	'icmp' operation ('icmp_ln24_3', pynq_dsp_hls.cpp:24) [41]  (2.45 ns)
+	'or' operation ('or_ln24_1', pynq_dsp_hls.cpp:24) [42]  (0.978 ns)
+
+ <State 3>: 5.43ns
+The critical path consists of the following:
+	wire read on port 'inData_r' (pynq_dsp_hls.cpp:17) [7]  (0 ns)
+	'fcmp' operation ('tmp_37', pynq_dsp_hls.cpp:31) [63]  (5.43 ns)
+
+ <State 4>: 6.41ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_32', pynq_dsp_hls.cpp:24) [44]  (5.43 ns)
+	'and' operation ('and_ln24_1', pynq_dsp_hls.cpp:24) [45]  (0.978 ns)
+
+ <State 5>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 6>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 7>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 8>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 9>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 10>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 11>: 6.44ns
+The critical path consists of the following:
+	'fsub' operation ('tmp_s', pynq_dsp_hls.cpp:27) [46]  (6.44 ns)
+
+ <State 12>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_22', pynq_dsp_hls.cpp:27) [47]  (5.7 ns)
+
+ <State 13>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_22', pynq_dsp_hls.cpp:27) [47]  (5.7 ns)
+
+ <State 14>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_22', pynq_dsp_hls.cpp:27) [47]  (5.7 ns)
+
+ <State 15>: 5.7ns
+The critical path consists of the following:
+	'fmul' operation ('tmp_22', pynq_dsp_hls.cpp:27) [47]  (5.7 ns)
+
+ <State 16>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 17>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 18>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 19>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 20>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 21>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 22>: 6.44ns
+The critical path consists of the following:
+	'fadd' operation ('absDst', pynq_dsp_hls.cpp:27) [48]  (6.44 ns)
+
+ <State 23>: 1.69ns
+The critical path consists of the following:
+	'and' operation ('and_ln28', pynq_dsp_hls.cpp:28) [50]  (0 ns)
+	'and' operation ('and_ln28_1', pynq_dsp_hls.cpp:28) [55]  (0 ns)
+	'select' operation ('select_ln28', pynq_dsp_hls.cpp:28) [56]  (0.993 ns)
+	'select' operation ('dst.l', pynq_dsp_hls.cpp:24) [57]  (0.698 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+	State 6
+	State 7
+	State 8
+	State 9
+	State 10
+	State 11
+	State 12
+	State 13
+	State 14
+	State 15
+	State 16
+	State 17
+	State 18
+	State 19
+	State 20
+	State 21
+	State 22
+	State 23
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

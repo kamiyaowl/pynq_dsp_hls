@@ -1,0 +1,208 @@
+
+
+================================================================
+== Vivado HLS Report for 'effect_distortion'
+================================================================
+* Date:           Sun Mar 15 02:30:35 2020
+
+* Version:        2019.1.3 (Build 2642998 on Wed Sep 04 10:25:22 MDT 2019)
+* Project:        pynq_dsp_hls
+* Solution:       pynq_dsp_hls
+* Product family: zynq
+* Target device:  xc7z020-clg400-1
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing (ns): 
+    * Summary: 
+    +--------+-------+----------+------------+
+    |  Clock | Target| Estimated| Uncertainty|
+    +--------+-------+----------+------------+
+    |ap_clk  |   8.00|     6.409|        1.00|
+    +--------+-------+----------+------------+
+
++ Latency (clock cycles): 
+    * Summary: 
+    +-----+-----+-----+-----+---------+
+    |  Latency  |  Interval | Pipeline|
+    | min | max | min | max |   Type  |
+    +-----+-----+-----+-----+---------+
+    |    4|    4|    4|    4|   none  |
+    +-----+-----+-----+-----+---------+
+
+    + Detail: 
+        * Instance: 
+        N/A
+
+        * Loop: 
+        N/A
+
+============================================================
++ Verbose Summary: Synthesis Manager
+============================================================
+InlineROM: 1
+ExposeGlobal: 0
+============================================================
++ Verbose Summary: CDFG Model
+============================================================
+IsTopModel: 0
+ResetActiveHigh: 1
+IsCombinational: 0
+IsDatapathOnly: 0
+HasWiredReturn: 1
+HasMFsm: 0
+HasVarLatency: 1
+IsPipeline: 0
+IsRtlPipelined: 0
+IsInstanceOverlapped: 0
+IsDontTouch: 0
+HasImplIP: 0
+IsGatedGlobalClock: 0
+
+
+============================================================
++ Verbose Summary: Schedule
+============================================================
+* Number of FSM states : 5
+* Pipeline : 0
+* Dataflow Pipeline: 0
+
+* FSM state transitions: 
+1 --> 2 
+2 --> 3 
+3 --> 4 
+4 --> 5 
+5 --> 
+
+* FSM state operations: 
+
+State 1 <SV = 0> <Delay = 2.26>
+ST_1 : Operation 6 [1/1] (0.00ns)   --->   "%config_offset_read = call i5 @_ssdm_op_Read.ap_auto.i5(i5 %config_offset)" [pynq_dsp_hls.cpp:4]   --->   Operation 6 'read' 'config_offset_read' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 7 [1/1] (0.00ns)   --->   "%tmp_29 = call i9 @_ssdm_op_BitConcatenate.i9.i5.i4(i5 %config_offset_read, i4 0)" [pynq_dsp_hls.cpp:4]   --->   Operation 7 'bitconcatenate' 'tmp_29' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 8 [1/1] (0.00ns)   --->   "%or_ln4 = or i9 %tmp_29, 1" [pynq_dsp_hls.cpp:4]   --->   Operation 8 'or' 'or_ln4' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 9 [1/1] (0.00ns)   --->   "%tmp_30 = call i64 @_ssdm_op_BitConcatenate.i64.i55.i9(i55 0, i9 %or_ln4)" [pynq_dsp_hls.cpp:4]   --->   Operation 9 'bitconcatenate' 'tmp_30' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 10 [1/1] (0.00ns)   --->   "%config_addr = getelementptr [256 x i32]* %config_r, i64 0, i64 %tmp_30" [pynq_dsp_hls.cpp:4]   --->   Operation 10 'getelementptr' 'config_addr' <Predicate = true> <Delay = 0.00>
+ST_1 : Operation 11 [2/2] (2.26ns)   --->   "%p_Val2_s = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:4]   --->   Operation 11 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+
+State 2 <SV = 1> <Delay = 5.69>
+ST_2 : Operation 12 [1/2] (2.26ns)   --->   "%p_Val2_s = load i32* %config_addr, align 4" [pynq_dsp_hls.cpp:4]   --->   Operation 12 'load' 'p_Val2_s' <Predicate = true> <Delay = 2.26> <Core = "RAM_1P">   --->   Core 44 'RAM_1P' <Latency = 1> <II = 1> <Delay = 2.26> <Storage> <Opcode : 'load' 'store'> <Ports = 1> <Width = 32> <Depth = 256> <RAM>
+ST_2 : Operation 13 [1/1] (0.00ns)   --->   "%trunc_ln368 = trunc i32 %p_Val2_s to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:4]   --->   Operation 13 'trunc' 'trunc_ln368' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 14 [1/1] (0.00ns)   --->   "%trunc_ln257 = trunc i32 %p_Val2_s to i23" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 14 'trunc' 'trunc_ln257' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 15 [1/1] (0.00ns)   --->   "%tmp_8 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_s, i32 23, i32 30)" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 15 'partselect' 'tmp_8' <Predicate = true> <Delay = 0.00>
+ST_2 : Operation 16 [1/1] (1.55ns)   --->   "%icmp_ln257_2 = icmp ne i8 %tmp_8, -1" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 16 'icmp' 'icmp_ln257_2' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 17 [1/1] (2.44ns)   --->   "%icmp_ln257_3 = icmp eq i23 %trunc_ln257, 0" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 17 'icmp' 'icmp_ln257_3' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_2 : Operation 18 [1/1] (0.97ns)   --->   "%or_ln257_1 = or i1 %icmp_ln257_3, %icmp_ln257_2" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 18 'or' 'or_ln257_1' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+
+State 3 <SV = 2> <Delay = 5.43>
+ST_3 : Operation 19 [1/1] (0.00ns)   --->   "%inData_r_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_r)" [pynq_dsp_hls.cpp:4]   --->   Operation 19 'read' 'inData_r_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 20 [1/1] (0.00ns)   --->   "%inData_l_read = call float @_ssdm_op_Read.ap_auto.float(float %inData_l)" [pynq_dsp_hls.cpp:4]   --->   Operation 20 'read' 'inData_l_read' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 21 [1/1] (0.00ns)   --->   "%p_Result_s = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:4]   --->   Operation 21 'bitconcatenate' 'p_Result_s' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 22 [1/1] (0.00ns)   --->   "%thresh = bitcast i32 %p_Result_s to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:4]   --->   Operation 22 'bitcast' 'thresh' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 23 [1/1] (0.00ns)   --->   "%p_Val2_4 = bitcast float %inData_l_read to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:310->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:12->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:7]   --->   Operation 23 'bitcast' 'p_Val2_4' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 24 [1/1] (0.00ns)   --->   "%trunc_ln368_1 = trunc i32 %p_Val2_4 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:7]   --->   Operation 24 'trunc' 'trunc_ln368_1' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 25 [1/1] (0.00ns)   --->   "%trunc_ln257_1 = trunc i32 %p_Val2_4 to i23" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 25 'trunc' 'trunc_ln257_1' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 26 [1/1] (0.00ns)   --->   "%p_Result_6 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_1)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:7]   --->   Operation 26 'bitconcatenate' 'p_Result_6' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 27 [1/1] (0.00ns)   --->   "%absL = bitcast i32 %p_Result_6 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:7]   --->   Operation 27 'bitcast' 'absL' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 28 [1/1] (0.00ns)   --->   "%p_Val2_5 = bitcast float %inData_r_read to i32" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:310->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:319->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:12->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:8]   --->   Operation 28 'bitcast' 'p_Val2_5' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 29 [1/1] (0.00ns)   --->   "%trunc_ln368_2 = trunc i32 %p_Val2_5 to i31" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:8]   --->   Operation 29 'trunc' 'trunc_ln368_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 30 [1/1] (0.00ns)   --->   "%trunc_ln257_2 = trunc i32 %p_Val2_5 to i23" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 30 'trunc' 'trunc_ln257_2' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 31 [1/1] (0.00ns)   --->   "%p_Result_7 = call i32 @_ssdm_op_BitConcatenate.i32.i1.i31(i1 false, i31 %trunc_ln368_2)" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:335->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:8]   --->   Operation 31 'bitconcatenate' 'p_Result_7' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 32 [1/1] (0.00ns)   --->   "%absR = bitcast i32 %p_Result_7 to float" [r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:348->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/src/hls\utils/x_hls_utils.h:369->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint/hls_copysign.h:14->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/include/FloatingPoint\hls_fabs.h:13->r:/builds/2019.1.3/continuous/2019_09_04_2644227/src/products/hls/hls_lib/hlsmath/src/c++/absfloat.cpp:7->pynq_dsp_hls.cpp:8]   --->   Operation 32 'bitcast' 'absR' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 33 [1/1] (0.00ns)   --->   "%tmp_7 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_4, i32 23, i32 30)" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 33 'partselect' 'tmp_7' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 34 [1/1] (1.55ns)   --->   "%icmp_ln257 = icmp ne i8 %tmp_7, -1" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 34 'icmp' 'icmp_ln257' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 35 [1/1] (2.44ns)   --->   "%icmp_ln257_1 = icmp eq i23 %trunc_ln257_1, 0" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 35 'icmp' 'icmp_ln257_1' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 36 [1/1] (0.97ns)   --->   "%or_ln257 = or i1 %icmp_ln257_1, %icmp_ln257" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 36 'or' 'or_ln257' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 37 [2/2] (5.43ns)   --->   "%tmp_9 = fcmp olt float %absL, %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 37 'fcmp' 'tmp_9' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 38 [1/1] (0.00ns)   --->   "%tmp_10 = call i8 @_ssdm_op_PartSelect.i8.i32.i32.i32(i32 %p_Val2_5, i32 23, i32 30)" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 38 'partselect' 'tmp_10' <Predicate = true> <Delay = 0.00>
+ST_3 : Operation 39 [1/1] (1.55ns)   --->   "%icmp_ln257_4 = icmp ne i8 %tmp_10, -1" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 39 'icmp' 'icmp_ln257_4' <Predicate = true> <Delay = 1.55> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 40 [1/1] (2.44ns)   --->   "%icmp_ln257_5 = icmp eq i23 %trunc_ln257_2, 0" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 40 'icmp' 'icmp_ln257_5' <Predicate = true> <Delay = 2.44> <Core = "Cmp">   --->   Core 25 'Cmp' <Latency = 0> <II = 1> <Delay = 2.44> <FuncUnit> <Opcode : 'icmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 41 [1/1] (0.97ns)   --->   "%or_ln257_2 = or i1 %icmp_ln257_5, %icmp_ln257_4" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 41 'or' 'or_ln257_2' <Predicate = true> <Delay = 0.97> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 42 [2/2] (5.43ns)   --->   "%tmp_12 = fcmp olt float %absR, %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 42 'fcmp' 'tmp_12' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 43 [2/2] (5.43ns)   --->   "%tmp_14 = fcmp olt float %inData_l_read, 0.000000e+00" [pynq_dsp_hls.cpp:11]   --->   Operation 43 'fcmp' 'tmp_14' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_3 : Operation 44 [2/2] (5.43ns)   --->   "%tmp_16 = fcmp olt float %inData_r_read, 0.000000e+00" [pynq_dsp_hls.cpp:12]   --->   Operation 44 'fcmp' 'tmp_16' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 4 <SV = 3> <Delay = 6.40>
+ST_4 : Operation 45 [1/1] (0.00ns) (grouped into LUT with out node monitorDstL)   --->   "%and_ln257 = and i1 %or_ln257, %or_ln257_1" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 45 'and' 'and_ln257' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 46 [1/2] (5.43ns)   --->   "%tmp_9 = fcmp olt float %absL, %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 46 'fcmp' 'tmp_9' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 47 [1/1] (0.00ns) (grouped into LUT with out node monitorDstL)   --->   "%and_ln257_1 = and i1 %and_ln257, %tmp_9" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 47 'and' 'and_ln257_1' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 48 [1/1] (0.97ns) (out node of the LUT)   --->   "%monitorDstL = select i1 %and_ln257_1, float %absL, float %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9]   --->   Operation 48 'select' 'monitorDstL' <Predicate = true> <Delay = 0.97> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_4 : Operation 49 [1/1] (0.00ns) (grouped into LUT with out node monitorDstR)   --->   "%and_ln257_2 = and i1 %or_ln257_2, %or_ln257_1" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 49 'and' 'and_ln257_2' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 50 [1/2] (5.43ns)   --->   "%tmp_12 = fcmp olt float %absR, %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 50 'fcmp' 'tmp_12' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 51 [1/1] (0.00ns) (grouped into LUT with out node monitorDstR)   --->   "%and_ln257_3 = and i1 %and_ln257_2, %tmp_12" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 51 'and' 'and_ln257_3' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 52 [1/1] (0.97ns) (out node of the LUT)   --->   "%monitorDstR = select i1 %and_ln257_3, float %absR, float %thresh" [C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10]   --->   Operation 52 'select' 'monitorDstR' <Predicate = true> <Delay = 0.97> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_4 : Operation 53 [1/2] (5.43ns)   --->   "%tmp_14 = fcmp olt float %inData_l_read, 0.000000e+00" [pynq_dsp_hls.cpp:11]   --->   Operation 53 'fcmp' 'tmp_14' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+ST_4 : Operation 54 [1/2] (5.43ns)   --->   "%tmp_16 = fcmp olt float %inData_r_read, 0.000000e+00" [pynq_dsp_hls.cpp:12]   --->   Operation 54 'fcmp' 'tmp_16' <Predicate = true> <Delay = 5.43> <Core = "FCmp">   --->   Core 111 'FCmp' <Latency = 1> <II = 1> <Delay = 5.43> <FuncUnit> <Opcode : 'fcmp'> <InPorts = 2> <OutPorts = 1>
+
+State 5 <SV = 4> <Delay = 0.99>
+ST_5 : Operation 55 [1/1] (0.00ns)   --->   "%empty = call i32 (...)* @_ssdm_op_SpecMemCore([256 x i32]* %config_r, [1 x i8]* @p_str8, [7 x i8]* @RAM_1P_str, [1 x i8]* @p_str8, i32 -1, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8, [1 x i8]* @p_str8)"   --->   Operation 55 'specmemcore' 'empty' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 56 [1/1] (0.00ns) (grouped into LUT with out node dst_l)   --->   "%and_ln11 = and i1 %or_ln257, %tmp_14" [pynq_dsp_hls.cpp:11]   --->   Operation 56 'and' 'and_ln11' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 57 [1/1] (0.00ns) (grouped into LUT with out node dst_l)   --->   "%bitcast_ln11 = bitcast float %monitorDstL to i32" [pynq_dsp_hls.cpp:11]   --->   Operation 57 'bitcast' 'bitcast_ln11' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 58 [1/1] (0.00ns) (grouped into LUT with out node dst_l)   --->   "%xor_ln11 = xor i32 %bitcast_ln11, -2147483648" [pynq_dsp_hls.cpp:11]   --->   Operation 58 'xor' 'xor_ln11' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 59 [1/1] (0.00ns) (grouped into LUT with out node dst_l)   --->   "%bitcast_ln11_1 = bitcast i32 %xor_ln11 to float" [pynq_dsp_hls.cpp:11]   --->   Operation 59 'bitcast' 'bitcast_ln11_1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 60 [1/1] (0.99ns) (out node of the LUT)   --->   "%dst_l = select i1 %and_ln11, float %bitcast_ln11_1, float %monitorDstL" [pynq_dsp_hls.cpp:11]   --->   Operation 60 'select' 'dst_l' <Predicate = true> <Delay = 0.99> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_5 : Operation 61 [1/1] (0.00ns) (grouped into LUT with out node dst_r)   --->   "%and_ln12 = and i1 %or_ln257_2, %tmp_16" [pynq_dsp_hls.cpp:12]   --->   Operation 61 'and' 'and_ln12' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 62 [1/1] (0.00ns) (grouped into LUT with out node dst_r)   --->   "%bitcast_ln12 = bitcast float %monitorDstR to i32" [pynq_dsp_hls.cpp:12]   --->   Operation 62 'bitcast' 'bitcast_ln12' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 63 [1/1] (0.00ns) (grouped into LUT with out node dst_r)   --->   "%xor_ln12 = xor i32 %bitcast_ln12, -2147483648" [pynq_dsp_hls.cpp:12]   --->   Operation 63 'xor' 'xor_ln12' <Predicate = true> <Delay = 0.00> <Core = "LogicGate">   --->   Core 27 'LogicGate' <Latency = 0> <II = 1> <Delay = 0.99> <FuncUnit> <Opcode : 'and' 'or' 'xor'> <InPorts = 2> <OutPorts = 1>
+ST_5 : Operation 64 [1/1] (0.00ns) (grouped into LUT with out node dst_r)   --->   "%bitcast_ln12_1 = bitcast i32 %xor_ln12 to float" [pynq_dsp_hls.cpp:12]   --->   Operation 64 'bitcast' 'bitcast_ln12_1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 65 [1/1] (0.99ns) (out node of the LUT)   --->   "%dst_r = select i1 %and_ln12, float %bitcast_ln12_1, float %monitorDstR" [pynq_dsp_hls.cpp:12]   --->   Operation 65 'select' 'dst_r' <Predicate = true> <Delay = 0.99> <Core = "Sel">   --->   Core 26 'Sel' <Latency = 0> <II = 1> <Delay = 0.69> <FuncUnit> <Opcode : 'select'> <InPorts = 3> <OutPorts = 1>
+ST_5 : Operation 66 [1/1] (0.00ns)   --->   "%mrv = insertvalue { float, float } undef, float %dst_l, 0" [pynq_dsp_hls.cpp:13]   --->   Operation 66 'insertvalue' 'mrv' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 67 [1/1] (0.00ns)   --->   "%mrv_1 = insertvalue { float, float } %mrv, float %dst_r, 1" [pynq_dsp_hls.cpp:13]   --->   Operation 67 'insertvalue' 'mrv_1' <Predicate = true> <Delay = 0.00>
+ST_5 : Operation 68 [1/1] (0.00ns)   --->   "ret { float, float } %mrv_1" [pynq_dsp_hls.cpp:13]   --->   Operation 68 'ret' <Predicate = true> <Delay = 0.00>
+
+
+============================================================
++ Verbose Summary: Timing violations
+============================================================
+Target clock period: 8ns, clock uncertainty: 1ns.
+
+ <State 1>: 2.27ns
+The critical path consists of the following:
+	wire read on port 'config_offset' (pynq_dsp_hls.cpp:4) [6]  (0 ns)
+	'or' operation ('or_ln4', pynq_dsp_hls.cpp:4) [10]  (0 ns)
+	'getelementptr' operation ('config_addr', pynq_dsp_hls.cpp:4) [12]  (0 ns)
+	'load' operation ('pi', pynq_dsp_hls.cpp:4) on array 'config_r' [13]  (2.27 ns)
+
+ <State 2>: 5.69ns
+The critical path consists of the following:
+	'load' operation ('pi', pynq_dsp_hls.cpp:4) on array 'config_r' [13]  (2.27 ns)
+	'icmp' operation ('icmp_ln257_3', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9) [34]  (2.45 ns)
+	'or' operation ('or_ln257_1', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9) [35]  (0.978 ns)
+
+ <State 3>: 5.43ns
+The critical path consists of the following:
+	wire read on port 'inData_r' (pynq_dsp_hls.cpp:4) [7]  (0 ns)
+	'fcmp' operation ('tmp_12', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:10) [45]  (5.43 ns)
+
+ <State 4>: 6.41ns
+The critical path consists of the following:
+	'fcmp' operation ('tmp_9', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9) [37]  (5.43 ns)
+	'and' operation ('and_ln257_1', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9) [38]  (0 ns)
+	'select' operation ('monitorDstL', C:/Xilinx/Vivado/2019.1/common/technology/autopilot\hls_math.h:257->pynq_dsp_hls.cpp:9) [39]  (0.978 ns)
+
+ <State 5>: 0.993ns
+The critical path consists of the following:
+	'and' operation ('and_ln11', pynq_dsp_hls.cpp:11) [49]  (0 ns)
+	'select' operation ('dst.l', pynq_dsp_hls.cpp:11) [53]  (0.993 ns)
+
+
+============================================================
++ Verbose Summary: Binding
+============================================================
+N/A
+* FSMD analyzer results:
+  - Output states:
+ - Input state : 
+  - Chain level:
+	State 1
+	State 2
+	State 3
+	State 4
+	State 5
+
+
+============================================================
++ Verbose Summary: Datapath Resource usage 
+============================================================
+N/A

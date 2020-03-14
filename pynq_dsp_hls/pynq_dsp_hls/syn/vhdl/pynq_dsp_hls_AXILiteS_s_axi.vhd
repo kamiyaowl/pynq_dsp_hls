@@ -8,7 +8,7 @@ use IEEE.NUMERIC_STD.all;
 
 entity pynq_dsp_hls_AXILiteS_s_axi is
 generic (
-    C_S_AXI_ADDR_WIDTH    : INTEGER := 9;
+    C_S_AXI_ADDR_WIDTH    : INTEGER := 11;
     C_S_AXI_DATA_WIDTH    : INTEGER := 32);
 port (
     ACLK                  :in   STD_LOGIC;
@@ -52,7 +52,7 @@ port (
     numOfStage_ap_vld     :in   STD_LOGIC;
     configSizePerStage    :in   STD_LOGIC_VECTOR(31 downto 0);
     configSizePerStage_ap_vld :in   STD_LOGIC;
-    configReg_address0    :in   STD_LOGIC_VECTOR(5 downto 0);
+    configReg_address0    :in   STD_LOGIC_VECTOR(7 downto 0);
     configReg_ce0         :in   STD_LOGIC;
     configReg_we0         :in   STD_LOGIC;
     configReg_d0          :in   STD_LOGIC_VECTOR(31 downto 0);
@@ -120,8 +120,8 @@ end entity pynq_dsp_hls_AXILiteS_s_axi;
 -- 0x054 : Control signal of configSizePerStage
 --         bit 0  - configSizePerStage_ap_vld (Read/COR)
 --         others - reserved
--- 0x100 ~
--- 0x1ff : Memory 'configReg' (64 * 32b)
+-- 0x400 ~
+-- 0x7ff : Memory 'configReg' (256 * 32b)
 --         Word n : bit [31:0] - configReg[n]
 -- (SC = Self Clear, COR = Clear on Read, TOW = Toggle on Write, COH = Clear on Handshake)
 
@@ -152,9 +152,9 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     constant ADDR_NUMOFSTAGE_CTRL           : INTEGER := 16#04c#;
     constant ADDR_CONFIGSIZEPERSTAGE_DATA_0 : INTEGER := 16#050#;
     constant ADDR_CONFIGSIZEPERSTAGE_CTRL   : INTEGER := 16#054#;
-    constant ADDR_CONFIGREG_BASE            : INTEGER := 16#100#;
-    constant ADDR_CONFIGREG_HIGH            : INTEGER := 16#1ff#;
-    constant ADDR_BITS         : INTEGER := 9;
+    constant ADDR_CONFIGREG_BASE            : INTEGER := 16#400#;
+    constant ADDR_CONFIGREG_HIGH            : INTEGER := 16#7ff#;
+    constant ADDR_BITS         : INTEGER := 11;
 
     signal waddr               : UNSIGNED(ADDR_BITS-1 downto 0);
     signal wmask               : UNSIGNED(31 downto 0);
@@ -193,13 +193,13 @@ architecture behave of pynq_dsp_hls_AXILiteS_s_axi is
     signal int_configSizePerStage : UNSIGNED(31 downto 0) := (others => '0');
     signal int_configSizePerStage_ap_vld : STD_LOGIC;
     -- memory signals
-    signal int_configReg_address0 : UNSIGNED(5 downto 0);
+    signal int_configReg_address0 : UNSIGNED(7 downto 0);
     signal int_configReg_ce0   : STD_LOGIC;
     signal int_configReg_we0   : STD_LOGIC;
     signal int_configReg_be0   : UNSIGNED(3 downto 0);
     signal int_configReg_d0    : UNSIGNED(31 downto 0);
     signal int_configReg_q0    : UNSIGNED(31 downto 0);
-    signal int_configReg_address1 : UNSIGNED(5 downto 0);
+    signal int_configReg_address1 : UNSIGNED(7 downto 0);
     signal int_configReg_ce1   : STD_LOGIC;
     signal int_configReg_we1   : STD_LOGIC;
     signal int_configReg_be1   : UNSIGNED(3 downto 0);
@@ -248,8 +248,8 @@ begin
 int_configReg : pynq_dsp_hls_AXILiteS_s_axi_ram
 generic map (
      BYTES    => 4,
-     DEPTH    => 64,
-     AWIDTH   => log2(64))
+     DEPTH    => 256,
+     AWIDTH   => log2(256))
 port map (
      clk0     => ACLK,
      address0 => int_configReg_address0,
@@ -782,7 +782,7 @@ port map (
     int_configReg_be0    <= (others => configReg_we0);
     int_configReg_d0     <= RESIZE(UNSIGNED(configReg_d0), 32);
     configReg_q0         <= STD_LOGIC_VECTOR(RESIZE(int_configReg_q0, 32));
-    int_configReg_address1 <= raddr(7 downto 2) when ar_hs = '1' else waddr(7 downto 2);
+    int_configReg_address1 <= raddr(9 downto 2) when ar_hs = '1' else waddr(9 downto 2);
     int_configReg_ce1    <= '1' when ar_hs = '1' or (int_configReg_write = '1' and WVALID  = '1') else '0';
     int_configReg_we1    <= '1' when int_configReg_write = '1' and WVALID = '1' else '0';
     int_configReg_be1    <= UNSIGNED(WSTRB);
